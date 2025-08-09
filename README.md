@@ -52,3 +52,9 @@ Each node in the tree is an operation (like a command, a pipe, or a redirection)
 ### Heredocs
 
 Advice from 1 group : use forks for heredocs because to correctly handle either signals or correct exit codes
+
+### Supress readline leaks
+
+```sh
+alias msv='valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind.supp ./minishell'
+```

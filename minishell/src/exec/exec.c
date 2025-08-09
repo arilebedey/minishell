@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:01:11 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/08 21:44:57 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:25:43 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static void	run_execve(t_ms *ms, char *cmd)
 {
-	char	**argv;
+	char	**cmd_full;
 	char	**paths;
 
 	paths = find_path(ms->env);
 	if (!paths)
 	{
 		ft_putstr_fd("PATH not set\n", 2);
-		exit(127);
+		exit_shell(ms, NULL, 127);
 	}
-	argv = get_cmd(paths, cmd);
+	cmd_full = get_cmd(paths, cmd);
 	free_tab(paths);
-	if (!argv)
+	if (!cmd_full)
 	{
 		ft_putstr_fd("command not found: ", 2);
 		ft_putendl_fd(cmd, 2);
-		exit(127);
+		exit_shell(ms, NULL, 127);
 	}
-	execve(argv[0], argv, ms->env);
+	execve(cmd_full[0], cmd_full, ms->env);
 	perror("execve");
 	exit(EXIT_FAILURE);
 }

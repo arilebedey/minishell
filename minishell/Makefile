@@ -32,6 +32,8 @@ FILES       = main						\
 							exec/get_cmd		\
 							exec/exec				\
 							free/free_tab		\
+							free/cleanup		\
+							process_line
 
 SRC_DIR     = src/
 SRC_FILES   = $(addsuffix .c, $(FILES))

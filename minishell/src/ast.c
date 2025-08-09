@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:46:22 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/08 18:26:14 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:40:05 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_tree	*build(t_token *tok, t_token_type sep)
 	t_tree	*n;
 
 	s = find_sep(tok, sep);
-	if (!s)
+	if (!s || s == tok || s->next == NULL)
 		return (NULL);
 	right = s->next;
 	s->next = NULL;
@@ -69,20 +69,11 @@ t_tree	*build_ast(t_token *tok)
 
 	if (!tok)
 		return (NULL);
-	n = build(tok, T_PIPE);
-	if (n)
-		return (n);
 	n = build(tok, T_REDIR_OUT);
 	if (n)
 		return (n);
+	n = build(tok, T_PIPE);
+	if (n)
+		return (n);
 	return (new_node(tok));
-}
-
-void	free_ast(t_tree *r)
-{
-	if (!r)
-		return ;
-	free_ast(r->left);
-	free_ast(r->right);
-	free(r);
 }

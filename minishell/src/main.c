@@ -6,50 +6,39 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 22:03:30 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/08 21:44:31 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:27:56 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+static void	init_ms(t_ms *ms, char **env)
+{
+	ms->env = env;
+	ms->ast = NULL;
+}
+
+static void	run_shell(t_ms *ms)
 {
 	char	*line;
-	t_token	*tokens;
-	t_ms	ms;
-	pid_t	pid;
-	int		status;
 
-	(void)argc;
-	(void)argv;
-	ms.env = env;
 	line = readline("$ ");
 	while (line)
 	{
-		if (*line)
-			add_history(line);
-		tokens = lexer(line);
-		free(line);
-		if (!tokens)
-			continue ;
-		ms.ast = build_ast(tokens);
-		if (!ms.ast)
-			continue ;
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			free_ast(ms.ast);
-			break ;
-		}
-		if (pid == 0)
-		{
-			exec_ast(&ms, ms.ast);
-			exit(1);
-		}
-		waitpid(pid, &status, 0);
-		free_ast(ms.ast);
+		process_line(ms, line);
 		line = readline("$ ");
 	}
+	// Ctrl+D exit ?
+	exit_shell(ms, NULL, 0);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_ms	ms;
+
+	(void)argc;
+	(void)argv;
+	init_ms(&ms, env);
+	run_shell(&ms);
 	return (0);
 }

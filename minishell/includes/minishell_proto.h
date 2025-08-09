@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:11:42 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/08 21:38:55 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/09 21:40:13 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 # include "minishell_structs.h"
 
 /* ROOT FOLDER */
+// main.c
 // lexer.c
 t_token	*lexer(const char *line);
 void	free_tokens(t_token *tok);
 // ast.c
 t_tree	*build_ast(t_token *tok);
 void	free_ast(t_tree *root);
+// process_line.c
+void	process_line(t_ms *ms, char *line);
 
 /* EXEC */
 // cmd.c
@@ -33,5 +36,9 @@ int		exec_ast(t_ms *ms, t_tree *root);
 /* FREE */
 // free_tab.c
 void	free_tab(char **tab);
+// cleanup.c
+void	cleanup_ms(t_ms *ms, t_token *tokens);
+void	exit_shell(t_ms *ms, t_token *tokens, int status);
+void	free_ast(t_tree *r);
 
 #endif
