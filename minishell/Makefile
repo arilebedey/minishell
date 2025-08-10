@@ -12,19 +12,20 @@ quiet		=	@
 
 UNAME_S     := $(shell uname -s)
 
-ifeq ($(UNAME_S),darwin)
+ifeq ($(UNAME_S),Darwin)  # macOS
     READLINE_DIR := $(shell brew --prefix readline)
-    INCLUDES += -I$(READLINE_DIR)/include
+    INCLUDES = -I$(READLINE_DIR)/include \
+               -I$(LIBFT_DIR)/includes \
+               -I./includes
     READLINE_LIBS := -L$(READLINE_DIR)/lib -lreadline -lncurses
 else
-    READLINE_LIBS := -lreadline
+    INCLUDES = -I$(LIBFT_DIR)/includes \
+               -I./includes
+    READLINE_LIBS := -lreadline -lncurses
 endif
 
 LIBFT_DIR   = ./libft
 LIBFT_A     = $(LIBFT_DIR)/libft.a
-
-INCLUDES    = -I$(LIBFT_DIR)/includes \
-              -I./includes
 
 FILES       = main						\
 							lexer 					\
@@ -59,7 +60,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/free
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT_A)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIBFT_A) $(READLINE_LIBS) -o $(NAME)
