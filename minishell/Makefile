@@ -28,13 +28,14 @@ LIBFT_DIR   = ./libft
 LIBFT_A     = $(LIBFT_DIR)/libft.a
 
 FILES       = main						\
-							lexer 					\
 							ast							\
+							process_line		\
 							exec/get_cmd		\
 							exec/exec				\
 							free/free_tab		\
 							free/cleanup		\
-							process_line
+							lexing/lexer			\
+							lexing/syntax		\
 
 SRC_DIR     = src/
 SRC_FILES   = $(addsuffix .c, $(FILES))

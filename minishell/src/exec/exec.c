@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:01:11 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/09 21:25:43 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:27:58 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ static void	exec_redir_out(t_ms *ms, t_tree *root)
 	if (fd < 0)
 	{
 		perror("open");
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	close(fd);
 	exec_ast(ms, root->left);
-	exit(EXIT_FAILURE);
+	exit_shell(ms, NULL, EXIT_FAILURE);
 }
 
 static void	exec_pipe(t_ms *ms, t_tree *root)
@@ -70,13 +70,13 @@ static void	exec_pipe(t_ms *ms, t_tree *root)
 	if (pipe(fds) < 0)
 	{
 		perror("pipe");
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	left_child = fork();
 	if (left_child < 0)
 	{
 		perror("fork");
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	if (left_child == 0)
 	{
@@ -84,13 +84,13 @@ static void	exec_pipe(t_ms *ms, t_tree *root)
 		close(fds[0]);
 		close(fds[1]);
 		exec_ast(ms, root->left);
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	right_child = fork();
 	if (right_child < 0)
 	{
 		perror("fork");
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	if (right_child == 0)
 	{
@@ -98,7 +98,7 @@ static void	exec_pipe(t_ms *ms, t_tree *root)
 		close(fds[0]);
 		close(fds[1]);
 		exec_ast(ms, root->right);
-		exit(EXIT_FAILURE);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	close(fds[0]);
 	close(fds[1]);

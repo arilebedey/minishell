@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:11:42 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/09 21:40:13 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:40:36 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 
 /* ROOT FOLDER */
 // main.c
-// lexer.c
-t_token	*lexer(const char *line);
-void	free_tokens(t_token *tok);
 // ast.c
 t_tree	*build_ast(t_token *tok);
 void	free_ast(t_tree *root);
@@ -40,5 +37,11 @@ void	free_tab(char **tab);
 void	cleanup_ms(t_ms *ms, t_token *tokens);
 void	exit_shell(t_ms *ms, t_token *tokens, int status);
 void	free_ast(t_tree *r);
+void	free_tokens(t_token *tok);
 
+/* LEXER */
+// lexer.c
+t_token	*lexer(const char *line);
+// syntax.c
+int		syntax_error(t_token *tok);
 #endif

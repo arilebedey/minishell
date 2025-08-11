@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:37:05 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/05 19:40:30 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:34:29 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,4 @@ t_token	*lexer(const char *line)
 		}
 	}
 	return (head);
-}
-
-void	free_tokens(t_token *tok)
-{
-	t_token	*nx;
-
-	while (tok)
-	{
-		nx = tok->next;
-		free(tok->text);
-		free(tok);
-		tok = nx;
-	}
 }

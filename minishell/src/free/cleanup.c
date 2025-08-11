@@ -6,11 +6,24 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:21:27 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/09 21:39:48 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:01:03 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_tokens(t_token *tok)
+{
+	t_token	*nx;
+
+	while (tok)
+	{
+		nx = tok->next;
+		free(tok->text);
+		free(tok);
+		tok = nx;
+	}
+}
 
 void	cleanup_ms(t_ms *ms, t_token *tokens)
 {
@@ -30,16 +43,16 @@ void	exit_shell(t_ms *ms, t_token *tokens, int status)
 	exit(status);
 }
 
-void	free_ast(t_tree *r)
+void	free_ast(t_tree *node)
 {
-	if (!r)
+	if (!node)
 		return ;
-	free_ast(r->left);
-	free_ast(r->right);
-	if (r->tok)
+	free_ast(node->left);
+	free_ast(node->right);
+	if (node->tok)
 	{
-		free(r->tok->text);
-		free(r->tok);
+		free(node->tok->text);
+		free(node->tok);
 	}
-	free(r);
+	free(node);
 }

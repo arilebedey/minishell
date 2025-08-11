@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 19:10:22 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/08 19:30:02 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:06:41 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static char	**split_cmd_args(char *cmd)
 
 char	**find_path(char **env)
 {
+	if (!env)
+		return (NULL);
 	while (ft_strncmp("PATH", *env, 4))
 		env++;
 	if (!*env)

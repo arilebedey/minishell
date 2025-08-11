@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 21:09:09 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/09 21:41:48 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:40:20 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,12 @@ static void	execute_in_child(t_ms *ms)
 	if (pid < 0)
 	{
 		perror("fork");
-		free_ast(ms->ast);
-		return ;
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
 		exec_ast(ms, ms->ast);
-		exit(1);
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	}
 	waitpid(pid, &status, 0);
 }
@@ -60,6 +59,12 @@ void	process_line(t_ms *ms, char *line)
 
 	add_to_history(line);
 	tokens = tokenize_input(line);
+	if (syntax_error(tokens))
+	{
+		free_tokens(tokens);
+		/* ms->last_status = 2; // if you track it */
+		return ;
+	}
 	ms->ast = parse_tokens(tokens);
 	if (!ms->ast)
 	{

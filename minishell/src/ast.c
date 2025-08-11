@@ -6,13 +6,12 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:46:22 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/09 21:40:05 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:47:59 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* create a tree node */
 static t_tree	*new_node(t_token *tok)
 {
 	t_tree	*node;
@@ -62,7 +61,6 @@ static t_tree	*build(t_token *tok, t_token_type sep)
 	return (n);
 }
 
-/* lowest‐precedence first, aka PIPE */
 t_tree	*build_ast(t_token *tok)
 {
 	t_tree	*n;
