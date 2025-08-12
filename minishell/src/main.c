@@ -14,6 +14,7 @@ static void	run_shell(t_ms *ms)
 	while (line)
 	{
 		process_line(ms, line);
+		free(line);
 		line = readline("petitshell> ");
 	}
 	// Ctrl+D exit ?

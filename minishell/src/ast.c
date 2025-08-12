@@ -71,7 +71,7 @@ static char	**tokens_to_argv(t_token *tok)
 	return (argv);
 }
 
-static t_tree	*build(t_token *tok, t_token_type sep)
+static t_node	*build(t_token *tok, t_token_type sep)
 {
 	t_token	*s;
 	t_token	*right;

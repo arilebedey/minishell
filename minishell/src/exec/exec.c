@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void	exec_cmd(t_ms *ms, t_tree *node)
+static void	exec_cmd(t_ms *ms, t_node *node)
 {
 	char	**paths;
 	char	*cmd_path;
@@ -49,7 +49,7 @@ static void	exec_cmd(t_ms *ms, t_tree *node)
 	exit(EXIT_FAILURE);
 }
 
-static void	exec_redir_out(t_ms *ms, t_tree *root)
+static void	exec_redir_out(t_ms *ms, t_node *root)
 {
 	int	fd;
 
