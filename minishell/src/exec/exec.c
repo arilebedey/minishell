@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 18:01:11 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/11 19:27:58 by alebedev         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static void	run_execve(t_ms *ms, char *cmd)
@@ -36,12 +24,12 @@ static void	run_execve(t_ms *ms, char *cmd)
 	exit(EXIT_FAILURE);
 }
 
-static void	exec_cmd(t_ms *ms, t_tree *node)
+static void	exec_cmd(t_ms *ms, t_node *node)
 {
 	run_execve(ms, node->tok->text);
 }
 
-static void	exec_redir_out(t_ms *ms, t_tree *root)
+static void	exec_redir_out(t_ms *ms, t_node *root)
 {
 	int	fd;
 
@@ -61,7 +49,7 @@ static void	exec_redir_out(t_ms *ms, t_tree *root)
 	exit_shell(ms, NULL, EXIT_FAILURE);
 }
 
-static void	exec_pipe(t_ms *ms, t_tree *root)
+static void	exec_pipe(t_ms *ms, t_node *root)
 {
 	int		fds[2];
 	pid_t	left_child;
@@ -106,7 +94,7 @@ static void	exec_pipe(t_ms *ms, t_tree *root)
 	waitpid(right_child, NULL, 0);
 }
 
-int	exec_ast(t_ms *ms, t_tree *root)
+int	exec_ast(t_ms *ms, t_node *root)
 {
 	if (!root || !root->tok)
 		return (0);
