@@ -8,18 +8,17 @@ static void	add_to_history(char *line)
 
 static t_token	*tokenize_input(char *line)
 {
-	t_token	*tokens;
+	t_token	*head;
 
-	tokens = lexer(line);
-	free(line);
-	return (tokens);
+	head = lexer(line);
+	return (head);
 }
 
-static t_node	*parse_tokens(t_token *tokens)
+static t_node	*parse_tokens(t_token *head)
 {
-	if (!tokens)
+	if (!head)
 		return (NULL);
-	return (build_ast(tokens));
+	return (build_ast(head));
 }
 
 static void	execute_in_child(t_ms *ms)
