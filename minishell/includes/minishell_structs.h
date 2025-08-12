@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 19:09:20 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/08 19:05:33 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:01:34 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_tree
 	struct s_tree	*left;
 	struct s_tree	*right;
 	t_token			*tok;
+	char			**argv;
 }					t_tree;
 
 typedef struct s_ms
