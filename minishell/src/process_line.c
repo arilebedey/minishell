@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   process_line.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 21:09:09 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/11 20:40:20 by alebedev         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 static void	add_to_history(char *line)
@@ -27,7 +15,7 @@ static t_token	*tokenize_input(char *line)
 	return (tokens);
 }
 
-static t_tree	*parse_tokens(t_token *tokens)
+static t_node	*parse_tokens(t_token *tokens)
 {
 	if (!tokens)
 		return (NULL);

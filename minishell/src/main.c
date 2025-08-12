@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 22:03:30 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/09 21:27:56 by alebedev         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 static void	init_ms(t_ms *ms, char **env)
@@ -22,11 +10,11 @@ static void	run_shell(t_ms *ms)
 {
 	char	*line;
 
-	line = readline("$ ");
+	line = readline("petitshell> ");
 	while (line)
 	{
 		process_line(ms, line);
-		line = readline("$ ");
+		line = readline("petitshell> ");
 	}
 	// Ctrl+D exit ?
 	exit_shell(ms, NULL, 0);

@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ast.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 19:46:22 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/11 19:47:59 by alebedev         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
-static t_tree	*new_node(t_token *tok)
+static t_node	*new_node(t_token *tok)
 {
-	t_tree	*node;
+	t_node	*node;
 
 	node = malloc(sizeof(*node));
 	if (!node)
@@ -42,11 +30,11 @@ static t_token	*find_sep(t_token *tok, t_token_type type)
 	return (last);
 }
 
-static t_tree	*build(t_token *tok, t_token_type sep)
+static t_node	*build(t_token *tok, t_token_type sep)
 {
 	t_token	*s;
 	t_token	*right;
-	t_tree	*n;
+	t_node	*n;
 
 	s = find_sep(tok, sep);
 	if (!s || s == tok || s->next == NULL)
@@ -61,9 +49,9 @@ static t_tree	*build(t_token *tok, t_token_type sep)
 	return (n);
 }
 
-t_tree	*build_ast(t_token *tok)
+t_node	*build_ast(t_token *tok)
 {
-	t_tree	*n;
+	t_node	*n;
 
 	if (!tok)
 		return (NULL);
