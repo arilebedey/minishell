@@ -42,5 +42,6 @@ void	free_ast(t_node *node)
 		free(node->tok->text);
 		free(node->tok);
 	}
+	free_tab(node->argv);
 	free(node);
 }

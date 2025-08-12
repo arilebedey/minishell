@@ -43,20 +43,20 @@ static void	execute_in_child(t_ms *ms)
 
 void	process_line(t_ms *ms, char *line)
 {
-	t_token	*tokens;
+	t_token	*head;
 
 	add_to_history(line);
-	tokens = tokenize_input(line);
-	if (syntax_error(tokens))
+	head = tokenize_input(line);
+	if (syntax_error(head))
 	{
-		free_tokens(tokens);
+		free_tokens(head);
 		/* ms->last_status = 2; // if you track it */
 		return ;
 	}
-	ms->ast = parse_tokens(tokens);
+	ms->ast = parse_tokens(head);
 	if (!ms->ast)
 	{
-		free_tokens(tokens);
+		free_tokens(head);
 		return ;
 	}
 	execute_in_child(ms);

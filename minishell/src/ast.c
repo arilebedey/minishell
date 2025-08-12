@@ -10,6 +10,7 @@ static t_node	*new_node(t_token *tok)
 	node->left = NULL;
 	node->right = NULL;
 	node->tok = tok;
+	node->argv = NULL;
 	return (node);
 }
 
@@ -30,7 +31,47 @@ static t_token	*find_sep(t_token *tok, t_token_type type)
 	return (last);
 }
 
-static t_node	*build(t_token *tok, t_token_type sep)
+static char	**tokens_to_argv(t_token *tok)
+{
+	int		count;
+	t_token	*tmp;
+	char	**argv;
+	t_token	*to_free;
+
+	count = 0;
+	tmp = tok;
+	// Count consecutive T_WORD tokens
+	while (tmp && tmp->type == T_WORD)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	argv = malloc(sizeof(char *) * (count + 1));
+	if (!argv)
+		return (NULL);
+	// Fill argv and free extra tokens (keep the first one for node->tok)
+	tmp = tok;
+	count = 0;
+	while (tmp && tmp->type == T_WORD)
+	{
+		argv[count++] = strdup(tmp->text);
+		if (tmp != tok) // free all except the first token
+		{
+			to_free = tmp;
+			tmp = tmp->next;
+			free(to_free->text);
+			free(to_free);
+			continue ;
+		}
+		tmp = tmp->next;
+	}
+	argv[count] = NULL;
+	// Detach the first token from the rest
+	tok->next = tmp;
+	return (argv);
+}
+
+static t_tree	*build(t_token *tok, t_token_type sep)
 {
 	t_token	*s;
 	t_token	*right;
@@ -61,5 +102,9 @@ t_node	*build_ast(t_token *tok)
 	n = build(tok, T_PIPE);
 	if (n)
 		return (n);
-	return (new_node(tok));
+	n = new_node(tok);
+	if (!n)
+		return (NULL);
+	n->argv = tokens_to_argv(tok);
+	return (n);
 }
