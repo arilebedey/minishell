@@ -1,44 +1,52 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 18:01:11 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/11 19:27:58 by alebedev         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
-static void	run_execve(t_ms *ms, char *cmd)
+static void	exec_cmd(t_ms *ms, t_tree *node)
 {
-	char	**cmd_full;
 	char	**paths;
+	char	*cmd_path;
+	char	**tmp_paths;
+	char	*tmp;
+	char	*full;
 
+	if (!node->argv || !node->argv[0])
+		exit_shell(ms, NULL, EXIT_FAILURE);
 	paths = find_path(ms->env);
 	if (!paths)
 	{
 		ft_putstr_fd("PATH not set\n", 2);
 		exit_shell(ms, NULL, 127);
 	}
-	cmd_full = get_cmd(paths, cmd);
+	// If command contains '/', try directly
+	if (strchr(node->argv[0], '/'))
+		cmd_path = strdup(node->argv[0]);
+	else
+	{
+		tmp_paths = paths;
+		cmd_path = NULL;
+		while (*tmp_paths)
+		{
+			tmp = ft_strjoin(*tmp_paths, "/");
+			full = ft_strjoin(tmp, node->argv[0]);
+			free(tmp);
+			if (access(full, X_OK) == 0)
+			{
+				cmd_path = full;
+				break ;
+			}
+			free(full);
+			tmp_paths++;
+		}
+	}
 	free_tab(paths);
-	if (!cmd_full)
+	if (!cmd_path)
 	{
 		ft_putstr_fd("command not found: ", 2);
-		ft_putendl_fd(cmd, 2);
+		ft_putendl_fd(node->argv[0], 2);
 		exit_shell(ms, NULL, 127);
 	}
-	execve(cmd_full[0], cmd_full, ms->env);
+	execve(cmd_path, node->argv, ms->env);
 	perror("execve");
 	exit(EXIT_FAILURE);
-}
-
-static void	exec_cmd(t_ms *ms, t_tree *node)
-{
-	run_execve(ms, node->tok->text);
 }
 
 static void	exec_redir_out(t_ms *ms, t_tree *root)

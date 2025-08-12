@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/09 21:21:27 by alebedev          #+#    #+#             */
-/*   Updated: 2025/08/11 20:01:03 by alebedev         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	free_tokens(t_token *tok)
@@ -54,5 +42,6 @@ void	free_ast(t_tree *node)
 		free(node->tok->text);
 		free(node->tok);
 	}
+	free_tab(node->argv);
 	free(node);
 }
