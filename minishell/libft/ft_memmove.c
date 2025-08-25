@@ -3,37 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 13:46:29 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/30 11:34:34 by alebedev         ###   ########.fr       */
+/*   Created: 2025/04/29 16:10:22 by agense            #+#    #+#             */
+/*   Updated: 2025/05/20 11:43:47 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	*ft_memmove(void *dst, const void *src, size_t len)
+// Copies n bytes from memory area src to memory area dest.
+// The memory areas may overlap: copying takes place as though
+// the bytes in src are first copied into a temporary array that
+// does not overlap src or dest, and the bytes are then copied
+// from the temporary array to dest.
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	size_t	i;
 
-	if (dst == src || len == 0)
-		return (dst);
-	if (dst < src)
+	i = -1;
+	if (!dest && !src)
+		return (NULL);
+	if (!n)
+		return (dest);
+	if (dest < src)
 	{
-		i = 0;
-		while (i < len)
-		{
-			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-			i++;
-		}
+		while (++i < n)
+			*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
 	}
 	else
 	{
-		while (len > 0)
-		{
-			len--;
-			((unsigned char *)dst)[len] = ((unsigned char *)src)[len];
-		}
+		i = n;
+		while (--i >= 1)
+			*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
+		*(unsigned char *)(dest) = *(unsigned char *)(src);
 	}
-	return (dst);
+	return (dest);
 }

@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 15:52:25 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/26 16:44:48 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/05 15:27:30 by agense            #+#    #+#             */
+/*   Updated: 2025/05/13 09:08:28 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <malloc.h>
 
+// Returns a new string which is the concatenation of s1 and s2.
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*new;
-	size_t	i;
-	size_t	j;
+	char	*conc_s;
+	int		len_s1;
+	int		len_s2;
+	int		i;
+	int		j;
 
-	new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		new[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j])
-	{
-		new[i + j] = s2[j];
-		j++;
-	}
-	new[i + j] = '\0';
-	return (new);
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	conc_s = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	if (!conc_s)
+		return (0);
+	i = -1;
+	while (++i < len_s1)
+		conc_s[i] = s1[i];
+	j = -1;
+	while (i < len_s1 + len_s2)
+		conc_s[i++] = s2[++j];
+	conc_s[i] = 0;
+	return (conc_s);
 }

@@ -1,79 +1,63 @@
-.PHONY: all clean fclean re debug quiet
+NAME = minishell
 
-CC          = cc
-CFLAGS      = -Wall -Werror -Wextra -MMD -MP -g3
-AR          = ar -rcs
-NAME        = minishell
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
 
-# add flag to hide directory messages
-makeflags += --no-print-directory
-# quiet = @ mutes make in terminal, remove @ to show again
-quiet		=	@
+SRC_DIR = src
+OBJ_DIR = obj
+PARSE_SRC_DIR = $(SRC_DIR)/parse
+EXEC_SRC_DIR = $(SRC_DIR)/exec
 
-UNAME_S     := $(shell uname -s)
+PARSE_SRC_FILES = parse.c \
+	parse_deps/free_token.c
 
-ifeq ($(UNAME_S),Darwin)  # macOS
-    READLINE_DIR := $(shell brew --prefix readline)
-    INCLUDES = -I$(READLINE_DIR)/include \
-               -I$(LIBFT_DIR)/includes \
-               -I./includes
-    READLINE_LIBS := -L$(READLINE_DIR)/lib -lreadline -lncurses
-else
-    INCLUDES = -I$(LIBFT_DIR)/includes \
-               -I./includes
-    READLINE_LIBS := -lreadline -lncurses
-endif
+EXEC_SRC_FILES = exec.c \
 
-LIBFT_DIR   = ./libft
-LIBFT_A     = $(LIBFT_DIR)/libft.a
+OTHER_SRC_FILES = main.c \
+	free_cmd.c \
+	free_env.c \
 
-FILES       = main						\
-							ast							\
-							process_line		\
-							exec/get_cmd		\
-							exec/exec				\
-							free/free_tab		\
-							free/cleanup		\
-							lexing/lexer			\
-							lexing/syntax		\
+PARSE_SRC = $(addprefix $(PARSE_SRC_DIR)/, $(PARSE_SRC_FILES))
+EXEC_SRC = $(addprefix $(EXEC_SRC_DIR)/, $(EXEC_SRC_FILES))
+OTHER_SRC = $(addprefix $(SRC_DIR)/, $(OTHER_SRC_FILES))
+SRC_ALL = $(OTHER_SRC) $(PARSE_SRC) $(EXEC_SRC)
 
-SRC_DIR     = src/
-SRC_FILES   = $(addsuffix .c, $(FILES))
-SRC         = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_ALL))
 
-OBJ_DIR     = obj/
-OBJ         = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
+LIBFT_DIR = ./libft
+LIBFT_A = $(LIBFT_DIR)/libft.a
 
-all: $(LIBFT_A) $(NAME)
-	@echo "-> minishell compiled <-"
+RED = \033[31m
+GREEN = \033[1;32m
+YELLOW = \033[33m
+RESET = \033[0m
+
+all : $(NAME)
+	@echo "$(GREEN)✨ minishell ready! ✨$(RESET)"
+
+$(NAME) : $(LIBFT_A) $(OBJ)
+	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_DIR) -lft -lreadline -lncurses
 
 $(LIBFT_A):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/builtin
-	@mkdir -p $(OBJ_DIR)/lexing
-	@mkdir -p $(OBJ_DIR)/parsing
-	@mkdir -p $(OBJ_DIR)/signal
-	@mkdir -p $(OBJ_DIR)/exec
-	@mkdir -p $(OBJ_DIR)/expand
-	@mkdir -p $(OBJ_DIR)/free
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@echo "$(YELLOW)Compiling $<..."
+#	delete g flag
+	@$(CC) $(CFLAGS) -c -g $< -o $@
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(INCLUDES) -c $< -o $@
+clean :
+	@echo "$(RED)Cleaning object folder... 🧹$(RESET)"
+	@rm -rf $(OBJ_DIR)/*
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
 
-$(NAME): $(OBJ) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) $(LIBFT_A) $(READLINE_LIBS) -o $(NAME)
+fclean : clean
+	@echo "$(RED)Deleting minishell executable... 🧹⚠️$(RESET)"
+	@rm -f $(NAME)
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 
-clean:
-	rm -rf $(OBJ_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
+re:	fclean all
 
-fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
-
-re: fclean all
-
-debug: all
+.PHONY:	all clean fclean all

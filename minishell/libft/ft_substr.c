@@ -3,38 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/25 12:13:40 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/25 12:24:05 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/05 15:27:36 by agense            #+#    #+#             */
+/*   Updated: 2025/05/16 12:22:08 by agense           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-/* Key validations:                                                           */
-/* 1. If start is beyond string end, create empty string                      */
-/* 2. Limit extraction length to available characters                         */
-/* 3. Only copy until string end or requested length                          */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <malloc.h>
 
+// Returns a new string from the string s, starting at start index with a size
+// of len.
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*new;
+	char	*sub_s;
 	size_t	i;
 
-	if (start >= ft_strlen(s))
+	if (start > ft_strlen(s))
 		len = 0;
-	if (len > ft_strlen(&s[start]))
-		len = ft_strlen(&s[start]);
-	new = malloc(sizeof(char) * (len + 1));
-	if (!new)
+	if (ft_strlen(s + start) < len)
+		len = ft_strlen(s + start);
+	sub_s = malloc(sizeof(char) * (len + 1));
+	if (!sub_s)
 		return (NULL);
-	i = 0;
-	while (start + i < ft_strlen(s) && i < len)
-	{
-		new[i] = s[start + i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
+	i = -1;
+	while (++i < len)
+		sub_s[i] = s[start + i];
+	sub_s[i] = 0;
+	return (sub_s);
 }

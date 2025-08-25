@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/15 17:32:05 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/15 17:34:51 by alebedev         ###   ########.fr       */
+/*   Created: 2025/04/25 11:44:24 by agense            #+#    #+#             */
+/*   Updated: 2025/04/25 12:05:54 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+// Checks for any printable character including space
 int	ft_isprint(int c)
 {
-	if (c >= 32 && 126 >= c)
+	if (c > 31 && c < 127)
 		return (1);
 	return (0);
 }

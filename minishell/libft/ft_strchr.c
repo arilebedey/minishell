@@ -3,34 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 18:13:27 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/30 11:39:35 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/03 15:53:19 by agense            #+#    #+#             */
+/*   Updated: 2025/05/16 16:50:08 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-** ft_strchr - Locates the first occurrence of a character in a string
-**
-** This function searches for the first occurrence of the character 'c'
-** in the string 's'. The terminating null byte is considered part of the 
-** string.
-**/
 
 #include "libft.h"
 
+// Returns a pointer to the first occurence of the character c in the string s.
 char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (s[i])
+	if (s[0])
+		;
+	if (!s)
+		return (NULL);
+	if (!(char)c)
+		return ((char *)(s + ft_strlen(s)));
+	i = -1;
+	while (s[++i])
 	{
-		if (s[i] == (char) c)
-			break ;
-		i++;
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
 	}
-	if (s[i] == (char) c)
-		return ((char *) s + i);
-	return (NULL);
+	return (0);
 }

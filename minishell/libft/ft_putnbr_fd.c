@@ -3,35 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 13:36:33 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/09 14:46:50 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/06 21:08:52 by agense            #+#    #+#             */
+/*   Updated: 2025/05/18 13:38:48 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	print_nb(long nb, int fd)
-{
-	if (nb / 10)
-	{
-		print_nb(nb / 10, fd);
-		print_nb(nb % 10, fd);
-	}
-	else
-		ft_putchar_fd(nb + '0', fd);
-}
-
+// Write the number n in the file descriptor fd.
 void	ft_putnbr_fd(int n, int fd)
 {
-	long	nb;
+	int	c;
 
-	nb = n;
-	if (nb < 0)
+	if (n < 0)
 	{
-		write(fd, "-", 1);
-		nb = -nb;
+		if (n == -2147483648)
+		{
+			ft_putstr_fd("-2147483648", fd);
+			return ;
+		}
+		ft_putchar_fd('-', fd);
+		n *= -1;
 	}
-	print_nb(nb, fd);
+	if (n > 9)
+		ft_putnbr_fd(n / 10, fd);
+	c = (n % 10) + '0';
+	ft_putstr_fd((char *)&c, fd);
 }

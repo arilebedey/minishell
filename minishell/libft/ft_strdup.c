@@ -3,29 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 19:00:17 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/26 17:26:57 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/04 18:53:00 by agense            #+#    #+#             */
+/*   Updated: 2025/05/13 09:08:10 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <malloc.h>
 
+// Returns a pointer to a new string which is a duplicate of the string s.
+// Memory for the new string is obtained with malloc, and can be freed
+// with free().
+// Returns NULL if insufficient memory was available.
 char	*ft_strdup(const char *s)
 {
-	size_t		i;
-	char		*dst;
+	char	*dup;
+	int		s_len;
+	int		i;
 
-	dst = malloc(sizeof (char) * (ft_strlen(s) + 1));
-	if (dst == NULL)
+	if (!s)
 		return (0);
-	i = 0;
-	while (s[i])
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	dst[i] = 0;
-	return (dst);
+	s_len = ft_strlen(s);
+	dup = malloc(sizeof(char) * s_len + 1);
+	if (!dup)
+		return (0);
+	i = -1;
+	while (++i < s_len)
+		dup[i] = s[i];
+	dup[i] = 0;
+	return (dup);
 }

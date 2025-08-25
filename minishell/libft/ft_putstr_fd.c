@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 12:24:37 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/09 14:45:45 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/06 19:03:22 by agense            #+#    #+#             */
+/*   Updated: 2025/05/06 20:53:54 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char const *s, int fd)
+// Write the string s in the file descriptor fd
+void	ft_putstr_fd(char *s, int fd)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	write(fd, s, i);
+	i = -1;
+	while (s[++i])
+		ft_putchar_fd(s[i], fd);
 }

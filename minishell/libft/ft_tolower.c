@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 18:12:54 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/18 18:12:55 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/01 20:16:49 by agense            #+#    #+#             */
+/*   Updated: 2025/05/01 20:16:52 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+// If c is a lowercase letter, returns its uppercase equivalent.
+// Otherwise, returns c.
 int	ft_tolower(int c)
 {
-	if (c >= 'A' && 'Z' >= c)
-		return (c + 'a' - 'A');
+	if (c >= 65 && c <= 90)
+		return (c + 32);
 	return (c);
 }
