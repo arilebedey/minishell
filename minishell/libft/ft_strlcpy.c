@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 15:33:08 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/23 14:19:46 by alebedev         ###   ########.fr       */
+/*   Created: 2025/04/29 16:49:31 by agense            #+#    #+#             */
+/*   Updated: 2025/06/20 16:14:23 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+// Copy a NUL terminated string into a sized buffer.
+// Returns src length.
+size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size)
 {
 	size_t	i;
+	size_t	src_len;
 
+	src_len = ft_strlen(src);
+	if (!dest_size)
+		return (src_len);
 	i = 0;
-	if (!dst || !src)
-		return (0);
-	while (src[i] && i + 1 < dstsize)
+	while (i < dest_size - 1 && i < src_len)
 	{
-		dst[i] = src[i];
+		dest[i] = src[i];
 		i++;
 	}
-	if (dstsize > 0)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (ft_strlen(src));
+	dest[i] = 0;
+	return (src_len);
 }

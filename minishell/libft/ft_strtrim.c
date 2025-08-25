@@ -3,106 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 17:22:40 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/29 11:55:20 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/05 23:25:42 by agense            #+#    #+#             */
+/*   Updated: 2025/05/20 22:51:29 by agense           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-/* Function trims leading and trailing characters from s1 that match any      */
-/* character in set. Returns a new allocated string with trimmed content.     */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <malloc.h>
 
-static char	*skip_leading_chars(char const *s1, char const *set)
+// Returns 1 if a char in the string set is equal to the char s.
+// Otherwise returns 0.
+static int	detec_set(char const s, char const *set)
 {
-	size_t	i;
-	size_t	j;
-	int		is_trim_char;
+	int	i;
 
-	is_trim_char = 0;
-	i = 0;
-	j = 0;
-	while (s1[i])
+	i = -1;
+	while (set[++i])
 	{
-		is_trim_char = 0;
-		j = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-				is_trim_char = 1;
-			j++;
-		}
-		if (!is_trim_char)
-			break ;
-		i++;
+		if ((unsigned char)set[i] == (unsigned char)s)
+			return (1);
 	}
-	return ((char *)&s1[i]);
+	return (0);
 }
 
-static char	*get_end_position(char const *s1, char const *set)
-{
-	size_t	i;
-	size_t	j;
-	int		is_trim_char;
+//int	ft_strlen_int(const char *s)
+//{
+//	int	i;
 
-	is_trim_char = 0;
-	i = ft_strlen(s1) - 1;
-	j = 0;
-	while (i > 0)
-	{
-		is_trim_char = 0;
-		j = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-				is_trim_char = 1;
-			j++;
-		}
-		if (!is_trim_char)
-			break ;
-		i--;
-	}
-	return ((char *)&s1[i]);
-}
+//	i = -1;
+//	while (s[++i])
+//		;
+//	return (i);
+//}
 
-static char	*create_trimmed_string(char const *begin, char const *end)
-{
-	char	*result;
-	size_t	i;
-
-	result = malloc(sizeof(char) * (end - begin + 2));
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (begin + i <= end)
-	{
-		result[i] = begin[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
-}
-
+// Returns a new string which is a copy of s1 without chars in the string set
+// at start and end of s1.
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*begin;
-	char	*end;
-	char	*res;
+	char	*new_s;
+	size_t	i;
+	size_t	start;
+	size_t	end;
 
-	begin = skip_leading_chars(s1, set);
-	end = get_end_position(begin, set);
-	if (!s1[0] || end < begin)
+	i = -1;
+	while (detec_set(s1[++i], set))
+		;
+	start = i;
+	if (start == ft_strlen(s1))
 	{
-		res = malloc(sizeof(char) * 1);
-		if (!res)
-			return (NULL);
-		res[0] = '\0';
+		new_s = malloc(1);
+		return (*new_s = 0, new_s);
 	}
-	else
-		res = create_trimmed_string(begin, end);
-	if (!res)
+	i--;
+	while (s1[++i])
+	{
+		if (!detec_set(s1[i], set))
+			end = i;
+	}
+	new_s = malloc(sizeof(char) * (end - start + 2));
+	if (!new_s)
 		return (NULL);
-	return (res);
+	return (ft_strlcpy(new_s, s1 + start, end - start + 2), new_s);
 }

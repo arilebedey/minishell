@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/15 17:30:09 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/15 17:30:10 by alebedev         ###   ########.fr       */
+/*   Created: 2025/04/25 11:03:15 by agense            #+#    #+#             */
+/*   Updated: 2025/04/25 12:08:39 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+// Checks for an alphabetic character.
 int	ft_isalpha(int c)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 		return (1);
 	return (0);
 }

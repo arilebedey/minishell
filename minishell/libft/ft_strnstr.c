@@ -3,44 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 16:49:06 by alebedev          #+#    #+#             */
-/*   Updated: 2025/05/05 11:14:30 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/04 16:05:15 by agense            #+#    #+#             */
+/*   Updated: 2025/05/16 17:09:45 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-** Note on strnstr:
-** - Locates first occurrence of needle in haystack, up to len chars
-** - Returns haystack if needle is empty
-** - Returns NULL if needle isn't found within len chars
-** - Otherwise returns pointer to first match
-*/
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t max_len)
+// Returns the first occurence of s2 in s1, where not more than n characters are
+// searched. Characters that appear after '\0' are not searched.
+// If s2 is an empty string, returns s1; if s2 occurs nowhere in s1,
+// returns NULL; otherwise a pointer to the first character of the first
+// occurence of s2 is returned.
+char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
-	size_t	ndl_len;
 	size_t	i;
+	size_t	save_i;
 	size_t	j;
 
-	if (!haystack || !needle)
+	i = -1;
+	if (s1[0])
+		;
+	if (!(*s2))
+		return ((char *)s1);
+	if (!s1 || !s2 || !n || (!s1[0] && s2[0]))
 		return (NULL);
-	if (ft_strlen(needle) == 0)
-		return ((char *) haystack);
-	ndl_len = ft_strlen(needle);
-	i = 0;
-	if (max_len < ndl_len)
-		return (NULL);
-	while (haystack[i] && i < max_len)
+	while (s1[++i] && i < n)
 	{
 		j = 0;
-		while (j < ndl_len && i + j < max_len && needle[j] == haystack[j + i])
+		save_i = i;
+		while ((s1[i] == s2[j] && i < n) || !s2[j])
+		{
+			if (!s2[j])
+				return ((char *)(s1 + save_i));
+			i++;
 			j++;
-		if (j == ndl_len)
-			return ((char *) haystack + i);
-		i++;
+		}
+		i = save_i;
 	}
 	return (NULL);
 }

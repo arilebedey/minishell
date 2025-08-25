@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 18:08:23 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/30 11:51:13 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/04 18:19:35 by agense            #+#    #+#             */
+/*   Updated: 2025/05/13 09:04:25 by agense           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-/* This file implements ft_calloc with four key security considerations:      */
-/* 1. The (size_t)-1 represents the maximum value a size_t can hold           */
-/* 2. (size_t)-1 / size calculates max elements that won't overflow           */
-/* 3. count > ((size_t)-1 / size) checks if multiplication would overflow     */
-/* 4. size != 0 prevents division by zero in the calculation                  */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <malloc.h>
 
-static void	*zeroalloc(size_t size)
+// Allocates memory for an array of n_elem elements of size bytes each and
+// returns a pointer to the allocated memory.
+// The memory is set to zero.
+// If n_elem or size is 0, returns a unique pointer value that can later
+// be successfully passed to free().
+// Error if n_elem * size results to integer overflow
+void	*ft_calloc(size_t n_elem, size_t size)
 {
-	void	*mem_ptr;
+	char	*p;
+	size_t	i;
 
-	mem_ptr = malloc(size);
-	if (!mem_ptr)
-		return (NULL);
-	ft_bzero(mem_ptr, size);
-	return (mem_ptr);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	if (size != 0 && count > ((size_t) -1 / size))
-		return (NULL);
-	return (zeroalloc(count * size));
+	if (!n_elem || !size)
+	{
+		p = malloc(0);
+		if (!p)
+			return (0);
+		return (p);
+	}
+	p = malloc(n_elem * size);
+	if (!p)
+		return (0);
+	i = -1;
+	while (++i < n_elem * size)
+		p[i] = 0;
+	return (p);
 }

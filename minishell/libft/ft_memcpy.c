@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 12:38:00 by alebedev          #+#    #+#             */
-/*   Updated: 2025/03/17 12:38:00 by alebedev         ###   ########.fr       */
+/*   Created: 2025/04/29 13:50:30 by agense            #+#    #+#             */
+/*   Updated: 2025/05/14 12:44:17 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+// Copies n bytes from memory area src to memory area dest.
+// The memory areas must not overlap.
+// Use memmove if the memory areas do overlap.
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t	i;
 
-	i = 0;
-	while (i < n)
-	{
-		*(unsigned char *)(dst + i) = *(unsigned char *)(src + i);
-		i++;
-	}
-	return (dst);
+	i = -1;
+	if (!dest && !src)
+		return (NULL);
+	while (++i < n)
+		*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
+	return (dest);
 }

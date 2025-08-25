@@ -3,60 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 13:41:40 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/29 12:08:59 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/05 20:14:40 by agense            #+#    #+#             */
+/*   Updated: 2025/05/18 15:04:54 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <malloc.h>
 
-static size_t	calculate_digit_count(long number)
+// Returns the number of digits in n
+static int	nbr_digit(int n)
 {
-	size_t	digit_count;
+	int	pot;
+	int	nbr_digit;
 
-	digit_count = 0;
-	if (number < 0)
-	{
-		number = number * -1;
-		digit_count++;
-	}
-	if (number == 0)
+	if (n == 0)
 		return (1);
-	while (number)
+	nbr_digit = 10;
+	pot = 1000000000;
+	while (!(n / pot))
 	{
-		number = number / 10;
-		digit_count++;
+		nbr_digit--;
+		pot /= 10;
 	}
-	return (digit_count);
+	return (nbr_digit);
 }
 
+// Returns absolute value of n
+static int	abs_value(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
+
+// Reverse string s.
+// Returns s reversed.
+static char	*reverse(char *s)
+{
+	int		len;
+	int		i;
+	char	temp;
+
+	i = -1;
+	len = ft_strlen(s);
+	while (++i < --len)
+	{
+		temp = s[i];
+		s[i] = s[len];
+		s[len] = temp;
+	}
+	return (s);
+}
+
+// Converts n to string.
 char	*ft_itoa(int n)
 {
-	size_t	string_length;
-	long	number_value;
-	char	*result_string;
-	size_t	negative_sign;
+	char	*result;
+	int		is_negative;
+	int		i;
+	int		n_digit;
 
-	string_length = calculate_digit_count((long) n);
-	result_string = (char *) malloc(sizeof(char) * (string_length + 1));
-	if (!result_string)
+	n_digit = nbr_digit(n);
+	is_negative = 0;
+	i = -1;
+	if (n < 0)
+		is_negative = 1;
+	result = malloc(sizeof(char) * (n_digit + is_negative + 1));
+	if (!result)
 		return (NULL);
-	number_value = (long) n;
-	negative_sign = 0;
-	if (number_value < 0)
+	while (++i < n_digit)
 	{
-		number_value = number_value * (-1);
-		result_string[0] = '-';
-		negative_sign = 1;
+		result[i] = abs_value(n % 10) + '0';
+		n /= 10;
 	}
-	result_string[string_length] = 0;
-	while (string_length > negative_sign)
-	{
-		result_string[string_length - 1] = number_value % 10 + '0';
-		number_value = number_value / 10;
-		string_length--;
-	}
-	return (result_string);
+	if (is_negative)
+		result[i++] = '-';
+	result[i] = 0;
+	result = reverse(result);
+	return (result);
 }

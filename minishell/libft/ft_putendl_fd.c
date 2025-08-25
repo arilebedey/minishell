@@ -3,24 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 12:42:05 by alebedev          #+#    #+#             */
-/*   Updated: 2025/04/28 12:39:51 by alebedev         ###   ########.fr       */
+/*   Created: 2025/05/06 19:13:49 by agense            #+#    #+#             */
+/*   Updated: 2025/05/06 20:53:54 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putendl_fd(char const *s, int fd)
+// Write the string s in the file descriptor fd followed by a newline.
+void	ft_putendl_fd(char *s, int fd)
 {
-	size_t	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-		i++;
-	write(fd, s, i);
-	write(fd, "\n", 1);
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }
