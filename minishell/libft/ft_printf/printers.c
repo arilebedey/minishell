@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:40:19 by agense            #+#    #+#             */
-/*   Updated: 2025/05/21 12:32:16 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:54:18 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	printf_unsigned_number_base10(unsigned int n)
 
 int	printf_number_base16_lowercase(unsigned int n)
 {
-	if (n >= 0)
-		return (ft_putnbr_base(n, "0123456789abcdef"));
-	return (ft_putnbr_base(n, "0123456789abcdef") + 1);
+	return (ft_putnbr_base(n, "0123456789abcdef"));
 }
 
 int	printf_address(void *p)
@@ -46,7 +44,5 @@ int	printf_address(void *p)
 
 int	printf_number_base16_uppercase(unsigned int n)
 {
-	if (n >= 0)
-		return (ft_putnbr_base(n, "0123456789ABCDEF"));
-	return (ft_putnbr_base(n, "0123456789ABCDEF") + 1);
+	return (ft_putnbr_base(n, "0123456789ABCDEF"));
 }

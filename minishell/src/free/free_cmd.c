@@ -1,4 +1,4 @@
-#include "../include/command.h"
+#include "../../include/command.h"
 #include <malloc.h>
 
 static void	free_cmd_element(t_command *current_cmd);

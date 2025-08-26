@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:05:18 by agense            #+#    #+#             */
-/*   Updated: 2025/05/16 16:42:43 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:22:37 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = -1;
-	if (s[0])
-		;
 	if (!s)
 		return (0);
 	while (s[++i])

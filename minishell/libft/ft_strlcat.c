@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:46:14 by agense            #+#    #+#             */
-/*   Updated: 2025/05/16 11:40:31 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:23:37 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ size_t	ft_strlcat(char *dest, const char *src, size_t dest_size)
 
 	dest_len = ft_strlen(dest);
 	src_len = ft_strlen(src);
-	if (src[0])
-		;
 	if (!src)
 		return (0);
 	if (dest_len >= dest_size)
