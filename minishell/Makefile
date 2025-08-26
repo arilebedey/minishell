@@ -5,15 +5,16 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRC_DIR = src
 OBJ_DIR = obj
-PARSE_SRC_DIR = $(SRC_DIR)/parse
-EXEC_SRC_DIR = $(SRC_DIR)/exec
+PARSE_SRC_DIR = parse/src
+EXEC_SRC_DIR = exec/src
 
 PARSE_SRC_FILES = parse.c \
-	parse_deps/free_token.c
+	free_token.c
 
 EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
+	sig/interactive_sig.c \
 	free_cmd.c \
 	free_env.c \
 

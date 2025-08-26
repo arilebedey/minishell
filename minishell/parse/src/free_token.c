@@ -1,4 +1,4 @@
-#include "../../../include/parse/token.h"
+#include "../include/token.h"
 #include <malloc.h>
 
 void	free_token_list(t_token *head_tk)

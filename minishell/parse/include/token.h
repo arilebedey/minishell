@@ -1,7 +1,7 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef enum s_token_type
+typedef enum e_token_type
 {
 	T_WORD,
 	T_PIPE,
