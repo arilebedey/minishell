@@ -1,8 +1,8 @@
 #ifndef EXEC_H
 # define EXEC_H
 
-# include "../command.h"
-# include "../env.h"
+# include "../../include/command.h"
+# include "../../include/env.h"
 
 // exec.c
 
