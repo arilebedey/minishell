@@ -6,30 +6,28 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:36:02 by agense            #+#    #+#             */
-/*   Updated: 2025/06/24 18:42:26 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:56:05 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
+#include <stdlib.h>
 
 void	*ft_calloc_edit(size_t n_elem, size_t size)
 {
 	char	*p;
 	size_t	i;
+	size_t	total;
 
-	if (!n_elem || !size)
-	{
-		p = malloc(0);
-		if (!p)
-			return (0);
-		return (p);
-	}
-	p = malloc(n_elem * size);
+	if (n_elem == 0 || size == 0)
+		return (NULL);
+	total = n_elem * size;
+	p = malloc(total);
 	if (!p)
-		return (0);
-	i = -1;
-	while (++i < n_elem * size)
-		p[i] = 0;
+		return (NULL);
+	i = 0;
+	while (i < total)
+		p[i++] = 0;
 	return (p);
 }
 

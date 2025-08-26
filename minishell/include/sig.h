@@ -1,7 +1,9 @@
 #ifndef SIG_H
 # define SIG_H
 
+#include <stdio.h>
 # include <signal.h>
+#include <readline/readline.h>
 
 # define CONV_SIGINT 128 + SIGINT
 # define CONV_SIGQUIT 128 + SIGQUIT

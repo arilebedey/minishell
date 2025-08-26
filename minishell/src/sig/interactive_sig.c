@@ -1,12 +1,10 @@
-#include "../../include/sig.h"
 #include "../../include/libft.h"
-#include <readline/readline.h>
-#include <signal.h>
+#include "../../include/sig.h"
 
 volatile sig_atomic_t	g_exit_status = 0;
 
-static void	sigint_interactive_handler(void);
-static void	interactive_signal_handler(int signum);
+static void				sigint_interactive_handler(void);
+static void				interactive_signal_handler(int signum);
 
 int	init_interactive_sigaction(void)
 {
@@ -15,7 +13,8 @@ int	init_interactive_sigaction(void)
 	struct sigaction	sa_quit;
 
 	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART; // to restart blocking functions (like readline or waitpid) instead of stopping them.
+	sa_int.sa_flags = SA_RESTART;
+		// to restart blocking functions (like readline or waitpid) instead of stopping them.
 	sa_int.sa_handler = &interactive_signal_handler;
 	if (sigaction(SIGINT, &sa_int, NULL) == -1)
 		return (perror("sigaction sigint error"), 0);

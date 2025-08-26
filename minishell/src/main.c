@@ -1,13 +1,14 @@
-#include "../parse/include/parse.h"
 #include "../exec/include/exec.h"
-#include "../include/env.h"
 #include "../include/command.h"
+#include "../include/env.h"
 #include "../include/libft.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "../include/sig.h"
-#include <signal.h>
+#include "../parse/include/parse.h"
+#include <stdio.h>
 #include <malloc.h>
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <signal.h>
 
 #define PROMPT "petitshell> "
 
@@ -21,7 +22,6 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac || av || envp)
 	{
-
 	}
 	if (!init_interactive_sigaction())
 		return (1);

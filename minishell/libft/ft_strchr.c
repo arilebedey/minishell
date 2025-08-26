@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:53:19 by agense            #+#    #+#             */
-/*   Updated: 2025/05/16 16:50:08 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:50:57 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 
-	if (s[0])
-		;
 	if (!s)
 		return (NULL);
 	if (!(char)c)

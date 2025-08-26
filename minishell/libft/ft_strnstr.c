@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 16:05:15 by agense            #+#    #+#             */
-/*   Updated: 2025/05/16 17:09:45 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/26 21:51:09 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 	size_t	j;
 
 	i = -1;
-	if (s1[0])
-		;
 	if (!(*s2))
 		return ((char *)s1);
 	if (!s1 || !s2 || !n || (!s1[0] && s2[0]))
