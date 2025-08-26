@@ -15,8 +15,8 @@ EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
 	sig/interactive_sig.c \
-	free_cmd.c \
-	free_env.c \
+	free/free_cmd.c \
+	free/free_env.c \
 
 PARSE_SRC = $(addprefix $(PARSE_SRC_DIR)/, $(PARSE_SRC_FILES))
 EXEC_SRC = $(addprefix $(EXEC_SRC_DIR)/, $(EXEC_SRC_FILES))
