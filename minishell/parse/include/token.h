@@ -11,7 +11,7 @@ typedef enum e_token_type
 	T_HEREDOC,
 }		t_token_type;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
