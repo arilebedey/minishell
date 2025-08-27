@@ -9,12 +9,15 @@ PARSE_SRC_DIR = parse/src
 EXEC_SRC_DIR = exec/src
 
 PARSE_SRC_FILES = parse.c \
+	lexer.c \
+	build.c \
 	free_token.c
 
 EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
-	init.c \
+	init/init_cmd.c \
+	init/init_env.c \
 	sig/sig_interactive.c \
 	sig/sig_process.c \
 	sig/sig_handler.c \

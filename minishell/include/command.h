@@ -12,9 +12,14 @@ typedef struct s_command
 	struct s_command	*next;
 }		t_command;
 
+// init_cmd.c
+
+// Initialize all values of the command to 0/NULL.
+void	init_cmd_values(t_command *curr_cmd);
+
 // free_cmd.c
 
-// free the command element given and all next elements.
+// Free the command linked list.
 void	free_cmd_list(t_command *head_cmd);
 
 #endif
