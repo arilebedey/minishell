@@ -9,6 +9,7 @@ typedef enum e_token_type
 	T_REDIR_OUT,
 	T_REDIR_APPEND,
 	T_HEREDOC,
+	T_EOF
 }		t_token_type;
 
 typedef struct s_token
