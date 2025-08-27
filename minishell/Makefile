@@ -14,7 +14,10 @@ PARSE_SRC_FILES = parse.c \
 EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
-	sig/interactive_sig.c \
+	init.c \
+	sig/sig_interactive.c \
+	sig/sig_process.c \
+	sig/sig_handler.c \
 	free/free_cmd.c \
 	free/free_env.c \
 
