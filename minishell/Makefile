@@ -11,7 +11,7 @@ EXEC_SRC_DIR = exec/src
 PARSE_SRC_FILES = parse.c \
 	lexer.c \
 	build.c \
-	free_token.c
+	token.c
 
 EXEC_SRC_FILES = exec.c \
 
@@ -29,7 +29,7 @@ EXEC_SRC = $(addprefix $(EXEC_SRC_DIR)/, $(EXEC_SRC_FILES))
 OTHER_SRC = $(addprefix $(SRC_DIR)/, $(OTHER_SRC_FILES))
 SRC_ALL = $(OTHER_SRC) $(PARSE_SRC) $(EXEC_SRC)
 
-OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_ALL))
+OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_ALL))
 
 LIBFT_DIR = ./libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
@@ -49,9 +49,9 @@ $(NAME) : $(LIBFT_A) $(OBJ)
 $(LIBFT_A):
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o : %.c
 	@mkdir -p $(dir $@)
-	@echo "$(YELLOW)Compiling $<..."
+	@echo "$(YELLOW)Compiling $<...$(RESET)"
 #	delete g flag
 	@$(CC) $(CFLAGS) -c -g $< -o $@
 
@@ -61,9 +61,9 @@ clean :
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) clean
 
 fclean : clean
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 	@echo "$(RED)Deleting minishell executable... 🧹⚠️$(RESET)"
 	@rm -f $(NAME)
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR) fclean
 
 re:	fclean all
 
