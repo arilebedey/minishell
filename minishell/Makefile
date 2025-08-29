@@ -16,6 +16,7 @@ PARSE_SRC_FILES = parse.c \
 EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
+	error.c \
 	init/init_cmd.c \
 	init/init_env.c \
 	sig/sig_interactive.c \

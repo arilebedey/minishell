@@ -5,11 +5,10 @@ typedef enum e_token_type
 {
 	T_WORD,
 	T_PIPE,
-	T_REDIR_IN,
-	T_REDIR_OUT,
-	T_REDIR_APPEND,
+	T_IN,
+	T_OUT,
+	T_APPEND,
 	T_HEREDOC,
-	T_EOF
 }		t_token_type;
 
 typedef struct s_token
@@ -19,9 +18,14 @@ typedef struct s_token
 	struct s_token	*next;
 }		t_token;
 
-// free_token.c
+// token.c
 
-// free the token element given and all next elements.
-void	free_token_list(t_token *head_tk);
+// Returns a new token element.
+// If failed, prints error msg and returns a NULL pointer.
+t_token	*init_tk_element(void);
+
+// Free head token and all next elements.
+// Set head token to NULL.
+void	free_token_list(t_token **ref_head_tk);
 
 #endif

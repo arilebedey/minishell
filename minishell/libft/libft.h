@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:13 by agense            #+#    #+#             */
-/*   Updated: 2025/07/22 13:22:41 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:03:45 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_list
 
 // Checks for an alphabetic character.
 int			ft_isalpha(int c);
+// Checks if c is a space or a backslash character (\n, \t, \v, \f, \r).
+int 		ft_isspace(int c);
 // Checks for a digit (0 through 9).
 int			ft_isdigit(int c);
 // Checks for an alphanumeric character
@@ -68,6 +70,9 @@ int			ft_toupper(int c);
 int			ft_tolower(int c);
 // Returns a pointer to the first occurence of the character c in the string s.
 char		*ft_strchr(const char *s, int c);
+// Returns a pointer to the first occurence of a character of delim in the string s.
+// Returns NULL if none have been found.
+char		*ft_strchr2(const char *s, const char *delim);
 // Returns a pointer to the last occurence of the character c in the string s
 char		*ft_strrchr(const char *s, int c);
 // Compares the two strings s1 ans s2 and returns an integer indicating the
@@ -106,6 +111,9 @@ void		*ft_calloc(size_t n_elem, size_t size);
 // with free().
 // Returns NULL if insufficient memory was available.
 char		*ft_strdup(const char *s);
+// Returns a pointer to a new string which is a duplicate of s until n bytes.
+// Returns NULL if insufficient memory was available.
+char		*ft_strndup(const char *s, size_t n);
 // Converts the initial portion of the string pointed to by s to int.
 int			ft_atoi(const char *s);
 // Returns a new string from the string s, starting at start index with a size
