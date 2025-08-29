@@ -27,15 +27,15 @@ int	main(int ac, char **av, char **envp)
 	{
 		add_history(line);
 		head_cmd = parse(line, head_env);
-		if (!head_cmd)
-			return (free(line), free_env_list(head_env), 1);
-		if (!exec(head_cmd, head_env))
-			return (free(line), free_cmd_list(head_cmd), \
-				free_env_list(head_env), 1);
-		free_cmd_list(head_cmd);
 		free(line);
-		if (!init_interactive_sigaction())
-			break ;
+		if (head_cmd)
+		{
+			if (!exec(head_cmd, head_env))
+				perror("exec");
+			free_cmd_list(head_cmd);
+			if (!init_interactive_sigaction())
+				break ;
+		}
 		line = readline(PROMPT);
 	}
 	free_env_list(head_env);

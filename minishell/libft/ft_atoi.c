@@ -6,14 +6,14 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 19:43:06 by agense            #+#    #+#             */
-/*   Updated: 2025/05/06 21:06:09 by agense           ###   ########.fr       */
+/*   Updated: 2025/08/29 12:24:32 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 // Checks whether c is a white-space character
-static int	ft_isspace(char c)
+static int	ft_atoi_isspace(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
@@ -30,7 +30,7 @@ int	ft_atoi(const char *s)
 	result = 0;
 	result_sign = 1;
 	i = -1;
-	while (ft_isspace(s[++i]))
+	while (ft_atoi_isspace(s[++i]))
 		;
 	if (s[i] == '-' || s[i] == '+')
 	{
