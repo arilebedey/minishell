@@ -20,9 +20,12 @@ typedef struct s_token
 
 // token.c
 
-// Returns a new token element.
-// If failed, prints error msg and returns a NULL pointer.
-t_token	*init_tk_element(void);
+// Returns a new token.
+// If failed, returns NULL
+t_token *create_token(char *value, t_token_type type);
+
+// Add new token to the list
+void	add_token(t_token **ref_head_tk, t_token *new_token);
 
 // Free head token and all next elements.
 // Set head token to NULL.
