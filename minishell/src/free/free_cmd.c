@@ -2,7 +2,7 @@
 #include <malloc.h>
 
 static void	free_cmd_element(t_command *current_cmd);
-static void	free_cmd_args(t_command *current_cmd);
+static void	free_cmd_args(t_args *curr_arg);
 
 void	free_cmd_list(t_command *head_cmd)
 {
@@ -19,24 +19,20 @@ static void	free_cmd_element(t_command *current_cmd)
 {
 	if (!current_cmd)
 		return ;
-	if (current_cmd->args)
-		free_cmd_args(current_cmd);
-	if (current_cmd->input_file)
-		free(current_cmd->input_file);
-	if (current_cmd->output_file)
-		free(current_cmd->output_file);
-	if (current_cmd->heredoc_eof)
-		free(current_cmd->heredoc_eof);
+	free_cmd_args(current_cmd->head_arg);
+	free(current_cmd->input_file);
+	free(current_cmd->output_file);
+	free(current_cmd->heredoc_eof);
 	free(current_cmd);
 }
 
 // Free args of the command given
-static void	free_cmd_args(t_command *current_cmd)
+static void	free_cmd_args(t_args *curr_arg)
 {
-	int	i;
-
-	i = -1;
-	while (current_cmd->args[++i])
-		free(current_cmd->args[i]);
-	free(current_cmd->args);
+	if (!curr_arg)
+		return ;
+	if (curr_arg->next)
+		free_cmd_args(curr_arg->next);
+	free(curr_arg->value);
+	free(curr_arg);
 }
