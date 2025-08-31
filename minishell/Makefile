@@ -9,17 +9,19 @@ PARSE_SRC_DIR = parse/src
 EXEC_SRC_DIR = exec/src
 
 PARSE_SRC_FILES = parse.c \
+	command.c \
+	token.c \
 	lexer/lexer.c \
 	lexer/lexer_word.c \
 	lexer/lexer_special.c \
-	build.c \
-	token.c
+	build/build.c \
+	build/build_handler.c \
+	build/build_error.c \
 
 EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
-	init/init_cmd.c \
 	init/init_env.c \
 	sig/sig_interactive.c \
 	sig/sig_process.c \
