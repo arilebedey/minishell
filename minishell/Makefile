@@ -9,7 +9,9 @@ PARSE_SRC_DIR = parse/src
 EXEC_SRC_DIR = exec/src
 
 PARSE_SRC_FILES = parse.c \
-	lexer.c \
+	lexer/lexer.c \
+	lexer/lexer_word.c \
+	lexer/lexer_special.c \
 	build.c \
 	token.c
 
