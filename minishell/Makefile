@@ -17,17 +17,23 @@ PARSE_SRC_FILES = parse.c \
 	build/build.c \
 	build/build_handler.c \
 	build/build_error.c \
+	expander/expander.c \
 
 EXEC_SRC_FILES = exec.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
-	init/init_env.c \
+	free_cmd.c \
+	env/init_env.c \
+	env/free_env.c \
+	env/get_env.c \
 	sig/sig_interactive.c \
 	sig/sig_process.c \
 	sig/sig_handler.c \
-	free/free_cmd.c \
-	free/free_env.c \
+	debug/debug_token.c \
+	debug/debug_cmd.c \
+	debug/debug_env.c \
+
 
 PARSE_SRC = $(addprefix $(PARSE_SRC_DIR)/, $(PARSE_SRC_FILES))
 EXEC_SRC = $(addprefix $(EXEC_SRC_DIR)/, $(EXEC_SRC_FILES))

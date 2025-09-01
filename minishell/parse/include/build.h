@@ -19,7 +19,7 @@ int		handle_heredoc(t_token *curr_tk, t_command *curr_cmd);
 int		handle_out_file(t_token *curr_tk, t_command *curr_cmd);
 // Handle pipe. Creates new command.
 // If failed, prints error msg and returns 0.
-int	handle_pipe(t_token *curr_tk, t_command **ref_curr_cmd);
+int		handle_pipe(t_token *curr_tk, t_command **ref_curr_cmd);
 
 // build_error.c
 

@@ -11,16 +11,16 @@
 // If failed, prints error msg and returns a NULL pointer.
 t_token		*lexer(const char *line);
 
-// checker.c
-
-// Returns 1 if the syntax is correct.
-// Otherwise, returns 0.
-int			check_syntax(t_token *head_tk);
-
 // build.c
 
 // Returns a new command linked list.
 // If failed, returns a NULL pointer.
 t_command	*build_command_list(t_token *head_tk);
+
+// expander.c
+
+// Expand the environnment variables when necessary.
+// If failed or if a variable has not been found, returns 0.
+int			expander(t_command *head_cmd, t_env *head_env);
 
 #endif

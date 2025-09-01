@@ -1,4 +1,4 @@
-#include "../../include/command.h"
+#include "../include/command.h"
 #include <malloc.h>
 
 static void	free_cmd_element(t_command *current_cmd);
@@ -6,6 +6,8 @@ static void	free_cmd_args(t_args *curr_arg);
 
 void	free_cmd_list(t_command *head_cmd)
 {
+	if (!head_cmd)
+		return ;
 	if (head_cmd->next)
 		free_cmd_list(head_cmd->next);
 	free_cmd_element(head_cmd);
