@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:13 by agense            #+#    #+#             */
-/*   Updated: 2025/08/29 13:03:45 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/01 15:24:10 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int			ft_isprint(int c);
 // Calculates the length of the string pointed to by s,
 // excluding the terminating null byte ('\0').
 size_t		ft_strlen(const char *s);
+// Calculates the length of the string pointed to by s until '\0' or delim.
+size_t	ft_strlen2(const char *s, const char delim);
 // Fills the first n bytes of the memory area pointed to by s with the constant
 // byte c.
 void		*ft_memset(void *s, int c, size_t n);
