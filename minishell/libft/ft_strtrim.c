@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 23:25:42 by agense            #+#    #+#             */
-/*   Updated: 2025/05/20 22:51:29 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:10:21 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns 1 if a char in the string set is equal to the char s.
 // Otherwise returns 0.
@@ -28,7 +28,7 @@ static int	detec_set(char const s, char const *set)
 	return (0);
 }
 
-//int	ft_strlen_int(const char *s)
+// int	ft_strlen_int(const char *s)
 //{
 //	int	i;
 

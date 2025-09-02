@@ -1,5 +1,5 @@
 #include "../../include/env.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 void	free_env_list(t_env *head_env)
 {

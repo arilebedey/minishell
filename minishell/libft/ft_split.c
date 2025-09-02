@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:10:01 by agense            #+#    #+#             */
-/*   Updated: 2025/06/20 16:15:56 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:10:50 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns the number of words in s separated by sep
 static int	count_words(char const *s, char sep)

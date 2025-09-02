@@ -4,7 +4,8 @@
 #include "../../../include/env.h"
 #include "../../../libft/libft.h"
 #include "../../include/expander.h"
-#include <malloc.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 static int	remove_quotes(t_args *curr_arg, t_quotes quote);
 static char	*get_expanded_value(char **split_arg, t_env *head_env, \

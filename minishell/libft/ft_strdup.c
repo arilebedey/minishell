@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:53:00 by agense            #+#    #+#             */
-/*   Updated: 2025/05/13 09:08:10 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:09:41 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns a pointer to a new string which is a duplicate of the string s.
 // Memory for the new string is obtained with malloc, and can be freed

@@ -6,11 +6,10 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:36:02 by agense            #+#    #+#             */
-/*   Updated: 2025/08/26 21:56:05 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:11:45 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <malloc.h>
 #include <stdlib.h>
 
 void	*ft_calloc_edit(size_t n_elem, size_t size)

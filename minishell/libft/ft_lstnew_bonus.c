@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 10:18:46 by agense            #+#    #+#             */
-/*   Updated: 2025/05/14 08:53:37 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:12:19 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Create a new list with content as first member
 t_list	*ft_lstnew(void *content)

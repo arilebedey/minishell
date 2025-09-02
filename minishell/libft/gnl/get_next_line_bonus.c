@@ -6,13 +6,13 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 11:34:11 by agense            #+#    #+#             */
-/*   Updated: 2025/06/24 18:42:57 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:11:34 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdlib.h>
 #include <unistd.h>
-#include <malloc.h>
 
 // Copy a NUL terminated string into a sized buffer.
 // Not the og function btw
@@ -74,14 +74,14 @@ static char	*get_line_in_stash(char **p_stash, size_t stash_len)
 	if (!(*p_stash))
 		return (NULL);
 	stash_len_until_first_nl = ft_strlen_edit(*p_stash, '\n');
-	stash_len_after_nl = ft_strlen_edit(ft_strchr_edit(*p_stash, '\n', \
-		stash_len) + 1, 0);
+	stash_len_after_nl = ft_strlen_edit(ft_strchr_edit(*p_stash, '\n',
+				stash_len) + 1, 0);
 	line = ft_calloc_edit(stash_len_until_first_nl + 2, sizeof(char));
 	if (!ft_strlcpy(line, *p_stash, stash_len_until_first_nl + 2))
 		return (free(line), line = NULL, NULL);
 	buf_scrap = ft_calloc_edit(stash_len_after_nl + 1, sizeof(char));
-	if (!ft_strlcpy(buf_scrap, ft_strchr_edit(*p_stash, '\n', stash_len) + 1, \
-		stash_len_after_nl + 1))
+	if (!ft_strlcpy(buf_scrap, ft_strchr_edit(*p_stash, '\n', stash_len) + 1,
+			stash_len_after_nl + 1))
 		return (free(line), line = NULL, NULL);
 	free(*p_stash);
 	buf_scrap_len = ft_strlen_edit(buf_scrap, 0);

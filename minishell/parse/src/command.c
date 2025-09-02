@@ -1,7 +1,8 @@
 #include "../../include/command.h"
 #include "../../include/error.h"
 #include "../include/token.h"
-#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Returns a new arg initialized with each fields set to NULL.
 // If failed, returns NULL pointer.

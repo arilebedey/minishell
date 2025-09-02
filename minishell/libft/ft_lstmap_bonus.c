@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:16:05 by agense            #+#    #+#             */
-/*   Updated: 2025/08/25 14:12:40 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:12:38 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Iterate on the list and apply the f function on the content of each element.
 // Create a new list resulting from the successive applications of f.
