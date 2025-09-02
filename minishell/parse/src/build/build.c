@@ -3,7 +3,7 @@
 #include "../../../libft/libft.h"
 #include "../../include/token.h"
 #include "../../include/build.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 static int	build_from_token(t_token **ref_curr_tk, t_command **ref_curr_cmd);
 static int	redir_handlers(t_token **ref_curr_tk, t_command **ref_curr_cmd);

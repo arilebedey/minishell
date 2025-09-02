@@ -1,5 +1,5 @@
 #include "../include/command.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 static void	free_cmd_element(t_command *current_cmd);
 static void	free_cmd_args(t_args *curr_arg);

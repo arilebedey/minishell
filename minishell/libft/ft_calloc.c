@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 18:19:35 by agense            #+#    #+#             */
-/*   Updated: 2025/08/26 21:52:53 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:09:22 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Allocates memory for an array of n_elem elements of size bytes each and
 // returns a pointer to the allocated memory.

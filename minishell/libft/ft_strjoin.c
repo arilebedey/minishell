@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:27:30 by agense            #+#    #+#             */
-/*   Updated: 2025/05/13 09:08:28 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:10:08 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns a new string which is the concatenation of s1 and s2.
 char	*ft_strjoin(char const *s1, char const *s2)

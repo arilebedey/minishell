@@ -45,6 +45,10 @@ OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_ALL))
 LIBFT_DIR = ./libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
 
+READLINE_DIR = $(shell brew --prefix readline)
+CFLAGS += -I$(READLINE_DIR)/include
+LDFLAGS += -L$(READLINE_DIR)/lib -lreadline -lhistory -lncurses
+
 RED = \033[31m
 GREEN = \033[1;32m
 YELLOW = \033[33m
@@ -55,7 +59,7 @@ all : $(NAME)
 
 $(NAME) : $(LIBFT_A) $(OBJ)
 	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_DIR) -lft -lreadline -lncurses
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_DIR) -lft $(LDFLAGS)
 
 $(LIBFT_A):
 	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)

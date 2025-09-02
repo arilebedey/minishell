@@ -4,7 +4,8 @@
 #include "../include/sig/sig.h"
 #include "../include/debug.h"
 #include "../libft/libft.h"
-#include <malloc.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 

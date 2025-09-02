@@ -2,7 +2,7 @@
 #include "../../../libft/libft.h"
 #include "../../../include/error.h"
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 static char	*take_word(const char **ref_line, const char *delim);
 

@@ -1,6 +1,6 @@
 #include "../include/token.h"
 #include "../../libft/libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 t_token *create_token(char *value, t_token_type type)
 {

@@ -1,9 +1,8 @@
 #include "../../../libft/libft.h"
-#include "../../include/error.h"
 #include "../../include/lexer.h"
 #include "../../include/token.h"
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 static int	is_special_character(char c);
 

@@ -2,7 +2,8 @@
 #include "../../../include/error.h"
 #include "../../../libft/libft.h"
 #include "../../include/token.h"
-#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int	handle_pipe(t_token *curr_tk, t_command **ref_curr_cmd)
 {

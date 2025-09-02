@@ -1,8 +1,9 @@
 #include "../../include/env.h"
 #include "../../libft/libft.h"
-#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-static int	get_key_and_value(char **envp, t_env *curr_env);
+static int		get_key_and_value(char **envp, t_env *curr_env);
 static t_env	*init_env_element(void);
 
 t_env	*init_env_list(char **envp)

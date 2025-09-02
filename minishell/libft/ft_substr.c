@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 15:27:36 by agense            #+#    #+#             */
-/*   Updated: 2025/05/16 12:22:08 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:09:56 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns a new string from the string s, starting at start index with a size
 // of len.

@@ -1,7 +1,7 @@
 #include "../../include/token.h"
 #include "../../include/lexer.h"
 #include "../../../include/error.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 static int	handle_pipe(const char **ref_line, t_token **ref_new_token);
 static int	handle_in(const char **ref_line, t_token **ref_new_token);

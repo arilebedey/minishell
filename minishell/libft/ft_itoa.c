@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:14:40 by agense            #+#    #+#             */
-/*   Updated: 2025/05/18 15:04:54 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:10:35 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns the number of digits in n
 static int	nbr_digit(int n)

@@ -6,12 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:40:04 by agense            #+#    #+#             */
-/*   Updated: 2025/05/16 14:58:35 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/02 21:11:02 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <malloc.h>
+#include <stdlib.h>
 
 // Returns a new string resulting from the application of f for all char in s.
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
