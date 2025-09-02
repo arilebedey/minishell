@@ -3,6 +3,8 @@
 
 static void	free_cmd_element(t_command *current_cmd);
 static void	free_cmd_args(t_args *curr_arg);
+static void	free_cmd_infiles(t_infile *curr_infile);
+static void	free_cmd_outfiles(t_outfile *curr_outfile);
 
 void	free_cmd_list(t_command *head_cmd)
 {
@@ -22,13 +24,34 @@ static void	free_cmd_element(t_command *current_cmd)
 	if (!current_cmd)
 		return ;
 	free_cmd_args(current_cmd->head_arg);
-	free(current_cmd->input_file);
-	free(current_cmd->output_file);
-	free(current_cmd->heredoc_eof);
+	free_cmd_infiles(current_cmd->head_infile);
+	free_cmd_outfiles(current_cmd->head_outfile);
 	free(current_cmd);
 }
 
-// Free args of the command given
+// Free all infiles starting at curr_file
+static void	free_cmd_infiles(t_infile *curr_infile)
+{
+	if (!curr_infile)
+		return ;
+	if (curr_infile->next)
+		free_cmd_infiles(curr_infile->next);
+	free(curr_infile->value);
+	free(curr_infile);
+}
+
+// Free all outfiles starting at curr_outfile
+static void	free_cmd_outfiles(t_outfile *curr_outfile)
+{
+	if (!curr_outfile)
+		return ;
+	if (curr_outfile->next)
+		free_cmd_outfiles(curr_outfile->next);
+	free(curr_outfile->value);
+	free(curr_outfile);
+
+}
+// Free all args starting at curr_arg
 static void	free_cmd_args(t_args *curr_arg)
 {
 	if (!curr_arg)

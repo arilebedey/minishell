@@ -3,18 +3,29 @@
 
 typedef struct s_args
 {
-	char	*value;
+	char			*value;
 	struct s_args	*next;
 }		t_args;
+
+typedef struct s_infile
+{
+	char			*value;
+	int				heredoc_mode;
+	struct s_infile	*next;
+}		t_infile;
+
+typedef struct s_outfile
+{
+	char				*value;
+	int					append_mode;
+	struct s_outfile	*next;
+}		t_outfile;
 
 typedef struct s_command
 {
 	t_args				*head_arg;
-	char				*input_file;
-	char				*output_file;
-	int					append_mode;
-	int					heredoc_mode;
-	char				*heredoc_eof;
+	t_infile			*head_infile;
+	t_outfile			*head_outfile;
 	struct s_command	*next;
 }		t_command;
 
@@ -24,7 +35,14 @@ typedef struct s_command
 // If failed, returns NULL pointer.
 t_command	*init_cmd(void);
 // Add a new arg to the args list.
+// If failed, prints error msg and returns 0.
 int			add_arg(t_args **ref_head_arg, char *value);
+// Add a new infile to the infile list.
+// If failed, prints error msg and returns 0.
+int			add_infile(t_infile **ref_head_infile, char *value, int heredoc_mode);
+// Add a new outfile to the infile list.
+// If failed, prints error msg and returns 0.
+int			add_outfile(t_outfile **ref_head_outfile, char *value, int append_mode);
 
 // free_cmd.c
 

@@ -5,7 +5,13 @@
 
 // Returns a new arg initialized with each fields set to NULL.
 // If failed, returns NULL pointer.
-static t_args	*init_arg(void);
+static t_args		*init_arg(void);
+// Returns a new infile initialized with each fields set to NULL/0.
+// If failed, returns NULL pointer.
+static t_infile		*init_infile(void);
+// Returns a new outfile initialized with each fields set to NULL/0.
+// If failed, returns NULL pointer.
+static t_outfile	*init_outfile(void);
 
 t_command	*init_cmd(void)
 {
@@ -18,13 +24,58 @@ t_command	*init_cmd(void)
 		return (NULL);
 	}
 	new_cmd->head_arg = NULL;
-	new_cmd->input_file = NULL;
-	new_cmd->output_file = NULL;
-	new_cmd->append_mode = 0;
-	new_cmd->heredoc_mode = 0;
-	new_cmd->heredoc_eof = NULL;
+	new_cmd->head_infile = NULL;
+	new_cmd->head_outfile = NULL;
 	new_cmd->next = NULL;
 	return (new_cmd);
+}
+
+int	add_infile(t_infile **ref_head_infile, char *value, int heredoc_mode)
+{
+	t_infile	*curr_infile;
+
+	if (!*ref_head_infile)
+	{
+		*ref_head_infile = init_infile();
+		if (!*ref_head_infile)
+			return (print_error("error: head_file malloc"), 0);
+		(*ref_head_infile)->value = value;
+		(*ref_head_infile)->heredoc_mode = heredoc_mode;
+		return (1);
+	}
+	curr_infile = *ref_head_infile;
+	while (curr_infile->next)
+		curr_infile = curr_infile->next;
+	curr_infile->next = init_infile();
+	if (!curr_infile->next)
+		return (print_error("error: curr_arg malloc"), 0);
+	curr_infile->next->value = value;
+	curr_infile->next->heredoc_mode = heredoc_mode;
+	return (1);
+}
+
+int	add_outfile(t_outfile **ref_head_outfile, char *value, int append_mode)
+{
+	t_outfile	*curr_outfile;
+
+	if (!*ref_head_outfile)
+	{
+		*ref_head_outfile = init_outfile();
+		if (!*ref_head_outfile)
+			return (print_error("error: head_file malloc"), 0);
+		(*ref_head_outfile)->value = value;
+		(*ref_head_outfile)->append_mode = append_mode;
+		return (1);
+	}
+	curr_outfile = *ref_head_outfile;
+	while (curr_outfile->next)
+		curr_outfile = curr_outfile->next;
+	curr_outfile->next = init_outfile();
+	if (!curr_outfile->next)
+		return (print_error("error: curr_arg malloc"), 0);
+	curr_outfile->next->value = value;
+	curr_outfile->next->append_mode = append_mode;
+	return (1);
 }
 
 int	add_arg(t_args **ref_head_arg, char *value)
@@ -47,6 +98,32 @@ int	add_arg(t_args **ref_head_arg, char *value)
 		return (print_error("error: curr_arg malloc"), 0);
 	curr_arg->next->value = value;
 	return (1);
+}
+
+static t_infile	*init_infile(void)
+{
+	t_infile	*new_infile;
+
+	new_infile = malloc(sizeof(t_infile));
+	if (!new_infile)
+		return (NULL);
+	new_infile->value = NULL;
+	new_infile->heredoc_mode = 0;
+	new_infile->next = NULL;
+	return (new_infile);
+}
+
+static t_outfile	*init_outfile(void)
+{
+	t_outfile	*new_outfile;
+
+	new_outfile = malloc(sizeof(t_outfile));
+	if (!new_outfile)
+		return (NULL);
+	new_outfile->value = NULL;
+	new_outfile->append_mode = 0;
+	new_outfile->next = NULL;
+	return (new_outfile);
 }
 
 static t_args	*init_arg(void)
