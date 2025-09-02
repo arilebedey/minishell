@@ -20,6 +20,8 @@ PARSE_SRC_FILES = parse.c \
 	expander/expander.c \
 
 EXEC_SRC_FILES = exec.c \
+	args_to_argv.c \
+  env_to_envp.c  \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
