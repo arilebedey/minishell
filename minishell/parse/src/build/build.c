@@ -56,21 +56,15 @@ static int	build_from_token(t_token **ref_curr_tk, t_command **ref_curr_cmd)
 // If failed, returns 0.
 static int	redir_handlers(t_token **ref_curr_tk, t_command **ref_curr_cmd)
 {
-	if ((*ref_curr_tk)->type == T_IN)
+	if ((*ref_curr_tk)->type == T_IN || (*ref_curr_tk)->type == T_HEREDOC)
 	{
-		if (!handle_in_file(*ref_curr_tk, *ref_curr_cmd))
-			return (0);
-		*ref_curr_tk = (*ref_curr_tk)->next->next;
-	}
-	else if ((*ref_curr_tk)->type == T_HEREDOC)
-	{
-		if (!handle_heredoc(*ref_curr_tk, *ref_curr_cmd))
+		if (!handle_infile(*ref_curr_tk, &(*ref_curr_cmd)->head_infile))
 			return (0);
 		*ref_curr_tk = (*ref_curr_tk)->next->next;
 	}
 	else if ((*ref_curr_tk)->type == T_OUT || (*ref_curr_tk)->type == T_APPEND)
 	{
-		if (!handle_out_file(*ref_curr_tk, *ref_curr_cmd))
+		if (!handle_outfile(*ref_curr_tk, &(*ref_curr_cmd)->head_outfile))
 			return (0);
 		*ref_curr_tk = (*ref_curr_tk)->next->next;
 	}

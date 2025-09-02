@@ -8,15 +8,12 @@
 // Handle a single arg.
 // If failed, prints error msg and returns 0.
 int		handle_arg(t_token *curr_tk, t_command *curr_cmd);
-// Handle in file
+// Handle infile and heredoc.
 // If failed, prints error msg and returns 0.
-int		handle_in_file(t_token *curr_tk, t_command *curr_cmd);
-// Handle heredoc
+int		handle_infile(t_token *curr_tk, t_infile **ref_head_infile);
+// Handle outfile.
 // If failed, prints error msg and returns 0.
-int		handle_heredoc(t_token *curr_tk, t_command *curr_cmd);
-// Handle out file.
-// If failed, prints error msg and returns 0.
-int		handle_out_file(t_token *curr_tk, t_command *curr_cmd);
+int		handle_outfile(t_token *curr_tk, t_outfile **ref_head_outfile);
 // Handle pipe. Creates new command.
 // If failed, prints error msg and returns 0.
 int		handle_pipe(t_token *curr_tk, t_command **ref_curr_cmd);

@@ -27,58 +27,48 @@ int	handle_arg(t_token *curr_tk, t_command *curr_cmd)
 	return (1);
 }
 
-int	handle_in_file(t_token *curr_tk, t_command *curr_cmd)
+int	handle_infile(t_token *curr_tk, t_infile **ref_head_infile)
 {
-	if (curr_cmd->input_file != NULL)
-		return (print_error("error: already an input file"), 0);
-	if (curr_cmd->heredoc_mode == 1)
-		return (print_error("error: already heredoc, input fail"), 0);
 	if (!curr_tk->next)
 		return (print_error("error: no input file"), 0);
-	if (curr_tk->next->type != T_WORD)
-		return (print_error("error: what did u put next to < ??"), 0);
-	curr_cmd->input_file = ft_strdup(curr_tk->next->value);
-	if (!curr_cmd->input_file)
-		return (perror("in_file malloc"), 0);
+	if (curr_tk->type == T_IN)
+	{
+		if (curr_tk->next->type != T_WORD)
+			return (print_error("error: what did u put next to < ??"), 0);
+		if (!add_infile(ref_head_infile, ft_strdup(curr_tk->next->value), 0))
+			return (0);
+	}
+	else if (curr_tk->type == T_HEREDOC)
+	{
+		if (curr_tk->next->type != T_WORD)
+			return (print_error("error: what did u put next to << ??"), 0);
+		if (!add_infile(ref_head_infile, ft_strdup(curr_tk->next->value), 1))
+			return (0);
+	}
+	else
+		return (print_error("wtf?(in)"), 0);
 	return (1);
 }
 
-int	handle_heredoc(t_token *curr_tk, t_command *curr_cmd)
+int	handle_outfile(t_token *curr_tk, t_outfile **ref_head_outfile)
 {
-	if (curr_cmd->input_file != NULL)
-		return (print_error("error: input file already set"), 0);
-	if (curr_cmd->heredoc_mode == 1)
-		return (print_error("error: dont heredoc multiple times!"), 0);
-	curr_cmd->heredoc_mode = 1;
-	if (!curr_tk->next)
-		return (print_error("error: no heredoc eof"), 0);
-	if (curr_tk->next->type != T_WORD)
-		return (print_error("error: what did u put next to << ??"), 0);
-	curr_cmd->heredoc_eof = ft_strdup(curr_tk->next->value);
-	if (!curr_cmd->heredoc_eof)
-		return (perror("in_file malloc"), 0);
-	return (1);
-}
-
-int	handle_out_file(t_token *curr_tk, t_command *curr_cmd)
-{
-	if (curr_cmd->output_file != NULL)
-		return (print_error("error: already an output file"), 0);
-	if (curr_tk->type == T_APPEND)
-		curr_cmd->append_mode = 1;
 	if (!curr_tk->next)
 		return (print_error("error: no output file"), 0);
-	if (curr_tk->next->type != T_WORD)
+	if (curr_tk->type == T_OUT)
 	{
-		if (curr_tk->type == T_APPEND)
-			return (print_error("error: what did u put next to >> ??"), 0);
-		else if (curr_tk->type == T_OUT)
+		if (curr_tk->next->type != T_WORD)
 			return (print_error("error: what did u put next to > ??"), 0);
-		else
-			return (print_error("wtf?"), 0);
+		if (!add_outfile(ref_head_outfile, ft_strdup(curr_tk->next->value), 0))
+			return (0);
 	}
-	curr_cmd->output_file = ft_strdup(curr_tk->next->value);
-	if (!curr_cmd->output_file)
-		return (perror("out_file malloc"), 0);
+	else if (curr_tk->type == T_APPEND)
+	{
+		if (curr_tk->next->type != T_WORD)
+			return (print_error("error: what did u put next to >> ??"), 0);
+		if (!add_outfile(ref_head_outfile, ft_strdup(curr_tk->next->value), 1))
+			return (0);
+	}
+	else
+		return (print_error("wtf?(out)"), 0);
 	return (1);
 }
