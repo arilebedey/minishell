@@ -24,6 +24,9 @@ EXEC_SRC_FILES = exec.c \
 	args_to_argv.c \
 	env_to_envp.c \
 	heredoc/heredoc.c \
+	heredoc/files.c \
+	heredoc/write.c \
+	cmd/get_cmd.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
