@@ -22,6 +22,7 @@ PARSE_SRC_FILES = parse.c \
 EXEC_SRC_FILES = exec.c \
 	args_to_argv.c \
 	env_to_envp.c \
+	heredoc/heredoc.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
