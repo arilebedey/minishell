@@ -11,7 +11,7 @@
 
 # define DEBUG_ENV 0
 # define DEBUG_TOKEN 0
-# define DEBUG_COMMAND 0
+# define DEBUG_COMMAND 1
 
 // debug_env.c
 

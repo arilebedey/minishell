@@ -32,23 +32,23 @@ void	print_linked_lists(t_command *curr_cmd)
 	curr_arg = curr_cmd->head_arg;
 	while (curr_arg)
 	{
-		ft_printf("%s ", curr_arg->value);
+		ft_printf("{%s}, ", curr_arg->value);
 		curr_arg = curr_arg->next;
 	}
 	ft_printf("\ninput files:");
 	curr_infile = curr_cmd->head_infile;
 	while (curr_infile)
 	{
-		ft_printf("(%s, ", curr_infile->value);
-		ft_printf("%d), ", curr_infile->heredoc_mode);
+		ft_printf("{%s, ", curr_infile->value);
+		ft_printf("%d}, ", curr_infile->heredoc_mode);
 		curr_infile = curr_infile->next;
 	}
 	ft_printf("\noutput files:");
 	curr_outfile = curr_cmd->head_outfile;
 	while (curr_outfile)
 	{
-		ft_printf("(%s, ", curr_outfile->value);
-		ft_printf("%d), ", curr_outfile->append_mode);
+		ft_printf("{%s, ", curr_outfile->value);
+		ft_printf("%d}, ", curr_outfile->append_mode);
 		curr_outfile = curr_outfile->next;
 	}
 }
