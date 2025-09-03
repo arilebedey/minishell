@@ -1,6 +1,7 @@
 #include "../../include/command.h"
 #include "../../include/env.h"
 #include "../../include/sig/sig.h"
+#include "../include/cmd.h"
 #include "../include/exec.h"
 #include "../include/heredoc.h"
 #include <fcntl.h>
@@ -18,25 +19,18 @@ static void	setup_redirections(t_command *cmd)
 	in = cmd->head_infile;
 	while (in)
 	{
-		if (in->heredoc_mode == 0)
+		fd = open(in->value, O_RDONLY);
+		if (fd < 0)
 		{
-			fd = open(in->value, O_RDONLY);
-			if (fd < 0)
-			{
-				perror(in->value);
-				exit(1);
-			}
-			if (dup2(fd, STDIN_FILENO) < 0)
-			{
-				perror("dup2 infile");
-				exit(1);
-			}
-			close(fd);
+			perror(in->value);
+			exit(1);
 		}
-		else
+		if (dup2(fd, STDIN_FILENO) < 0)
 		{
-			// TODO: heredoc handling
+			perror("dup2 infile");
+			exit(1);
 		}
+		close(fd);
 		in = in->next;
 	}
 	out = cmd->head_outfile;
@@ -65,6 +59,7 @@ static void	exec_command(t_command *cmd, t_env *head_env)
 {
 	char	**argv;
 	char	**envp;
+	char	*resolved;
 
 	if (!cmd->head_arg)
 		exit(0);
@@ -75,6 +70,16 @@ static void	exec_command(t_command *cmd, t_env *head_env)
 	if (!envp)
 		return (free_argv(argv), exit(1));
 	setup_redirections(cmd);
+	resolved = resolve_cmd(argv[0], head_env);
+	if (!resolved)
+	{
+		perror(argv[0]);
+		free_argv(argv);
+		free_envp(envp);
+		exit(127);
+	}
+	free(argv[0]);
+	argv[0] = resolved;
 	execve(argv[0], argv, envp);
 	perror(argv[0]);
 	free_argv(argv);
@@ -145,5 +150,6 @@ int	exec(t_command *head_cmd, t_env *head_env)
 		return (0);
 	if (!exec_pipeline(head_cmd, head_env))
 		return (0);
+	cleanup_heredocs(head_cmd);
 	return (1);
 }

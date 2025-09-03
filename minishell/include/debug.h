@@ -1,9 +1,9 @@
 #ifndef DEBUG_H
 # define DEBUG_H
 
+# include "../parse/include/token.h"
 # include "command.h"
 # include "env.h"
-# include "../parse/include/token.h"
 
 // DEBUG MACROS
 // Set these macros to 0 or 1 to disable or enable each debug functions.
@@ -11,7 +11,7 @@
 
 # define DEBUG_ENV 0
 # define DEBUG_TOKEN 0
-# define DEBUG_COMMAND 1
+# define DEBUG_COMMAND 0
 
 // debug_env.c
 
