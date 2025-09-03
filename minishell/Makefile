@@ -22,7 +22,8 @@ PARSE_SRC_FILES = parse.c \
 
 EXEC_SRC_FILES = exec.c \
 	args_to_argv.c \
-	env_to_envp.c  \
+	env_to_envp.c \
+	heredoc/heredoc.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
@@ -47,9 +48,15 @@ OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_ALL))
 LIBFT_DIR = ./libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
 
-READLINE_DIR = $(shell brew --prefix readline)
-CFLAGS += -I$(READLINE_DIR)/include
-LDFLAGS += -L$(READLINE_DIR)/lib -lreadline -lhistory -lncurses
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin) # macOS
+	READLINE_DIR = $(shell brew --prefix readline)
+	CFLAGS += -I$(READLINE_DIR)/include
+	LDFLAGS += -L$(READLINE_DIR)/lib
+endif
+
+LDFLAGS += -lreadline -lhistory -lncurses
 
 RED = \033[31m
 GREEN = \033[1;32m
@@ -69,7 +76,6 @@ $(LIBFT_A):
 $(OBJ_DIR)/%.o : %.c
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling $<...$(RESET)"
-#	delete g flag
 	@$(CC) $(CFLAGS) -c -g $< -o $@
 
 clean :
@@ -84,4 +90,4 @@ fclean : clean
 
 re:	fclean all
 
-.PHONY:	all clean fclean all
+.PHONY:	all clean fclean re

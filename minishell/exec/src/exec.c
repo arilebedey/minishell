@@ -1,18 +1,13 @@
 #include "../../include/command.h"
 #include "../../include/env.h"
-#include "../../include/error.h"
 #include "../../include/sig/sig.h"
-#include "../../libft/libft.h"
+#include "../include/exec.h"
+#include "../include/heredoc.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-char		**args_to_argv(t_args *head_arg);
-void		free_argv(char **argv);
-char		**env_to_envp(t_env *head_env);
-void		free_envp(char **envp);
 
 static void	setup_redirections(t_command *cmd)
 {
@@ -146,6 +141,8 @@ int	exec(t_command *head_cmd, t_env *head_env)
 {
 	if (!head_cmd)
 		return (1);
+	if (!process_heredocs(head_cmd))
+		return (0);
 	if (!exec_pipeline(head_cmd, head_env))
 		return (0);
 	return (1);
