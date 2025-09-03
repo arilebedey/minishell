@@ -18,10 +18,11 @@ PARSE_SRC_FILES = parse.c \
 	build/build_handler.c \
 	build/build_error.c \
 	expander/expander.c \
+	expander/replace.c \
 
 EXEC_SRC_FILES = exec.c \
 	args_to_argv.c \
-  env_to_envp.c  \
+	env_to_envp.c  \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
@@ -35,7 +36,6 @@ OTHER_SRC_FILES = main.c \
 	debug/debug_token.c \
 	debug/debug_cmd.c \
 	debug/debug_env.c \
-
 
 PARSE_SRC = $(addprefix $(PARSE_SRC_DIR)/, $(PARSE_SRC_FILES))
 EXEC_SRC = $(addprefix $(EXEC_SRC_DIR)/, $(EXEC_SRC_FILES))

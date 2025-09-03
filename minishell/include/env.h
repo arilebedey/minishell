@@ -15,7 +15,7 @@ typedef struct s_env
 t_env	*init_env_list(char **envp);
 // Returns the value corresponding to the key (no dup).
 // If the key does not exist, returns NULL pointer.
-char	*get_env_value(t_env *head_env, const char *key);
+const char	*get_env_value(t_env *head_env, const char *key);
 // Free all env elements.
 void	free_env_list(t_env *head_env);
 
