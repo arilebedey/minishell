@@ -9,42 +9,61 @@
 
 static int	remove_quotes(void *curr_elem, t_quotes quote);
 static int	expansion(void *curr_elem, char **out_value, t_env *head_env);
+static int	args_expansion(t_command *curr_cmd, t_env *head_env);
+static int	files_expansion(t_command *curr_cmd, t_env *head_env);
 
-//TODO: le cas $?
-//TODO: le cas $$
 int	expander(t_command *head_cmd, t_env *head_env)
 {
 	t_command	*curr_cmd;
-	t_args		*curr_arg;
-	t_infile	*curr_infile;
-	t_outfile	*curr_outfile;
 
 	curr_cmd = head_cmd;
 	while (curr_cmd)
 	{
-		// cas argument
-		curr_arg = curr_cmd->head_arg;
-		while (curr_arg)
-		{
-			if (!expansion(curr_arg, &curr_arg->value, head_env))
-				return (0);
-			curr_arg = curr_arg->next;
-		}
-		curr_infile = curr_cmd->head_infile;
-		while (curr_infile)
-		{
-			if (!expansion(curr_infile, &curr_infile->value, head_env))
-				return (0);
-			curr_infile = curr_infile->next;
-		}
-		curr_outfile = curr_cmd->head_outfile;
-		while (curr_outfile)
-		{
-			if (!expansion(curr_outfile, &curr_outfile->value, head_env))
-				return (0);
-			curr_outfile = curr_outfile->next;
-		}
+		if (!args_expansion(curr_cmd, head_env))
+			return (0);
+		if (!files_expansion(curr_cmd, head_env))
+			return (0);
 		curr_cmd = curr_cmd->next;
+	}
+	return (1);
+}
+
+// Expansion for args elements in current command.
+// If failed, prints error msg and returns 0.
+static int	args_expansion(t_command *curr_cmd, t_env *head_env)
+{
+	t_args		*curr_arg;
+
+	curr_arg = curr_cmd->head_arg;
+	while (curr_arg)
+	{
+		if (!expansion(curr_arg, &curr_arg->value, head_env))
+			return (0);
+		curr_arg = curr_arg->next;
+	}
+	return (1);
+}
+
+// Expansion for files elements in current command.
+// If failed, prints error msg and returns 0.
+static int	files_expansion(t_command *curr_cmd, t_env *head_env)
+{
+	t_infile	*curr_infile;
+	t_outfile	*curr_outfile;
+
+	curr_infile = curr_cmd->head_infile;
+	while (curr_infile)
+	{
+		if (!expansion(curr_infile, &curr_infile->value, head_env))
+			return (0);
+		curr_infile = curr_infile->next;
+	}
+	curr_outfile = curr_cmd->head_outfile;
+	while (curr_outfile)
+	{
+		if (!expansion(curr_outfile, &curr_outfile->value, head_env))
+			return (0);
+		curr_outfile = curr_outfile->next;
 	}
 	return (1);
 }

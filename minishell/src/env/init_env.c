@@ -35,12 +35,27 @@ t_env	*init_env_list(char **envp)
 static int	get_key_and_value(char **envp, t_env *curr_env)
 {
 	char	*ptr_equal;
+	char	*SHLVL_value;
+	int		SHLVL_int;
 
 	ptr_equal = ft_strchr(*envp, '=');
 	curr_env->key = ft_substr(*envp, 0, ptr_equal - *envp);
 	if (!curr_env->key)
 		return (perror("key_malloc"), 0);
-	curr_env->value = ft_strdup(ptr_equal + 1);
+	if (!ft_strncmp(curr_env->key, "SHLVL", 10))
+	{
+		SHLVL_value = getenv("SHLVL");
+		if (!SHLVL_value)
+			curr_env->value = ft_strdup("1");
+		else
+		{
+			SHLVL_int = ft_atoi(SHLVL_value);
+			SHLVL_int++;
+			curr_env->value = ft_itoa(SHLVL_int);
+		}
+	}
+	else
+		curr_env->value = ft_strdup(ptr_equal + 1);
 	if (!curr_env->value)
 		return (perror("value malloc"), 0);
 	return (1);
