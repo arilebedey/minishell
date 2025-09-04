@@ -51,3 +51,36 @@ int	write_heredoc_to_fd(t_infile *infile, int fd)
 	}
 	return (1);
 }
+
+int	open_temp_infile(char **filename, int index)
+{
+	int	fd;
+
+	*filename = generate_heredoc_filename(index);
+	if (!*filename)
+		return (perror("heredoc filename"), -1);
+	fd = open(*filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	if (fd < 0)
+		return (perror("heredoc tmpfile"), free(*filename), -1);
+	return (fd);
+}
+
+int	write_heredocs_to_file(t_command *cmd, int fd)
+{
+	t_infile	*in;
+	int			has_heredoc;
+
+	in = cmd->head_infile;
+	has_heredoc = 0;
+	while (in)
+	{
+		if (in->heredoc_mode)
+		{
+			has_heredoc = 1;
+			if (!write_heredoc_to_fd(in, fd))
+				return (0);
+		}
+		in = in->next;
+	}
+	return (has_heredoc);
+}

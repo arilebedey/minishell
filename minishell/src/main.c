@@ -34,5 +34,6 @@ int	main(int ac, char **av, char **envp)
 		free_cmd_list(head_cmd);
 		line = readline(PROMPT);
 	}
+	printf("exit\n");
 	return (free_env_list(head_env), 0);
 }
