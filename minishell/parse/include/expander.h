@@ -7,6 +7,16 @@ typedef enum e_quotes
 	D_QUOTE = '\"'
 }		t_quotes;
 
+typedef struct s_handle_env
+{
+	char		*curs;
+	char		*bk;
+	char		*ak;
+	char		*key;
+	const char	*env_v;
+	char		*tmp_v;
+}		t_handle_env;
+
 // replace.c
 
 // Replace env keys by its values.

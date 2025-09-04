@@ -28,9 +28,8 @@ int	main(int ac, char **av, char **envp)
 		add_history(line);
 		head_cmd = parse(line, head_env);
 		free(line);
-		if (head_cmd)
-			if (!exec(head_cmd, head_env) || !init_interactive_sigaction())
-				break ;
+		if (!exec(head_cmd, head_env) || !init_interactive_sigaction())
+			break ;
 		free_cmd_list(head_cmd);
 		line = readline(PROMPT);
 	}
