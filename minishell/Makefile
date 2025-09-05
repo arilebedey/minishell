@@ -21,11 +21,15 @@ PARSE_SRC_FILES = parse.c \
 	expander/replace.c \
 
 EXEC_SRC_FILES = exec.c \
+	pipeline/pipeline.c \
+	pipeline/utils.c \
+	exec_command.c \
+	setup_redirs.c \
 	args_to_argv.c \
 	env_to_envp.c \
-	heredoc/heredoc.c \
-	heredoc/files.c \
-	heredoc/write.c \
+	infiles/process_heredocs.c \
+	infiles/process.c \
+	infiles/write_heredoc.c \
 	cmd/get_cmd.c \
 
 OTHER_SRC_FILES = main.c \

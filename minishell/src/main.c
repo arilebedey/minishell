@@ -2,9 +2,9 @@
 #include "../include/env.h"
 #include "../include/main.h"
 #include "../include/sig/sig.h"
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #define PROMPT "petitshell> "
@@ -34,4 +34,5 @@ int	main(int ac, char **av, char **envp)
 		line = readline(PROMPT);
 	}
 	return (free_cmd_list(head_cmd), free_env_list(head_env), 0);
+	printf("exit\n");
 }
