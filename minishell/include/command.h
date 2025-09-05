@@ -47,6 +47,6 @@ int			add_outfile(t_outfile **ref_head_outfile, char *value, int append_mode);
 // free_cmd.c
 
 // Free the command linked list.
-void		free_cmd_list(t_command *head_cmd);
+void	free_cmd_list(t_command **ref_head_cmd);
 
 #endif

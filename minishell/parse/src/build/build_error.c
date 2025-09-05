@@ -7,7 +7,7 @@ static void	print_parse_error(const char c);
 int	parse_exit(const char c, t_command *head_cmd)
 {
 	print_parse_error(c);
-	free_cmd_list(head_cmd);
+	free_cmd_list(&head_cmd);
 	return (0);
 }
 

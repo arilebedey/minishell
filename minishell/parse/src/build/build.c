@@ -23,11 +23,11 @@ t_command	*build_command_list(t_token *head_tk)
 	while (curr_tk)
 	{
 		if (!build_from_token(&curr_tk, &curr_cmd))
-			return (free_cmd_list(head_cmd), NULL);
+			return (free_cmd_list(&head_cmd), NULL);
 	}
 	if (!check_args(head_cmd))
-		return (print_error("error: no command"), \
-			free_cmd_list(head_cmd), NULL);
+		return (print_error("error: no command"), free_cmd_list(&head_cmd),
+			NULL);
 	return (head_cmd);
 }
 
