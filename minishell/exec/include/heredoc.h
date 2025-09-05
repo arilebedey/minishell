@@ -3,13 +3,16 @@
 
 # include "../../include/command.h"
 
-int		process_heredocs(t_command *head_cmd);
-void	cleanup_heredocs(t_command *head_cmd);
+// process.c
+int		process_infiles(t_command *head_cmd);
+void	cleanup_infiles(t_command *head_cmd);
 
-// write.c
-int		process_cmd_heredocs(t_command *cmd, int index);
+// logic.c
+void	replace_first_heredoc_with_file(t_command *cmd, char *filename);
 
-// files.c
+// write_heredocs.c
+int		open_temp_infile(char **filename, int index);
+int		write_heredocs_to_file(t_command *cmd, int fd);
 int		write_heredoc_to_fd(t_infile *infile, int fd);
 char	*generate_heredoc_filename(int index);
 
