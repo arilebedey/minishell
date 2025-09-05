@@ -7,8 +7,9 @@
 int		process_infiles(t_command *head_cmd);
 void	cleanup_infiles(t_command *head_cmd);
 
-// logic.c
+// process_heredocs.c
 void	replace_first_heredoc_with_file(t_command *cmd, char *filename);
+int		open_temp_infile(char **filename, int index);
 
 // write_heredocs.c
 int		open_temp_infile(char **filename, int index);

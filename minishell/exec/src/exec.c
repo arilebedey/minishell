@@ -11,10 +11,15 @@
 
 int	exec(t_command *head_cmd, t_env *head_env)
 {
+	int	res;
+
 	if (!head_cmd)
 		return (1);
-	if (!process_infiles(head_cmd))
+	res = process_infiles(head_cmd);
+	if (res == 0)
 		return (0);
+	if (res == -1)
+		return (1);
 	if (!exec_pipeline(head_cmd, head_env))
 		return (0);
 	cleanup_infiles(head_cmd);
