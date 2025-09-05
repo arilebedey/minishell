@@ -2,9 +2,9 @@
 #include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
 #include <fcntl.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 

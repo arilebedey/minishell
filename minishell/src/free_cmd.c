@@ -6,14 +6,17 @@ static void	free_cmd_args(t_args *curr_arg);
 static void	free_cmd_infiles(t_infile *curr_infile);
 static void	free_cmd_outfiles(t_outfile *curr_outfile);
 
-void	free_cmd_list(t_command *head_cmd)
+void	free_cmd_list(t_command **ref_head_cmd)
 {
-	if (!head_cmd)
+	t_command	*head_cmd;
+
+	if (!ref_head_cmd || !*ref_head_cmd)
 		return ;
+	head_cmd = *ref_head_cmd;
 	if (head_cmd->next)
-		free_cmd_list(head_cmd->next);
+		free_cmd_list(&head_cmd->next);
 	free_cmd_element(head_cmd);
-	head_cmd = NULL;
+	*ref_head_cmd = NULL;
 }
 
 // Free all values of the command given.
@@ -49,7 +52,6 @@ static void	free_cmd_outfiles(t_outfile *curr_outfile)
 		free_cmd_outfiles(curr_outfile->next);
 	free(curr_outfile->value);
 	free(curr_outfile);
-
 }
 // Free all args starting at curr_arg
 static void	free_cmd_args(t_args *curr_arg)
