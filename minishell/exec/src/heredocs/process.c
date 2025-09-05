@@ -1,3 +1,4 @@
+#include "../../../include/sig/sig.h"
 #include "../../../include/command.h"
 #include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
@@ -30,7 +31,10 @@ int	process_infiles(t_command *head_cmd)
 		else
 		{
 			close(fd);
+			unlink(filename);
 			free(filename);
+			if (g_exit_status == 130)
+				return (-1);
 		}
 		cmd = cmd->next;
 	}
@@ -48,8 +52,8 @@ void	cleanup_infiles(t_command *head_cmd)
 		in = cmd->head_infile;
 		while (in)
 		{
-			if (in->value && ft_strnstr(in->value, "/tmp/minishell_heredoc_",
-					23))
+			if (in->value
+				&& ft_strnstr(in->value, "/tmp/minishell_heredoc_", 23))
 				unlink(in->value);
 			in = in->next;
 		}

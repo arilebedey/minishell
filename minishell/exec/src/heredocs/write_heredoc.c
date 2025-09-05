@@ -1,4 +1,5 @@
 #include "../../../include/command.h"
+#include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
@@ -6,6 +7,8 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
+#include <signal.h>
 
 char	*generate_heredoc_filename(int index)
 {
@@ -30,17 +33,28 @@ char	*generate_heredoc_filename(int index)
 	return (filename);
 }
 
-// Write one heredoc into fd until delimiter is found
-int	write_heredoc_to_fd(t_infile *infile, int fd)
+static void	heredoc_sigint(int signum)
+{
+	(void)signum;
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
+	/* close(STDIN_FILENO); */
+	exit(130);
+}
+
+static void	child_write_heredoc(t_infile *infile, int fd)
 {
 	char	*line;
 
+	signal(SIGINT, heredoc_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
 		if (!line)
 			break ;
-		if (ft_strncmp(line, infile->value, ft_strlen(infile->value) + 1) == 0)
+		if (ft_strncmp(line, infile->value,
+				ft_strlen(infile->value) + 1) == 0)
 		{
 			free(line);
 			break ;
@@ -49,20 +63,33 @@ int	write_heredoc_to_fd(t_infile *infile, int fd)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	return (1);
+	close(fd);
+	exit(0);
 }
 
-int	open_temp_infile(char **filename, int index)
+int	write_heredoc_to_fd(t_infile *infile, int fd)
 {
-	int	fd;
+	pid_t	pid;
+	int		status;
 
-	*filename = generate_heredoc_filename(index);
-	if (!*filename)
-		return (perror("heredoc filename"), -1);
-	fd = open(*filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (fd < 0)
-		return (perror("heredoc tmpfile"), free(*filename), -1);
-	return (fd);
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork heredoc"), 0);
+	if (pid == 0)
+		child_write_heredoc(infile, fd);
+	if (!init_parent_sigaction())
+		return (0);
+	if (waitpid(pid, &status, 0) < 0)
+		return (perror("waitpid heredoc"), 0);
+	if (!init_interactive_sigaction())
+		return (0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		g_exit_status = 130;
+		write(STDOUT_FILENO, "\n", 1);
+		return (0);
+	}
+	return (1);
 }
 
 int	write_heredocs_to_file(t_command *cmd, int fd)

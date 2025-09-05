@@ -33,6 +33,6 @@ int	main(int ac, char **av, char **envp)
 		free_cmd_list(&head_cmd);
 		line = readline(PROMPT);
 	}
-	return (free_cmd_list(&head_cmd), free_env_list(head_env), 0);
 	printf("exit\n");
+	return (free_cmd_list(&head_cmd), free_env_list(head_env), 0);
 }
