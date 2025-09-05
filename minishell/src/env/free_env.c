@@ -8,5 +8,4 @@ void	free_env_list(t_env *head_env)
 	free(head_env->key);
 	free(head_env->value);
 	free(head_env);
-	head_env = NULL;
 }
