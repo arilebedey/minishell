@@ -11,9 +11,9 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	char		*line;
-	t_env		*head_env;
-	t_command	*head_cmd;
+	char				*line;
+	static t_env		*head_env = NULL;
+	static t_command	*head_cmd = NULL;
 
 	(void)ac;
 	(void)av;
@@ -33,5 +33,5 @@ int	main(int ac, char **av, char **envp)
 		free_cmd_list(head_cmd);
 		line = readline(PROMPT);
 	}
-	return (free_env_list(head_env), 0);
+	return (free_cmd_list(head_cmd), free_env_list(head_env), 0);
 }
