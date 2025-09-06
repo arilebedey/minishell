@@ -1,7 +1,6 @@
 #include "../../exec/include/builtins.h"
 #include "../../include/command.h"
 #include "../../include/env.h"
-#include "../../include/sig/sig.h"
 #include "../include/cmd.h"
 #include "../include/exec.h"
 #include <fcntl.h>
