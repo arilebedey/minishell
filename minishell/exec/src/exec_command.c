@@ -1,5 +1,7 @@
+#include "../../exec/include/builtins.h"
 #include "../../include/command.h"
 #include "../../include/env.h"
+#include "../../include/sig/sig.h"
 #include "../include/cmd.h"
 #include "../include/exec.h"
 #include <fcntl.h>
@@ -13,9 +15,15 @@ void	exec_command(t_command *cmd, t_env *head_env)
 	char	**argv;
 	char	**envp;
 	char	*resolved;
+	int		status;
 
 	if (!cmd->head_arg)
 		exit(0);
+	if (is_builtin(cmd))
+	{
+		status = exec_builtin(cmd, head_env, 0);
+		exit(status);
+	}
 	argv = args_to_argv(cmd->head_arg);
 	if (!argv)
 		exit(1);
