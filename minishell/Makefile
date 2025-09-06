@@ -32,8 +32,9 @@ EXEC_SRC_FILES = exec.c \
 	heredocs/write_heredoc.c \
 	cmd/get_cmd.c \
 	builtins/builtins.c \
-	builtins/b_exit.c \
 	builtins/helpers.c \
+	builtins/b_exit.c \
+	builtins/b_cd.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
