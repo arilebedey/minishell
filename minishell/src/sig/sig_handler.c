@@ -1,5 +1,5 @@
 #include "../../include/sig/sig.h"
-#include <stdio.h>
+#include "../../libft/libft.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 
@@ -11,7 +11,7 @@ void	copy_signal_value(int signum)
 void	readline_nl(int signum)
 {
 	copy_signal_value(signum);
-	printf("\n");
+	ft_printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

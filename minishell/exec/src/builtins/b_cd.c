@@ -17,22 +17,16 @@ static t_env	*find_env(t_env *head_env, const char *key)
 	return (NULL);
 }
 
-static int	update_pwd_env(t_env *head_env)
+static int	update_env_var(t_env *head_env, const char *key, const char *value)
 {
-	char	cwd[4096];
-	t_env	*pwd_env;
+	t_env	*var;
 
-	if (!getcwd(cwd, sizeof(cwd)))
-	{
-		perror("cd: getcwd");
-		return (1);
-	}
-	pwd_env = find_env(head_env, "PWD");
-	if (!pwd_env)
+	var = find_env(head_env, key);
+	if (!var)
 		return (0);
-	free(pwd_env->value);
-	pwd_env->value = ft_strdup(cwd);
-	if (!pwd_env->value)
+	free(var->value);
+	var->value = ft_strdup(value);
+	if (!var->value)
 	{
 		perror("cd: malloc");
 		return (1);
@@ -40,10 +34,34 @@ static int	update_pwd_env(t_env *head_env)
 	return (0);
 }
 
+static int	update_pwd_and_oldpwd(t_env *head_env, const char *oldpwd)
+{
+	char	*cwd;
+	int		ret;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		perror("cd: getcwd");
+		return (1);
+	}
+	ret = 0;
+	if (oldpwd)
+	{
+		if (update_env_var(head_env, "OLDPWD", oldpwd))
+			ret = 1;
+	}
+	if (update_env_var(head_env, "PWD", cwd))
+		ret = 1;
+	free(cwd);
+	return (ret);
+}
+
 int	builtin_cd(t_command *cmd, t_env *head_env)
 {
 	t_args	*arg;
 	int		argc;
+	char	*oldpwd;
 
 	argc = 0;
 	arg = cmd->head_arg;
@@ -54,17 +72,21 @@ int	builtin_cd(t_command *cmd, t_env *head_env)
 	}
 	if (argc < 2)
 		return (1);
+	oldpwd = getcwd(NULL, 0);
 	if (chdir(cmd->head_arg->next->value) != 0)
 	{
 		perror("cd");
+		free(oldpwd);
 		g_exit_status = 1;
 		return (1);
 	}
-	if (update_pwd_env(head_env))
+	if (update_pwd_and_oldpwd(head_env, oldpwd))
 	{
+		free(oldpwd);
 		g_exit_status = 1;
 		return (1);
 	}
+	free(oldpwd);
 	g_exit_status = 0;
 	return (0);
 }

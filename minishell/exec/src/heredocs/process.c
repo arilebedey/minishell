@@ -1,11 +1,11 @@
-#include "../../../include/sig/sig.h"
 #include "../../../include/command.h"
+#include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
 #include <fcntl.h>
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -23,7 +23,7 @@ int	process_infiles(t_command *head_cmd)
 		fd = open_temp_infile(&filename, index++);
 		if (fd < 0)
 			return (0);
-		if (write_heredocs_to_file(cmd, fd))
+		if (write_heredocs_to_file(cmd, fd, filename))
 		{
 			close(fd);
 			replace_first_heredoc_with_file(cmd, filename);
@@ -52,8 +52,8 @@ void	cleanup_infiles(t_command *head_cmd)
 		in = cmd->head_infile;
 		while (in)
 		{
-			if (in->value
-				&& ft_strnstr(in->value, "/tmp/minishell_heredoc_", 23))
+			if (in->value && ft_strnstr(in->value, "/tmp/minishell_heredoc_",
+					23))
 				unlink(in->value);
 			in = in->next;
 		}
