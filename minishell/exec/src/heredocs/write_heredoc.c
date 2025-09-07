@@ -11,8 +11,10 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-extern t_env	*g_head_env;
-static t_infile	*g_current_infile = NULL;
+extern t_env		*g_head_env;
+static t_infile		*g_current_infile = NULL;
+static t_command	*g_current_cmd = NULL;
+static char			*g_heredoc_tmpname = NULL;
 
 char	*generate_heredoc_filename(int index)
 {
@@ -43,16 +45,20 @@ static void	heredoc_sigint(int signum)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	free_env_list(g_head_env);
-	if (g_current_infile && g_current_infile->value)
-		free(g_current_infile->value);
+	if (g_heredoc_tmpname)
+		free(g_heredoc_tmpname);
+	if (g_current_cmd)
+		free_cmd_list(&g_current_cmd);
 	exit(130);
 }
 
-static void	child_write_heredoc(t_infile *infile, int fd, char *tmpname)
+static void	child_write_heredoc(t_infile *infile, int fd, char *tmpname,
+		t_command *head_cmd)
 {
 	char	*line;
 
 	g_current_infile = infile;
+	g_current_cmd = head_cmd;
 	signal(SIGINT, heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -71,21 +77,23 @@ static void	child_write_heredoc(t_infile *infile, int fd, char *tmpname)
 	}
 	close(fd);
 	free(tmpname);
-	free(infile->value);
+	free_cmd_list(&head_cmd);
 	free_env_list(g_head_env);
 	exit(0);
 }
 
-int	write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname)
+int	write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname,
+		t_command *head_cmd)
 {
 	pid_t	pid;
 	int		status;
 
+	g_heredoc_tmpname = tmpname;
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork heredoc"), 0);
 	if (pid == 0)
-		child_write_heredoc(infile, fd, tmpname);
+		child_write_heredoc(infile, fd, tmpname, head_cmd);
 	if (!init_parent_sigaction())
 		return (0);
 	if (waitpid(pid, &status, 0) < 0)
@@ -113,7 +121,7 @@ int	write_heredocs_to_file(t_command *cmd, int fd, char *filename)
 		if (in->heredoc_mode)
 		{
 			has_heredoc = 1;
-			if (!write_heredoc_to_fd(in, fd, filename))
+			if (!write_heredoc_to_fd(in, fd, filename, cmd))
 				return (0);
 		}
 		in = in->next;
