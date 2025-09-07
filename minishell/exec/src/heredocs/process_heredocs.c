@@ -1,9 +1,10 @@
 #include "../../../include/command.h"
+#include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
 #include <fcntl.h>
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -36,14 +37,21 @@ static void	prune_extra_heredocs(t_infile *first)
 void	replace_first_heredoc_with_file(t_command *cmd, char *filename)
 {
 	t_infile	*in;
+	char		*dup;
 
 	in = cmd->head_infile;
 	while (in)
 	{
 		if (in->heredoc_mode)
 		{
+			dup = ft_strdup(filename);
+			if (!dup)
+			{
+				perror("heredoc malloc");
+				return ;
+			}
 			free(in->value);
-			in->value = filename;
+			in->value = dup;
 			in->heredoc_mode = 0;
 			prune_extra_heredocs(in);
 			break ;
@@ -51,7 +59,7 @@ void	replace_first_heredoc_with_file(t_command *cmd, char *filename)
 		in = in->next;
 	}
 }
- 
+
 int	open_temp_infile(char **filename, int index)
 {
 	int	fd;

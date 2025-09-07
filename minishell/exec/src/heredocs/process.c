@@ -27,6 +27,7 @@ int	process_infiles(t_command *head_cmd)
 		{
 			close(fd);
 			replace_first_heredoc_with_file(cmd, filename);
+			free(filename);
 		}
 		else
 		{
@@ -54,7 +55,11 @@ void	cleanup_infiles(t_command *head_cmd)
 		{
 			if (in->value && ft_strnstr(in->value, "/tmp/minishell_heredoc_",
 					23))
+			{
 				unlink(in->value);
+				free(in->value);
+				in->value = NULL;
+			}
 			in = in->next;
 		}
 		cmd = cmd->next;
