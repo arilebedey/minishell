@@ -12,9 +12,8 @@ void	replace_first_heredoc_with_file(t_command *cmd, char *filename);
 int		open_temp_infile(char **filename, int index);
 
 // write_heredocs.c
-int		open_temp_infile(char **filename, int index);
-int		write_heredocs_to_file(t_command *cmd, int fd);
-int		write_heredoc_to_fd(t_infile *infile, int fd);
+int		write_heredocs_to_file(t_command *cmd, int fd, char *filename);
+int		write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname);
 char	*generate_heredoc_filename(int index);
 
 #endif
