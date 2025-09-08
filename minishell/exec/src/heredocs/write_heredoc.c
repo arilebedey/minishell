@@ -2,6 +2,7 @@
 #include "../../../include/env.h"
 #include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
+#include "../../include/heredoc.h"
 #include <fcntl.h>
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -11,10 +12,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-extern t_env		*g_head_env;
-static t_infile		*g_current_infile = NULL;
-static t_command	*g_current_cmd = NULL;
-static char			*g_heredoc_tmpname = NULL;
+extern t_env	*g_head_env;
+t_heredoc_ctx	*g_heredoc_ctx = NULL;
 
 char	*generate_heredoc_filename(int index)
 {
@@ -45,10 +44,10 @@ static void	heredoc_sigint(int signum)
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	free_env_list(g_head_env);
-	if (g_heredoc_tmpname)
-		free(g_heredoc_tmpname);
-	if (g_current_cmd)
-		free_cmd_list(&g_current_cmd);
+	if (g_heredoc_ctx && g_heredoc_ctx->tmpname)
+		free(g_heredoc_ctx->tmpname);
+	if (g_heredoc_ctx && g_heredoc_ctx->head_cmd)
+		free_cmd_list(&g_heredoc_ctx->head_cmd);
 	exit(130);
 }
 
@@ -57,8 +56,9 @@ static void	child_write_heredoc(t_infile *infile, int fd, char *tmpname,
 {
 	char	*line;
 
-	g_current_infile = infile;
-	g_current_cmd = head_cmd;
+	g_heredoc_ctx->infile = infile;
+	g_heredoc_ctx->head_cmd = head_cmd;
+	g_heredoc_ctx->tmpname = tmpname;
 	signal(SIGINT, heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -85,10 +85,14 @@ static void	child_write_heredoc(t_infile *infile, int fd, char *tmpname,
 int	write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname,
 		t_command *head_cmd)
 {
-	pid_t	pid;
-	int		status;
+	pid_t			pid;
+	int				status;
+	t_heredoc_ctx	ctx;
 
-	g_heredoc_tmpname = tmpname;
+	ctx.infile = infile;
+	ctx.head_cmd = head_cmd;
+	ctx.tmpname = tmpname;
+	g_heredoc_ctx = &ctx;
 	pid = fork();
 	if (pid < 0)
 		return (perror("fork heredoc"), 0);
