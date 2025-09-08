@@ -27,9 +27,9 @@ EXEC_SRC_FILES = exec.c \
 	setup_redirs.c \
 	args_to_argv.c \
 	env_to_envp.c \
-	heredocs/process_heredocs.c \
 	heredocs/process.c \
-	heredocs/write_heredoc.c \
+	heredocs/write_heredocs.c \
+	heredocs/write_utils.c \
 	cmd/get_cmd.c \
 	builtins/builtins.c \
 	builtins/helpers.c \
