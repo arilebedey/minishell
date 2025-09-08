@@ -9,34 +9,61 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+static int	process_infile_node(t_infile *in, int *idx, t_command *cmd)
+{
+	int		fd;
+	int		ok;
+	char	*filename;
+
+	if (!in->heredoc_mode)
+		return (1);
+	fd = open_temp_infile(&filename, (*idx)++);
+	if (fd < 0)
+		return (0);
+	ok = write_heredoc_to_fd(in, fd, filename, cmd);
+	close(fd);
+	if (!ok)
+	{
+		unlink(filename);
+		free(filename);
+		if (g_exit_status == 130)
+			return (-1);
+		return (0);
+	}
+	if (!replace_heredoc_with_file(in, filename))
+		return (unlink(filename), free(filename), 0);
+	return (1);
+}
+
+static int	process_command_infiles(t_command *cmd, int *idx)
+{
+	t_infile	*in;
+	int			res;
+
+	in = cmd->head_infile;
+	while (in)
+	{
+		res = process_infile_node(in, idx, cmd);
+		if (res <= 0)
+			return (res);
+		in = in->next;
+	}
+	return (1);
+}
+
 int	process_infiles(t_command *head_cmd)
 {
 	t_command	*cmd;
-	int			index;
-	int			fd;
-	char		*filename;
+	int			idx;
+	int			res;
 
 	cmd = head_cmd;
-	index = 0;
+	idx = 0;
 	while (cmd)
 	{
-		fd = open_temp_infile(&filename, index++);
-		if (fd < 0)
-			return (0);
-		if (write_heredocs_to_file(cmd, fd, filename))
-		{
-			close(fd);
-			replace_first_heredoc_with_file(cmd, filename);
-			free(filename);
-		}
-		else
-		{
-			close(fd);
-			unlink(filename);
-			free(filename);
-			if (g_exit_status == 130)
-				return (-1);
-		}
+		res = process_command_infiles(cmd, &idx);
+		if (res <= 0)
+			return (res);
 		cmd = cmd->next;
 	}
 	return (1);
@@ -54,7 +81,7 @@ void	cleanup_infiles(t_command *head_cmd)
 		while (in)
 		{
 			if (in->value && ft_strnstr(in->value, "/tmp/minishell_heredoc_",
-					23))
+					24))
 			{
 				unlink(in->value);
 				free(in->value);

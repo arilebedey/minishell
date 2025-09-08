@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,29 +15,6 @@ static void	heredoc_sigint(int signum)
 	g_exit_status = 130;
 	close(STDIN_FILENO);
 	write(STDOUT_FILENO, "\n", 1);
-}
-
-char	*generate_heredoc_filename(int index)
-{
-	char	*pid_str;
-	char	*idx_str;
-	char	*tmp;
-	char	*filename;
-
-	pid_str = ft_itoa(getpid());
-	if (!pid_str)
-		return (NULL);
-	idx_str = ft_itoa(index);
-	if (!idx_str)
-		return (free(pid_str), NULL);
-	tmp = ft_strjoin("/tmp/minishell_heredoc_", pid_str);
-	free(pid_str);
-	if (!tmp)
-		return (free(idx_str), NULL);
-	filename = ft_strjoin(tmp, idx_str);
-	free(tmp);
-	free(idx_str);
-	return (filename);
 }
 
 int	write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname,
