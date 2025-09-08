@@ -9,12 +9,15 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int	create_pipe_if_needed(int need_pipe, int pipefd[2])
+int	create_pipe_if_needed(t_child_ctx *ctx)
 {
-	if (need_pipe && pipe(pipefd) < 0)
+	if (ctx->need_pipe)
 	{
-		perror("pipe");
-		return (0);
+		if (pipe(ctx->pipefd) < 0)
+		{
+			perror("pipe");
+			return (0);
+		}
 	}
 	return (1);
 }
@@ -37,7 +40,7 @@ void	fork_and_exec_child(t_command *cmd, t_env *head_env, t_child_ctx *ctx)
 	exec_command(cmd, head_env);
 }
 
-void	update_exit_status(int wstatus)
+static void	update_exit_status(int wstatus)
 {
 	int	sig;
 
@@ -54,38 +57,35 @@ void	update_exit_status(int wstatus)
 	}
 }
 
-int	handle_parent_after_fork(pid_t pid, int *in_fd, int need_pipe,
-		int pipefd[2])
+int	handle_parent_after_fork(pid_t pid, int *in_fd, t_child_ctx *ctx)
 {
-	int	wstatus;
-
 	if (!init_parent_sigaction())
 		return (-1);
 	if (*in_fd != STDIN_FILENO)
 		close(*in_fd);
-	if (need_pipe)
+	if (ctx->need_pipe)
 	{
-		close(pipefd[1]);
-		*in_fd = pipefd[0];
+		close(ctx->pipefd[1]);
+		*in_fd = ctx->pipefd[0];
 		return (pid);
 	}
-	else
-	{
-		*in_fd = STDIN_FILENO;
-		if (waitpid(pid, &wstatus, 0) < 0)
-		{
-			perror("waitpid");
-			return (-1);
-		}
-		update_exit_status(wstatus);
-	}
-	return (-1);
+	*in_fd = STDIN_FILENO;
+	return (pid);
 }
 
 void	reap_async_children(pid_t last_async)
 {
-	int	wstatus;
+	int		wstatus;
+	pid_t	pid;
 
-	while (last_async > 0 && waitpid(-1, &wstatus, 0) > 0)
-		update_exit_status(wstatus);
+	if (last_async > 0)
+	{
+		pid = waitpid(-1, &wstatus, 0);
+		while (pid > 0)
+		{
+			if (pid == last_async)
+				update_exit_status(wstatus);
+			pid = waitpid(-1, &wstatus, 0);
+		}
+	}
 }
