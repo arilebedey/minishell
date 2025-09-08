@@ -1,13 +1,13 @@
-#include "../../include/token.h"
-#include "../../include/lexer.h"
 #include "../../../include/error.h"
+#include "../../include/lexer.h"
+#include "../../include/token.h"
 #include <stdlib.h>
 
 static int	handle_pipe(const char **ref_line, t_token **ref_new_token);
 static int	handle_in(const char **ref_line, t_token **ref_new_token);
 static int	handle_out(const char **ref_line, t_token **ref_new_token);
-static int	handle_quote(const char **ref_line, t_token **ref_head_tk, \
-	const char quote);
+static int	handle_quote(const char **ref_line, t_token **ref_head_tk,
+				const char quote);
 
 int	handle_special_character(const char **ref_line, t_token **ref_head_tk)
 {
@@ -39,8 +39,8 @@ int	handle_special_character(const char **ref_line, t_token **ref_head_tk)
 
 // Handle new T_WORD token between quotes.
 // If failed, returns 0.
-static int	handle_quote(const char **ref_line, t_token **ref_head_tk, \
-	const char quote)
+static int	handle_quote(const char **ref_line, t_token **ref_head_tk,
+		const char quote)
 {
 	if (quote == '\'')
 	{
@@ -101,7 +101,7 @@ static int	handle_in(const char **ref_line, t_token **ref_new_token)
 	else
 	{
 		*ref_new_token = create_token("<", T_IN);
-		if (!ref_new_token)
+		if (!*ref_new_token)
 			return (0);
 		*ref_line += 1;
 	}

@@ -8,10 +8,6 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-extern t_env		*g_head_env;
-
-// env.c
-
 // Return a pointer to a new env linked list.
 // If failed, prints error msg and returns 0.
 t_env				*init_env_list(char **envp);

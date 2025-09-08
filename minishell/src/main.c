@@ -3,13 +3,12 @@
 #include "../include/main.h"
 #include "../include/sig/sig.h"
 #include "../libft/libft.h"
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdlib.h>
 
-#define PROMPT "petitshell> "
-
-t_env	*g_head_env = NULL;
+#define PROMPT "\001\033[1;31m\002p\001\033[1;33m\002e\001\033[1;33m\002t\001\033[1;32m\002i\001\033[1;34m\002t\001\033[1;35m\002s\001\033[1;31m\002h\001\033[1;33m\002e\001\033[1;32m\002l\001\033[1;34m\002l\001\033[0m\002> "
 
 int	main(int ac, char **av, char **envp)
 {
@@ -26,7 +25,6 @@ int	main(int ac, char **av, char **envp)
 	head_env = init_env_list(envp);
 	if (!head_env)
 		return (1);
-	g_head_env = head_env;
 	line = readline(PROMPT);
 	while (line)
 	{
