@@ -18,11 +18,9 @@ void	exec_command(t_command *cmd, t_env *head_env)
 
 	if (!cmd->head_arg)
 		exit(0);
-	if (is_builtin(cmd))
-	{
-		status = exec_builtin(cmd, head_env, 0);
+	status = try_exec_builtin(cmd, head_env, 0);
+	if (status != -1)
 		exit(status);
-	}
 	argv = args_to_argv(cmd->head_arg);
 	if (!argv)
 		exit(1);

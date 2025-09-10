@@ -14,13 +14,18 @@
 int	exec(t_command *head_cmd, t_env *head_env)
 {
 	int	res;
+	int	status;
 
 	if (!head_cmd)
 		return (1);
-	if (!head_cmd->next && is_builtin(head_cmd))
+	if (!head_cmd->next)
 	{
-		g_exit_status = exec_builtin(head_cmd, head_env, 1);
-		return (1);
+		status = try_exec_builtin(head_cmd, head_env, 1);
+		if (status != -1)
+		{
+			g_exit_status = status;
+			return (1);
+		}
 	}
 	res = process_infiles(head_cmd);
 	if (res == 0)
