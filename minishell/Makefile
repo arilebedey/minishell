@@ -35,6 +35,7 @@ EXEC_SRC_FILES = exec.c \
 	builtins/helpers.c \
 	builtins/b_exit.c \
 	builtins/b_cd.c \
+	builtins/b_echo.c \
 	builtins/b_env.c \
 
 OTHER_SRC_FILES = main.c \
