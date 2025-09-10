@@ -20,9 +20,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (!init_interactive_sigaction())
 		return (1);
-	if (!*envp)
-		head_env = NULL;
-	else
+	if (*envp)
 	{
 		head_env = init_env_list(envp);
 		if (!head_env)
