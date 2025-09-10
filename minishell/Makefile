@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -Iinclude -Iparse/include -Iexec/include -Ilibft
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -56,6 +56,7 @@ OTHER_SRC = $(addprefix $(SRC_DIR)/, $(OTHER_SRC_FILES))
 SRC_ALL = $(OTHER_SRC) $(PARSE_SRC) $(EXEC_SRC)
 
 OBJ = $(patsubst %.c, $(OBJ_DIR)/%.o, $(SRC_ALL))
+DEP = $(OBJ:.o=.d)
 
 LIBFT_DIR = ./libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
@@ -101,5 +102,7 @@ fclean : clean
 	@rm -f $(NAME)
 
 re:	fclean all
+
+-include $(DEP)
 
 .PHONY:	all clean fclean re
