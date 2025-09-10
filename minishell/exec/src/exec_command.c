@@ -9,25 +9,36 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void	exec_command(t_command *cmd, t_env *head_env)
+static void	handle_builtin_or_exit(t_command *cmd, t_env *head_env)
 {
-	char	**argv;
-	char	**envp;
-	char	*resolved;
-	int		status;
+	int	status;
 
 	if (!cmd->head_arg)
 		exit(0);
 	status = try_exec_builtin(cmd, head_env, 0);
 	if (status != -1)
 		exit(status);
-	argv = args_to_argv(cmd->head_arg);
-	if (!argv)
+}
+
+static void	prepare_exec(t_command *cmd, t_env *head_env, char ***argv,
+		char ***envp)
+{
+	*argv = args_to_argv(cmd->head_arg);
+	if (!*argv)
 		exit(1);
-	envp = env_to_envp(head_env);
-	if (!envp)
-		return (free_argv(argv), exit(1));
+	*envp = env_to_envp(head_env);
+	if (!*envp)
+	{
+		free_argv(*argv);
+		exit(1);
+	}
 	setup_redirections(cmd);
+}
+
+static void	execute_binary(char **argv, char **envp, t_env *head_env)
+{
+	char	*resolved;
+
 	resolved = resolve_cmd(argv[0], head_env);
 	if (!resolved)
 	{
@@ -43,4 +54,14 @@ void	exec_command(t_command *cmd, t_env *head_env)
 	free_argv(argv);
 	free_envp(envp);
 	exit(127);
+}
+
+void	exec_command(t_command *cmd, t_env *head_env)
+{
+	char	**argv;
+	char	**envp;
+
+	handle_builtin_or_exit(cmd, head_env);
+	prepare_exec(cmd, head_env, &argv, &envp);
+	execute_binary(argv, envp, head_env);
 }

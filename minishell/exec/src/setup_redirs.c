@@ -5,11 +5,10 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void	setup_redirections(t_command *cmd)
+static void	setup_infiles(t_command *cmd)
 {
 	int			fd;
 	t_infile	*in;
-	t_outfile	*out;
 
 	in = cmd->head_infile;
 	while (in)
@@ -28,6 +27,13 @@ void	setup_redirections(t_command *cmd)
 		close(fd);
 		in = in->next;
 	}
+}
+
+static void	setup_outfiles(t_command *cmd)
+{
+	int			fd;
+	t_outfile	*out;
+
 	out = cmd->head_outfile;
 	while (out)
 	{
@@ -48,4 +54,10 @@ void	setup_redirections(t_command *cmd)
 		close(fd);
 		out = out->next;
 	}
+}
+
+void	setup_redirections(t_command *cmd)
+{
+	setup_infiles(cmd);
+	setup_outfiles(cmd);
 }
