@@ -1,10 +1,12 @@
 #include "../../include/env.h"
 #include "../../libft/libft.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 
 static int		get_key_and_value(char **envp, t_env *curr_env);
 static t_env	*init_env_element(void);
+static int		init_env_without_envp(t_env *head_env);
 
 t_env	*init_env_list(char **envp)
 {
@@ -14,6 +16,12 @@ t_env	*init_env_list(char **envp)
 	head_env = init_env_element();
 	if (!head_env)
 		return (perror("head_env malloc"), NULL);
+	if (!*envp)
+	{
+		if (!init_env_without_envp(head_env))
+			return (free_env_list(head_env), NULL);
+		return (head_env);
+	}
 	curr_env = head_env;
 	while (++envp && *envp)
 	{
@@ -28,6 +36,36 @@ t_env	*init_env_list(char **envp)
 		}
 	}
 	return (head_env);
+}
+
+// Initialize base env in case there's no envp (env -i).
+// If failed, prints error msg and returns 0.
+static int	init_env_without_envp(t_env *head_env)
+{
+	char	*pwd;
+	char	*exec_path;
+
+	head_env->next = init_env_element();
+	if (!head_env->next)
+		return (perror("head_env next init"), 0);
+	head_env->next->next = init_env_element();
+	if (!head_env->next->next)
+		return (perror("head_env next next init"), 0);
+	pwd = getcwd(NULL, 0);
+	exec_path = ft_strjoin(pwd, "/./minishell");
+	if (!pwd)
+		return (free(pwd), perror("init env path"), 0);
+	head_env->key = ft_strdup("SHLVL");
+	head_env->value = ft_strdup("2");
+	head_env->next->key = ft_strdup("PWD");
+	head_env->next->value = pwd;
+	head_env->next->next->key = ft_strdup("_");
+	head_env->next->next->value = exec_path;
+	if (!head_env->key || !head_env->value || !head_env->next->value \
+		|| !head_env->next->key || !head_env->next->next->key \
+			|| !head_env->next->next->value)
+			return (0);
+	return (1);
 }
 
 // Set key and value for curr_env.
