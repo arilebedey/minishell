@@ -15,6 +15,9 @@ int		builtin_cd(t_command *cmd, t_env *head_env);
 // b_env.c
 int		builtin_env(t_command *cmd, t_env *head_env);
 
+// b_echo.c
+int		builtin_echo(t_command *cmd, t_env *head_env);
+
 // helpers.c
 int		is_numeric(const char *s);
 long	simple_atol(const char *s);
