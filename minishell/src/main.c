@@ -10,6 +10,29 @@
 
 #define PROMPT "\001\033[1;31m\002p\001\033[1;33m\002e\001\033[1;33m\002t\001\033[1;32m\002i\001\033[1;34m\002t\001\033[1;35m\002s\001\033[1;31m\002h\001\033[1;33m\002e\001\033[1;32m\002l\001\033[1;34m\002l\001\033[0m\002> "
 
+static int	run_shell_loop(t_env **head_env);
+
+int	main(int ac, char **av, char **envp)
+{
+	static t_env	*head_env = NULL;
+
+	(void)ac;
+	(void)av;
+	if (!init_interactive_sigaction())
+		return (1);
+	if (!*envp)
+		head_env = NULL;
+	else
+	{
+		head_env = init_env_list(envp);
+		if (!head_env)
+			return (1);
+	}
+	if (!run_shell_loop(&head_env))
+		ft_printf("exit\n");
+	return (free_env_list(head_env), 0);
+}
+
 static int	run_shell_loop(t_env **head_env)
 {
 	char		*line;
@@ -31,20 +54,4 @@ static int	run_shell_loop(t_env **head_env)
 		line = readline(PROMPT);
 	}
 	return (1);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	static t_env	*head_env = NULL;
-
-	(void)ac;
-	(void)av;
-	if (!init_interactive_sigaction())
-		return (1);
-	head_env = init_env_list(envp);
-	if (!head_env)
-		return (1);
-	if (!run_shell_loop(&head_env))
-		ft_printf("exit\n");
-	return (free_env_list(head_env), 0);
 }
