@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args_to_argv.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:12:20 by alebedev          #+#    #+#             */
+/*   Updated: 2025/09/11 13:12:20 by alebedev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/command.h"
 #include "../../libft/libft.h"
 #include <stdlib.h>
 
-char	**args_to_argv(t_args *head_arg)
+static int	count_args(t_args *head_arg)
 {
 	int		count;
 	t_args	*curr;
-	char	**argv;
-	int		i;
 
 	count = 0;
 	curr = head_arg;
@@ -16,6 +26,17 @@ char	**args_to_argv(t_args *head_arg)
 		count++;
 		curr = curr->next;
 	}
+	return (count);
+}
+
+char	**args_to_argv(t_args *head_arg)
+{
+	int		count;
+	t_args	*curr;
+	char	**argv;
+	int		i;
+
+	count = count_args(head_arg);
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
 		return (NULL);
