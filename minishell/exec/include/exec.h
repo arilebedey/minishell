@@ -18,7 +18,7 @@ int		exec(t_command *head_cmd, t_env *head_env);
 int		exec_pipeline(t_command *cmd, t_env *head_env);
 
 // exec_command.c
-void	exec_command(t_command *cmd, t_env *head_env);
+void	exec_command(t_command *head_cmd, t_command *cmd, t_env *head_env);
 
 // setup_redirs.c
 void	setup_redirections(t_command *cmd);

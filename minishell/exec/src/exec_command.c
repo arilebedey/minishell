@@ -1,6 +1,7 @@
 #include "../../exec/include/builtins.h"
 #include "../../include/command.h"
 #include "../../include/env.h"
+#include "../../libft/libft.h"
 #include "../include/cmd.h"
 #include "../include/exec.h"
 #include <fcntl.h>
@@ -35,16 +36,20 @@ static void	prepare_exec(t_command *cmd, t_env *head_env, char ***argv,
 	setup_redirections(cmd);
 }
 
-static void	execute_binary(char **argv, char **envp, t_env *head_env)
+static void	execute_binary(char **argv, char **envp, t_env *head_env,
+		t_command *head_cmd)
 {
 	char	*resolved;
 
 	resolved = resolve_cmd(argv[0], head_env);
 	if (!resolved)
 	{
-		perror(argv[0]);
+		ft_putstr_fd(argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		free_argv(argv);
 		free_envp(envp);
+		free_env_list(head_env);
+		free_cmd_list(&head_cmd);
 		exit(127);
 	}
 	free(argv[0]);
@@ -56,12 +61,12 @@ static void	execute_binary(char **argv, char **envp, t_env *head_env)
 	exit(127);
 }
 
-void	exec_command(t_command *cmd, t_env *head_env)
+void	exec_command(t_command *head_cmd, t_command *cmd, t_env *head_env)
 {
 	char	**argv;
 	char	**envp;
 
 	handle_builtin_or_exit(cmd, head_env);
 	prepare_exec(cmd, head_env, &argv, &envp);
-	execute_binary(argv, envp, head_env);
+	execute_binary(argv, envp, head_env, head_cmd);
 }

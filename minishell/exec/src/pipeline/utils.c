@@ -22,7 +22,8 @@ int	create_pipe_if_needed(t_child_ctx *ctx)
 	return (1);
 }
 
-void	fork_and_exec_child(t_command *cmd, t_env *head_env, t_child_ctx *ctx)
+void	fork_and_exec_child(t_command *head_cmd, t_command *cmd,
+		t_env *head_env, t_child_ctx *ctx)
 {
 	if (!init_child_sigaction())
 		exit(1);
@@ -37,7 +38,7 @@ void	fork_and_exec_child(t_command *cmd, t_env *head_env, t_child_ctx *ctx)
 		dup2(ctx->pipefd[1], STDOUT_FILENO);
 		close(ctx->pipefd[1]);
 	}
-	exec_command(cmd, head_env);
+	exec_command(head_cmd, cmd, head_env);
 }
 
 static void	update_exit_status(int wstatus)
