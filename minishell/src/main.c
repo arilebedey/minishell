@@ -8,7 +8,7 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 
-#define PROMPT "\001\033[1;31m\002p\001\033[1;33m\002e\001\033[1;33m\002t\001\033[1;32m\002i\001\033[1;34m\002t\001\033[1;35m\002s\001\033[1;31m\002h\001\033[1;33m\002e\001\033[1;32m\002l\001\033[1;34m\002l\001\033[0m\002> "
+#define PROMPT "\001\033[1;32m\002🥸 💻 petitshell> "
 
 static int	run_shell_loop(t_env **head_env);
 
