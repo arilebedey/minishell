@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:06:32 by alebedev          #+#    #+#             */
+/*   Updated: 2025/09/11 13:07:01 by alebedev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/env.h"
 #include "../../../libft/libft.h"
 #include "../../include/cmd.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -29,21 +40,12 @@ char	**find_path(t_env *head_env)
 	return (ft_split(path_value, ':'));
 }
 
-// Try to resolve argv[0] using PATH
-// If argv[0] is already absolute/relative (has `/`), just return it
-// Otherwise, search in PATH dirs
-char	*resolve_cmd(char *cmd, t_env *head_env)
+static char	*search_in_paths(char **paths, char *cmd)
 {
-	char	**paths;
 	char	*tmp;
 	char	*full_path;
 	int		i;
 
-	if (!cmd || ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	paths = find_path(head_env);
-	if (!paths)
-		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -64,4 +66,16 @@ char	*resolve_cmd(char *cmd, t_env *head_env)
 	}
 	free_str_array(paths);
 	return (NULL);
+}
+
+char	*resolve_cmd(char *cmd, t_env *head_env)
+{
+	char	**paths;
+
+	if (!cmd || ft_strchr(cmd, '/'))
+		return (ft_strdup(cmd));
+	paths = find_path(head_env);
+	if (!paths)
+		return (NULL);
+	return (search_in_paths(paths, cmd));
 }

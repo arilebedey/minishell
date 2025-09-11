@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_echo.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:03:42 by alebedev          #+#    #+#             */
+/*   Updated: 2025/09/11 13:03:47 by alebedev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/command.h"
 #include "../../../include/env.h"
 #include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
-#include <stdio.h>
 
 int	builtin_echo(t_command *cmd, t_env *head_env)
 {

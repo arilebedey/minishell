@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:12:11 by alebedev          #+#    #+#             */
+/*   Updated: 2025/09/11 13:12:16 by alebedev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/command.h"
 #include "../../../include/env.h"
 #include "../../../include/sig/sig.h"
-#include "../../include/cmd.h"
 #include "../../include/exec.h"
 #include <fcntl.h>
 #include <stdio.h>
