@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:51 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:11:48 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/11 13:13:35 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	count_args(t_args *arg)
+int	count_args_cd(t_args *arg)
 {
 	int	count;
 
@@ -64,7 +64,7 @@ int	builtin_cd(t_command *cmd, t_env *head_env)
 	int		argc;
 	char	*oldpwd;
 
-	argc = count_args(cmd->head_arg);
+	argc = count_args_cd(cmd->head_arg);
 	if (argc < 2)
 		return (1);
 	oldpwd = get_oldpwd();
