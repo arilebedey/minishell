@@ -3,9 +3,9 @@
 #include "../include/main.h"
 #include "../include/sig/sig.h"
 #include "../libft/libft.h"
-#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #define PROMPT "\001\033[1;32m\002🥸 💻 petitshell> "
