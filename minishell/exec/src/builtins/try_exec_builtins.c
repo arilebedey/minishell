@@ -1,7 +1,5 @@
 #include "../../../libft/libft.h"
 #include "../../include/builtins.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 int	try_exec_builtin(t_command *cmd, t_env *head_env, int is_parent)
 {
@@ -15,5 +13,7 @@ int	try_exec_builtin(t_command *cmd, t_env *head_env, int is_parent)
 		return (builtin_echo(cmd, head_env));
 	if (!ft_strncmp(cmd->head_arg->value, "env", 4))
 		return (builtin_env(cmd, head_env));
+	if (!ft_strncmp(cmd->head_arg->value, "export", 7))
+		return (builtin_export(cmd, head_env));
 	return (-1);
 }

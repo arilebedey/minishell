@@ -37,6 +37,9 @@ EXEC_SRC_FILES = exec.c \
 	builtins/b_cd.c \
 	builtins/b_echo.c \
 	builtins/b_env.c \
+	builtins/b_export.c \
+	builtins/b_export_setvar.c \
+	builtins/b_export_utils.c \
 
 OTHER_SRC_FILES = main.c \
 	error.c \
