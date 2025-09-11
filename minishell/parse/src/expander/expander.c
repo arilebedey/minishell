@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:10:26 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:10:40 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/sig/sig.h"
 #include "../../../include/command.h"
 #include "../../../include/error.h"
@@ -115,4 +127,3 @@ static int	remove_quotes(void *curr_elem, t_quotes quote)
 		return (perror("curr_arg value strndup"), 0);
 	return (1);
 }
-

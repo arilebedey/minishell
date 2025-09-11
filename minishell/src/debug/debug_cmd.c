@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:01:53 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:03:01 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/command.h"
 #include "../../include/debug.h"
 #include "../../libft/libft.h"
@@ -24,31 +36,33 @@ void	debug_command_list(t_command *head_cmd)
 // Prints linked list fields
 void	print_linked_lists(t_command *curr_cmd)
 {
-	t_args		*curr_arg;
-	t_infile		*curr_infile;
-	t_outfile		*curr_outfile;
-
-	ft_printf("\nargs: ");
-	curr_arg = curr_cmd->head_arg;
-	while (curr_arg)
-	{
-		ft_printf("{%s}, ", curr_arg->value);
-		curr_arg = curr_arg->next;
-	}
-	ft_printf("\ninput files:");
-	curr_infile = curr_cmd->head_infile;
-	while (curr_infile)
-	{
-		ft_printf("{%s, ", curr_infile->value);
-		ft_printf("%d}, ", curr_infile->heredoc_mode);
-		curr_infile = curr_infile->next;
-	}
-	ft_printf("\noutput files:");
-	curr_outfile = curr_cmd->head_outfile;
-	while (curr_outfile)
-	{
-		ft_printf("{%s, ", curr_outfile->value);
-		ft_printf("%d}, ", curr_outfile->append_mode);
-		curr_outfile = curr_outfile->next;
-	}
+	(void)curr_cmd;
 }
+// print_linked_list function
+	//t_args		*curr_arg;
+	//t_infile	*curr_infile;
+	//t_outfile	*curr_outfile;
+
+	//ft_printf("\nargs: ");
+	//curr_arg = curr_cmd->head_arg;
+	//while (curr_arg)
+	//{
+	//	ft_printf("{%s}, ", curr_arg->value);
+	//	curr_arg = curr_arg->next;
+	//}
+	//ft_printf("\ninput files:");
+	//curr_infile = curr_cmd->head_infile;
+	//while (curr_infile)
+	//{
+	//	ft_printf("{%s, ", curr_infile->value);
+	//	ft_printf("%d}, ", curr_infile->heredoc_mode);
+	//	curr_infile = curr_infile->next;
+	//}
+	//ft_printf("\noutput files:");
+	//curr_outfile = curr_cmd->head_outfile;
+	//while (curr_outfile)
+	//{
+	//	ft_printf("{%s, ", curr_outfile->value);
+	//	ft_printf("%d}, ", curr_outfile->append_mode);
+	//	curr_outfile = curr_outfile->next;
+	//}
