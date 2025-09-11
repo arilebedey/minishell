@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   replace.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:11:06 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:11:12 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../include/sig/sig.h"
 #include "../../../include/env.h"
 #include "../../include/expander.h"
@@ -36,7 +48,6 @@ int	handle_env_variables(char **out_value, t_env *head_env)
 	}
 	return (1);
 }
-
 
 // Init hev.
 // If failed, prints error msg and returns 0.
@@ -90,7 +101,8 @@ static int	join_to_out_value(t_handle_env *ref_hev, char **out_value)
 	free(ref_hev->tmp_v);
 	if (!*out_value)
 		return (perror("strjoin2"), free(ref_hev->bk), free(ref_hev->ak), 0);
-	ref_hev->curs = *out_value + ft_strlen(ref_hev->bk) + ft_strlen(ref_hev->env_v);
+	ref_hev->curs = *out_value + ft_strlen(ref_hev->bk) \
+		+ ft_strlen(ref_hev->env_v);
 	free(ref_hev->bk);
 	ref_hev->bk = NULL;
 	free(ref_hev->ak);

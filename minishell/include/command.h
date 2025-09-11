@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:05:23 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:16:01 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef COMMAND_H
 # define COMMAND_H
 
@@ -39,14 +51,28 @@ t_command	*init_cmd(void);
 int			add_arg(t_args **ref_head_arg, char *value);
 // Add a new infile to the infile list.
 // If failed, prints error msg and returns 0.
-int			add_infile(t_infile **ref_head_infile, char *value, int heredoc_mode);
+int			add_infile(t_infile **ref_head_infile, char *value, \
+	int heredoc_mode);
 // Add a new outfile to the infile list.
 // If failed, prints error msg and returns 0.
-int			add_outfile(t_outfile **ref_head_outfile, char *value, int append_mode);
+int			add_outfile(t_outfile **ref_head_outfile, char *value, \
+	int append_mode);
+
+// init_structs.c
+
+// Returns a new arg initialized with each fields set to NULL.
+// If failed, returns NULL pointer.
+t_args		*init_arg(void);
+// Returns a new infile initialized with each fields set to NULL/0.
+// If failed, returns NULL pointer.
+t_infile	*init_infile(void);
+// Returns a new outfile initialized with each fields set to NULL/0.
+// If failed, returns NULL pointer.
+t_outfile	*init_outfile(void);
 
 // free_cmd.c
 
 // Free the command linked list.
-void	free_cmd_list(t_command **ref_head_cmd);
+void		free_cmd_list(t_command **ref_head_cmd);
 
 #endif

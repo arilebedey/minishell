@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:09:18 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:09:18 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/token.h"
 #include "../../libft/libft.h"
 #include <stdlib.h>
 
-t_token *create_token(char *value, t_token_type type)
+t_token	*create_token(char *value, t_token_type type)
 {
 	t_token	*new_token;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_cmd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 12:51:35 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 12:51:38 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/command.h"
 #include <stdlib.h>
 
@@ -53,6 +65,7 @@ static void	free_cmd_outfiles(t_outfile *curr_outfile)
 	free(curr_outfile->value);
 	free(curr_outfile);
 }
+
 // Free all args starting at curr_arg
 static void	free_cmd_args(t_args *curr_arg)
 {

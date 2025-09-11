@@ -1,11 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sig.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:07:21 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:07:22 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SIG_H
 # define SIG_H
 
 # include <signal.h>
-
-# define CONV_SIGINT 128 + SIGINT
-# define CONV_SIGTERM 128 + SIGTERM
-# define CONV_SIGQUIT 128 + SIGQUIT
 
 extern volatile sig_atomic_t	g_exit_status;
 

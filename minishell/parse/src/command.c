@@ -1,18 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:15:25 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:15:25 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/command.h"
 #include "../../include/error.h"
 #include "../include/token.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-// Returns a new arg initialized with each fields set to NULL.
-// If failed, returns NULL pointer.
-static t_args		*init_arg(void);
-// Returns a new infile initialized with each fields set to NULL/0.
-// If failed, returns NULL pointer.
-static t_infile		*init_infile(void);
-// Returns a new outfile initialized with each fields set to NULL/0.
-// If failed, returns NULL pointer.
-static t_outfile	*init_outfile(void);
 
 t_command	*init_cmd(void)
 {
@@ -99,42 +101,4 @@ int	add_arg(t_args **ref_head_arg, char *value)
 		return (print_error("error: curr_arg malloc"), 0);
 	curr_arg->next->value = value;
 	return (1);
-}
-
-static t_infile	*init_infile(void)
-{
-	t_infile	*new_infile;
-
-	new_infile = malloc(sizeof(t_infile));
-	if (!new_infile)
-		return (NULL);
-	new_infile->value = NULL;
-	new_infile->heredoc_mode = 0;
-	new_infile->next = NULL;
-	return (new_infile);
-}
-
-static t_outfile	*init_outfile(void)
-{
-	t_outfile	*new_outfile;
-
-	new_outfile = malloc(sizeof(t_outfile));
-	if (!new_outfile)
-		return (NULL);
-	new_outfile->value = NULL;
-	new_outfile->append_mode = 0;
-	new_outfile->next = NULL;
-	return (new_outfile);
-}
-
-static t_args	*init_arg(void)
-{
-	t_args	*new_arg;
-
-	new_arg = malloc(sizeof(t_args));
-	if (!new_arg)
-		return (NULL);
-	new_arg->value = NULL;
-	new_arg->next = NULL;
-	return (new_arg);
 }

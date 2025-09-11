@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_env.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/11 13:01:29 by agense            #+#    #+#             */
+/*   Updated: 2025/09/11 13:01:30 by agense           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/env.h"
 #include "../../libft/libft.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
+static int		init_head_env(t_env **ref_head_env);
 static int		get_key_and_value(char **envp, t_env *curr_env);
 static t_env	*init_env_element(void);
 static int		init_env_without_envp(t_env *head_env);
@@ -13,9 +26,8 @@ t_env	*init_env_list(char **envp)
 	t_env	*head_env;
 	t_env	*curr_env;
 
-	head_env = init_env_element();
-	if (!head_env)
-		return (perror("head_env malloc"), NULL);
+	if (!init_head_env(&head_env))
+		return (NULL);
 	if (!*envp)
 	{
 		if (!init_env_without_envp(head_env))
@@ -36,6 +48,16 @@ t_env	*init_env_list(char **envp)
 		}
 	}
 	return (head_env);
+}
+
+// Initialize head env (just to save one line for norm xDDDDDDDDD)
+// If failed, prints error msg and returns 0.
+static int	init_head_env(t_env **ref_head_env)
+{
+	*ref_head_env = init_env_element();
+	if (!*ref_head_env)
+		return (perror("head_env malloc"), 0);
+	return (1);
 }
 
 // Initialize base env in case there's no envp (env -i).
@@ -64,7 +86,7 @@ static int	init_env_without_envp(t_env *head_env)
 	if (!head_env->key || !head_env->value || !head_env->next->value \
 		|| !head_env->next->key || !head_env->next->next->key \
 			|| !head_env->next->next->value)
-			return (0);
+		return (0);
 	return (1);
 }
 
@@ -73,8 +95,8 @@ static int	init_env_without_envp(t_env *head_env)
 static int	get_key_and_value(char **envp, t_env *curr_env)
 {
 	char	*ptr_equal;
-	char	*SHLVL_value;
-	int		SHLVL_int;
+	char	*shlvl_value;
+	int		shlvl_int;
 
 	ptr_equal = ft_strchr(*envp, '=');
 	curr_env->key = ft_substr(*envp, 0, ptr_equal - *envp);
@@ -82,14 +104,14 @@ static int	get_key_and_value(char **envp, t_env *curr_env)
 		return (perror("key_malloc"), 0);
 	if (!ft_strncmp(curr_env->key, "SHLVL", 10))
 	{
-		SHLVL_value = getenv("SHLVL");
-		if (!SHLVL_value)
+		shlvl_value = getenv("SHLVL");
+		if (!shlvl_value)
 			curr_env->value = ft_strdup("1");
 		else
 		{
-			SHLVL_int = ft_atoi(SHLVL_value);
-			SHLVL_int++;
-			curr_env->value = ft_itoa(SHLVL_int);
+			shlvl_int = ft_atoi(shlvl_value);
+			shlvl_int++;
+			curr_env->value = ft_itoa(shlvl_int);
 		}
 	}
 	else
