@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 09:02:13 by agense            #+#    #+#             */
-/*   Updated: 2025/09/01 15:24:10 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/11 13:22:27 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_list
 // Checks for an alphabetic character.
 int			ft_isalpha(int c);
 // Checks if c is a space or a backslash character (\n, \t, \v, \f, \r).
-int 		ft_isspace(int c);
+int			ft_isspace(int c);
 // Checks for a digit (0 through 9).
 int			ft_isdigit(int c);
 // Checks for an alphanumeric character
@@ -38,7 +38,7 @@ int			ft_isprint(int c);
 // excluding the terminating null byte ('\0').
 size_t		ft_strlen(const char *s);
 // Calculates the length of the string pointed to by s until '\0' or delim.
-size_t	ft_strlen2(const char *s, const char delim);
+size_t		ft_strlen2(const char *s, const char delim);
 // Fills the first n bytes of the memory area pointed to by s with the constant
 // byte c.
 void		*ft_memset(void *s, int c, size_t n);
@@ -72,7 +72,8 @@ int			ft_toupper(int c);
 int			ft_tolower(int c);
 // Returns a pointer to the first occurence of the character c in the string s.
 char		*ft_strchr(const char *s, int c);
-// Returns a pointer to the first occurence of a character of delim in the string s.
+// Returns a pointer to the first occurence
+// of a character of delimin the string s.
 // Returns NULL if none have been found.
 char		*ft_strchr2(const char *s, const char *delim);
 // Returns a pointer to the last occurence of the character c in the string s
