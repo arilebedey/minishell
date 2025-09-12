@@ -1,71 +1,46 @@
-# Git
+## Notes
 
-### Recommendations
+### Heredocs
 
-Try to work on different functionalities.
+Advice to fork heredoc was wrong, since we are only allowed one global variable in the project, therefore freeing the parent state in the child was not possible without overriding that rule and possibly getting KO-ed. Setting up a signal handler for the heredoc part was our solution.
 
-Use git branches and github merge request.
+### Supress readline leaks
 
-Push your branches to GitHub with working parts of your task regularly.
+Copy the `valgrind.supp` file and add optionally add an alias, for e.g.:
 
-Have other teammate read and approve/disapprove the merge request (aka pull request) for it to merge for better code quality, shared understanding, and early detection of issues.
-
-### Merging strategies for minishell
-
-"Squash merge" with `git merge --squash` stages all changes from the feature branch as one commit. Run `git commit` afterward to finalize it.
-
-"Simple merge" with `git merge` if you want to keep the commits plus a merge commit instead of only squash commit.
-
-Avoid using `git rebase` onto main in this workflow — rebase applies commits one by one, which can lead to resolving the same conflicts multiple times. This is not ideal when teammates are working closely on the same files, as it slows everyone down. Rebase works better for keeping a personal branch history clean before sharing it.
-
-Aim to merge/PR frequently. Only merge branches that compile.
-
-### Example flow
-
-```bash
-# create branch off of main and switch to it
-git checkout main
-git pull origin main
-git checkout -b feature-branch
-
-# work on files
-git add .
-git commit -m "Implement feature XYZ"
-# push branch to remote (github?)
-git push -u origin feature-branch
-
-# switch back to main and merge the feature branch onto it
-git checkout main
-git pull origin main
-git merge --squash feature-branch
-# or
-#git merge feature-branch
-
-# wait for merge approval -> delete branch
-git branch -d feature-branch
+```sh
+alias msv='valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=valgrind.supp ./minishell'
 ```
 
-### Warnings
+## Project specifications
 
-Don't commit directly to `main` unless necessary.
+For the project we relied on GNU’s readline library to manage user input and command history, but all the rest of the shell was built with raw POSIX syscalls and low-level primitives. Features like process control, redirection, environment handling, and signal management were implemented on top of these system calls.
 
-Check what will be committed with `git status` before running `git add .`.
+<b>System calls used:</b>  
+`readline, add_history, printf, malloc, free, write, access, open, read, close, fork, wait, waitpid, signal, sigaction, sigemptyset, kill, exit, getcwd, chdir, unlink, execve, dup, dup2, pipe, perror`
 
-Use `git stash` to checkout other branches without having to commit your changes: `git stash push -m "WIP: a silly shell"` to stash all changes.
+### Platforms
 
-Never delete a branch until you are sure it’s merged and pushed.
+The project was tested both on macOS and Linux. On macOS run `brew install readline` first.
 
-### Link
+### Running
 
-freecodecamp git for pros: https://www.youtube.com/watch?v=Uszj_k0DGsg
+To build and run:
 
-# Minishell
+```bash
+git clone git@github.com:arilebedey/minishell.git
+cd minishell
+make
+./minishell
+```
+
+From there you get a prompt (`🥸 💻 petitshell>`), and you can run commands like `ls`, use pipes (`ls | wc -l`), redirections (`cat < in1 > out`), and builtins (`cd`, `export`, `unset`, `env`, `echo`, `exit`).
 
 ### Subject
 
 [EN] https://cdn.intra.42.fr/pdf/pdf/154328/en.subject.pdf
 
-### Others' reference minishell implementations
+### Others students minishell implementations
 
 https://github.com/decilap/groupdev/
 
@@ -73,12 +48,6 @@ https://github.com/ft-palourde/minishell
 
 https://github.com/mli42/at42minishell
 
-### Heredocs
+## Git
 
-Advice from 1 group : use forks for heredocs because to correctly handle either signals or correct exit codes
-
-### Supress readline leaks
-
-```sh
-alias msv='valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind.supp ./minishell'
-```
+freecodecamp git for pros: https://www.youtube.com/watch?v=Uszj_k0DGsg
