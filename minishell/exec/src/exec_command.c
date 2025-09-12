@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:31 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:12:33 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/12 07:07:50 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	handle_builtin_or_exit(t_command *cmd, t_env *head_env)
+static void	handle_builtin_or_exit(t_command *head_cmd, t_command *cmd,
+		t_env *head_env)
 {
 	int	status;
 
@@ -30,7 +31,11 @@ static void	handle_builtin_or_exit(t_command *cmd, t_env *head_env)
 		exit(0);
 	status = try_exec_builtin(cmd, head_env, 0);
 	if (status != -1)
+	{
+		free_cmd_list(&head_cmd);
+		free_env_list(head_env);
 		exit(status);
+	}
 }
 
 static void	prepare_exec(t_command *cmd, t_env *head_env, char ***argv,
@@ -78,7 +83,7 @@ void	exec_command(t_command *head_cmd, t_command *cmd, t_env *head_env)
 	char	**argv;
 	char	**envp;
 
-	handle_builtin_or_exit(cmd, head_env);
+	handle_builtin_or_exit(head_cmd, cmd, head_env);
 	prepare_exec(cmd, head_env, &argv, &envp);
 	execute_binary(argv, envp, head_env, head_cmd);
 }
