@@ -15,6 +15,7 @@
 #include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
 #include <fcntl.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:45 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:09:18 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:29:12 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ int		write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname,
 int		open_temp_infile(char **filename, int index);
 int		replace_heredoc_with_file(t_infile *in, char *filename);
 void	heredoc_sigint(int signum);
-int		write_heredocs_to_file(t_command *cmd, int fd, char *filename);
 
 #endif
