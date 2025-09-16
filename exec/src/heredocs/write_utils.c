@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:07:38 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:09:01 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:28:58 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
 #include <fcntl.h>
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -72,25 +72,4 @@ void	heredoc_sigint(int signum)
 	g_exit_status = 130;
 	close(STDIN_FILENO);
 	write(STDOUT_FILENO, "\n", 1);
-}
-
-int	write_heredocs_to_file(t_command *cmd, int fd, char *filename)
-{
-	t_infile	*in;
-	int			has_heredoc;
-
-	(void)filename;
-	in = cmd->head_infile;
-	has_heredoc = 0;
-	while (in)
-	{
-		if (in->heredoc_mode)
-		{
-			has_heredoc = 1;
-			if (!write_heredoc_to_fd(in, fd, filename, cmd))
-				return (0);
-		}
-		in = in->next;
-	}
-	return (has_heredoc);
 }
