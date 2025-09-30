@@ -6,14 +6,14 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:11:06 by agense            #+#    #+#             */
-/*   Updated: 2025/09/16 11:07:11 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/09/30 15:59:07 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/env.h"
 #include "../../../include/sig/sig.h"
-#include "../../../libft/libft.h"
+#include "../../../include/env.h"
 #include "../../include/expander.h"
+#include "../../../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -101,7 +101,7 @@ static int	join_to_out_value(t_handle_env *ref_hev, char **out_value)
 	free(ref_hev->tmp_v);
 	if (!*out_value)
 		return (perror("strjoin2"), free(ref_hev->bk), free(ref_hev->ak), 0);
-	ref_hev->curs = *out_value + ft_strlen(ref_hev->bk)
+	ref_hev->curs = *out_value + ft_strlen(ref_hev->bk) \
 		+ ft_strlen(ref_hev->env_v);
 	free(ref_hev->bk);
 	ref_hev->bk = NULL;
@@ -121,21 +121,19 @@ static char	*take_env_key(char **ref_cursor)
 	ptrdiff_t	len_key;
 
 	*ref_cursor += 1;
-	if (**ref_cursor && ft_isdigit(**ref_cursor))
+	end = ft_strchr2(*ref_cursor, " $");
+	if (!end)
 	{
-		key = ft_strndup(*ref_cursor, 1);
-		*ref_cursor += 1;
+		key = ft_strdup(*ref_cursor);
+		if (!key)
+			return (perror("strdup_env_key"), NULL);
+		*ref_cursor += ft_strlen(key);
 		return (key);
 	}
-	if (**ref_cursor && (ft_isalpha(**ref_cursor) || **ref_cursor == '_'))
-	{
-		end = *ref_cursor;
-		while (*end && (ft_isalnum(*end) || *end == '_'))
-			end++;
-		len_key = end - *ref_cursor;
-		key = ft_strndup(*ref_cursor, len_key);
-		*ref_cursor += len_key;
-		return (key);
-	}
-	return (ft_strdup(""));
+	len_key = end - *ref_cursor;
+	key = ft_strndup(*ref_cursor, len_key);
+	*ref_cursor += len_key;
+	if (!key)
+		return (perror("strndup_env_key"), NULL);
+	return (key);
 }

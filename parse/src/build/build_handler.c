@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:09:58 by agense            #+#    #+#             */
-/*   Updated: 2025/09/11 13:09:59 by agense           ###   ########.fr       */
+/*   Updated: 2025/09/30 16:59:14 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 int	handle_pipe(t_token *curr_tk, t_command **ref_curr_cmd)
 {
 	if (!curr_tk->next || curr_tk->next->type == T_PIPE)
-		return (print_error("error: nothing after pipe >:("), 0);
+		return (print_error("error: no command after pipe"), 0);
 	(*ref_curr_cmd)->next = init_cmd();
 	if (!(*ref_curr_cmd)->next)
 		return (0);
@@ -47,14 +47,14 @@ int	handle_infile(t_token *curr_tk, t_infile **ref_head_infile)
 	if (curr_tk->type == T_IN)
 	{
 		if (curr_tk->next->type != T_WORD)
-			return (print_error("error: what did u put next to < ??"), 0);
+			return (print_error("error: input"), 0);
 		if (!add_infile(ref_head_infile, ft_strdup(curr_tk->next->value), 0))
 			return (0);
 	}
 	else if (curr_tk->type == T_HEREDOC)
 	{
 		if (curr_tk->next->type != T_WORD)
-			return (print_error("error: what did u put next to << ??"), 0);
+			return (print_error("error: heredoc"), 0);
 		if (!add_infile(ref_head_infile, ft_strdup(curr_tk->next->value), 1))
 			return (0);
 	}
@@ -70,14 +70,14 @@ int	handle_outfile(t_token *curr_tk, t_outfile **ref_head_outfile)
 	if (curr_tk->type == T_OUT)
 	{
 		if (curr_tk->next->type != T_WORD)
-			return (print_error("error: what did u put next to > ??"), 0);
+			return (print_error("error: output"), 0);
 		if (!add_outfile(ref_head_outfile, ft_strdup(curr_tk->next->value), 0))
 			return (0);
 	}
 	else if (curr_tk->type == T_APPEND)
 	{
 		if (curr_tk->next->type != T_WORD)
-			return (print_error("error: what did u put next to >> ??"), 0);
+			return (print_error("error: output"), 0);
 		if (!add_outfile(ref_head_outfile, ft_strdup(curr_tk->next->value), 1))
 			return (0);
 	}
