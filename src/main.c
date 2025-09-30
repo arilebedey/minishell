@@ -60,5 +60,6 @@ static int	run_shell_loop(t_env **head_env)
 			return (0);
 		line = readline(PROMPT);
 	}
+ft_printf("exit\n");
 	return (1);
 }
