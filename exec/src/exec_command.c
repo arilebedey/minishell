@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:31 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/12 07:07:50 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:46:00 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../../libft/libft.h"
 #include "../include/cmd.h"
 #include "../include/exec.h"
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -75,7 +76,10 @@ static void	execute_binary(char **argv, char **envp, t_env *head_env,
 	perror(argv[0]);
 	free_argv(argv);
 	free_envp(envp);
-	exit(127);
+	if (errno == EACCES)
+		exit(126);
+	else
+		exit(127);
 }
 
 void	exec_command(t_command *head_cmd, t_command *cmd, t_env *head_env)
