@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:36 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:29:58 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 07:38:30 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ void	print_identifier_error(const char *arg);
 void	print_env_export(t_env *head_env);
 int		append_new_env(t_env **head_env, char *key, char *value);
 
+// b_pwd.c
+int		builtin_pwd(void);
+
 // b_unset.c
 int		builtin_unset(t_command *cmd, t_env **head_env);
 
 // helpers.c
 int		is_numeric(const char *s);
 long	simple_atol(const char *s);
+int		append_new_env(t_env **head_env, char *key, char *value);
 
 #endif
