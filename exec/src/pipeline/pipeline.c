@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:06 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:12:06 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 10:38:25 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,14 @@ int	exec_pipeline(t_command *head_cmd, t_env *head_env)
 	{
 		curr_pid = exec_single_command_in_pipeline(head_cmd, cmd, head_env,
 				&in_fd);
-		if (curr_pid == -1 && cmd->next == NULL && in_fd == -1)
-			return (0);
 		if (cmd->next == NULL)
 			last_async = curr_pid;
 		cmd = cmd->next;
+	}
+	if (last_async == -1)
+	{
+		g_exit_status = 1;
+		return (0);
 	}
 	reap_async_children(last_async);
 	return (1);
