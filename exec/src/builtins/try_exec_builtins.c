@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:57 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:30:47 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 07:31:45 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	try_exec_builtin(t_command *cmd, t_env *head_env, int is_parent)
 		return (builtin_env(cmd, head_env));
 	if (!ft_strncmp(cmd->head_arg->value, "export", 7))
 		return (builtin_export(cmd, head_env));
+	if (!ft_strncmp(cmd->head_arg->value, "pwd", 4))
+		return (builtin_pwd());
 	if (!ft_strncmp(cmd->head_arg->value, "unset", 6))
 		return (builtin_unset(cmd, &head_env));
 	return (-1);

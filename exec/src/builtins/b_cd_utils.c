@@ -6,34 +6,39 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:56:47 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:02:39 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 07:40:14 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/env.h"
 #include "../../../libft/libft.h"
+#include "../../include/builtins.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static t_env	*find_env(t_env *head_env, const char *key)
-{
-	while (head_env)
-	{
-		if (!ft_strncmp(head_env->key, key, ft_strlen(key) + 1))
-			return (head_env);
-		head_env = head_env->next;
-	}
-	return (NULL);
-}
-
 int	update_env_var(t_env *head_env, const char *key, const char *value)
 {
 	t_env	*var;
+	char	*new_key;
+	char	*new_val;
 
 	var = find_env(head_env, key);
 	if (!var)
+	{
+		new_key = ft_strdup(key);
+		new_val = ft_strdup(value);
+		if (!new_key || !new_val)
+		{
+			perror("cd: malloc");
+			free(new_key);
+			free(new_val);
+			return (1);
+		}
+		if (append_new_env(&head_env, new_key, new_val))
+			return (1);
 		return (0);
+	}
 	free(var->value);
 	var->value = ft_strdup(value);
 	if (!var->value)

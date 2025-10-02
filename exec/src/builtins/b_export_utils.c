@@ -6,25 +6,15 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:51 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:04:51 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 07:40:42 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/env.h"
 #include "../../../libft/libft.h"
+#include "../../include/builtins.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-t_env	*find_env(t_env *head_env, const char *key)
-{
-	while (head_env)
-	{
-		if (!ft_strncmp(head_env->key, key, ft_strlen(key) + 1))
-			return (head_env);
-		head_env = head_env->next;
-	}
-	return (NULL);
-}
 
 int	is_valid_identifier(const char *s)
 {
@@ -47,29 +37,6 @@ void	print_identifier_error(const char *arg)
 	ft_putstr_fd("export: `", 2);
 	ft_putstr_fd((char *)arg, 2);
 	ft_putendl_fd("': not a valid identifier", 2);
-}
-
-int	append_new_env(t_env **head_env, char *key, char *value)
-{
-	t_env	*last;
-	t_env	*new;
-
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return (perror("export malloc"), 1);
-	new->key = key;
-	new->value = value;
-	new->next = NULL;
-	if (!*head_env)
-	{
-		*head_env = new;
-		return (0);
-	}
-	last = *head_env;
-	while (last->next)
-		last = last->next;
-	last->next = new;
-	return (0);
 }
 
 void	print_env_export(t_env *head_env)
