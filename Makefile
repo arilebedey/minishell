@@ -34,6 +34,7 @@ EXEC_SRC_FILES = exec.c \
 	cmd/get_cmd.c \
 	builtins/try_exec_builtins.c \
 	builtins/helpers.c \
+	builtins/helpers2.c \
 	builtins/b_exit.c \
 	builtins/b_cd.c \
 	builtins/b_cd_utils.c \
