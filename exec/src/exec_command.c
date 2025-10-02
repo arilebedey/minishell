@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:31 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/01 11:46:00 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:19:03 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ static void	execute_binary(char **argv, char **envp, t_env *head_env,
 	perror(argv[0]);
 	free_argv(argv);
 	free_envp(envp);
-	if (errno == EACCES)
+	free_env_list(head_env);
+	free_cmd_list(&head_cmd);
+	if (errno == EACCES || errno == EISDIR)
 		exit(126);
 	else
 		exit(127);

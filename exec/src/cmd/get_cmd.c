@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:06:32 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:07:01 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:04:20 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*search_in_paths(char **paths, char *cmd)
 		free(tmp);
 		if (!full_path)
 			return (free_str_array(paths), NULL);
-		if (access(full_path, X_OK) == 0)
+		if (access(full_path, F_OK) == 0)
 		{
 			free_str_array(paths);
 			return (full_path);

@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:22:01 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:29:01 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:26:00 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,15 @@ static void	remove_env_var(t_env **head_env, const char *key)
 int	builtin_unset(t_command *cmd, t_env **head_env)
 {
 	t_args	*arg;
-	int		err;
 
 	arg = cmd->head_arg;
 	if (arg)
 		arg = arg->next;
-	err = 0;
 	while (arg)
 	{
 		remove_env_var(head_env, arg->value);
 		arg = arg->next;
 	}
-	g_exit_status = err;
-	return (err);
+	g_exit_status = 0;
+	return (0);
 }
