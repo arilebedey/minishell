@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:51 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 07:40:42 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:14:58 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	is_valid_identifier(const char *s)
 	i = 0;
 	while (s[i] && s[i] != '=')
 	{
+		if (s[i] == '+' && s[i + 1] == '=')
+			break ;
 		if (!ft_isalnum(s[i]) && s[i] != '_')
 			return (0);
 		i++;

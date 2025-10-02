@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:42 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:04:42 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:01:33 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ static int	handle_export_no_args(t_env *head_env)
 	return (0);
 }
 
-static char	*try_join_split_value(t_args **arg)
-{
-	char	*joined;
-	char	*eq;
-
-	eq = ft_strchr((*arg)->value, '=');
-	joined = NULL;
-	if (eq && eq[1] == '\0' && (*arg)->next)
-	{
-		joined = ft_strjoin((*arg)->value, (*arg)->next->value);
-		if (joined)
-			*arg = (*arg)->next;
-	}
-	return (joined);
-}
-
 // Only uses functions from _setvar and _utils
 static int	process_export_arg(t_env *head_env, char *param)
 {
@@ -56,25 +40,12 @@ static int	process_export_arg(t_env *head_env, char *param)
 
 static int	handle_export_args(t_args *arg, t_env *head_env)
 {
-	int		err;
-	char	*param;
-	char	*joined;
+	int	err;
 
 	err = 0;
 	while (arg)
 	{
-		param = arg->value;
-		joined = try_join_split_value(&arg);
-		if (!joined && ft_strchr(param, '=') && arg->next && ft_strchr(param,
-				'=')[1] == '\0')
-		{
-			perror("export");
-			return (1);
-		}
-		if (joined)
-			param = joined;
-		err |= process_export_arg(head_env, param);
-		free(joined);
+		err |= process_export_arg(head_env, arg->value);
 		arg = arg->next;
 	}
 	return (err);

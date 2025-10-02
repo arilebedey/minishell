@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:54 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 07:40:52 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:10:53 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	append_new_env(t_env **head_env, char *key, char *value)
 	if (!new)
 		return (perror("export malloc"), 1);
 	new->key = key;
-	new->value = value;
+	if (!value)
+		new->value = ft_strdup("");
+	else
+		new->value = value;
 	new->next = NULL;
 	if (!*head_env)
 	{
