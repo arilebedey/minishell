@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:57 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 07:31:45 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:45:58 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	try_exec_builtin(t_command *cmd, t_env *head_env, int is_parent)
 	if (!cmd->head_arg || !cmd->head_arg->value)
 		return (-1);
 	if (!ft_strncmp(cmd->head_arg->value, "exit", 5))
-		return (builtin_exit(cmd, is_parent));
+		return (builtin_exit(cmd, head_env, is_parent));
 	if (!ft_strncmp(cmd->head_arg->value, "cd", 3))
 		return (builtin_cd(cmd, head_env));
 	if (!ft_strncmp(cmd->head_arg->value, "echo", 5))
