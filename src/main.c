@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:51:57 by agense            #+#    #+#             */
-/*   Updated: 2025/09/30 19:00:58 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/02 13:10:28 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	run_shell_loop(t_env **head_env)
 			return (0);
 		line = readline(PROMPT);
 	}
+	rl_clear_history();
 	ft_printf("exit\n");
 	return (1);
 }
