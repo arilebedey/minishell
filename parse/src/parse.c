@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:09:26 by agense            #+#    #+#             */
-/*   Updated: 2025/09/30 18:56:28 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/02 10:59:38 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ static void	clean_args(t_command *head_cmd)
 	curr_cmd = head_cmd;
 	while (curr_cmd)
 	{
-		clean_command_args(curr_cmd, curr_arg, arg_to_free, next_arg);
+		curr_arg = curr_cmd->head_arg;
+		if (curr_arg)
+			clean_command_args(curr_cmd, curr_arg, arg_to_free, next_arg);
 		curr_cmd = curr_cmd->next;
 	}
 }
@@ -66,7 +68,6 @@ static void	clean_args(t_command *head_cmd)
 static void	clean_command_args(t_command *curr_cmd, t_args *curr_arg, \
 	t_args *arg_to_free, t_args *next_arg)
 {
-	curr_arg = curr_cmd->head_arg;
 	while (!*curr_arg->value)
 	{
 		arg_to_free = curr_arg;
@@ -74,6 +75,8 @@ static void	clean_command_args(t_command *curr_cmd, t_args *curr_arg, \
 		curr_cmd->head_arg = curr_arg;
 		free(arg_to_free->value);
 		free(arg_to_free);
+		if (!curr_arg)
+			return ;
 	}
 	next_arg = curr_arg->next;
 	while (curr_arg)
