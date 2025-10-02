@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:36 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 07:38:30 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:45:43 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int		try_exec_builtin(t_command *cmd, t_env *head_env, int is_parent);
 
 // b_exit.c
-int		builtin_exit(t_command *cmd, int is_parent);
+int		builtin_exit(t_command *cmd, t_env *head_env, int is_parent);
 
 // b_cd.c
 int		builtin_cd(t_command *cmd, t_env *head_env);
