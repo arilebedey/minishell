@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:36 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 08:45:43 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/02 11:24:01 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ int		builtin_unset(t_command *cmd, t_env **head_env);
 int		is_numeric(const char *s);
 long	simple_atol(const char *s);
 int		append_new_env(t_env **head_env, char *key, char *value);
+
+// helpers2.c
+int		setup_parent_redirections(t_command *cmd, int *saved_fds);
+void	restore_fds(int *saved_fds);
 
 #endif

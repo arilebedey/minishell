@@ -14,6 +14,7 @@
 #include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
 #include "../../include/builtins.h"
+#include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdlib.h>
