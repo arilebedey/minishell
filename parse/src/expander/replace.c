@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:11:06 by agense            #+#    #+#             */
-/*   Updated: 2025/09/30 15:59:07 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/02 13:01:02 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static char	*take_env_key(char **ref_cursor)
 	ptrdiff_t	len_key;
 
 	*ref_cursor += 1;
-	end = ft_strchr2(*ref_cursor, " $");
+	end = ft_strchr2(*ref_cursor, " $\'");
 	if (!end)
 	{
 		key = ft_strdup(*ref_cursor);
