@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:11:06 by agense            #+#    #+#             */
-/*   Updated: 2025/10/02 13:01:02 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/03 13:32:25 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	handle_env_variables(char **out_value, t_env *head_env)
 		}
 		else
 			hev.curs++;
+		if (hev.is_exit_status == 1)
+			free(hev.env_v);
 	}
 	return (1);
 }
@@ -53,9 +55,11 @@ int	handle_env_variables(char **out_value, t_env *head_env)
 // If failed, prints error msg and returns 0.
 static int	init_hev(t_handle_env *ref_hev, char **out_value, t_env *head_env)
 {
+	ref_hev->is_exit_status = 0;
 	ref_hev->env_v = NULL;
 	if (*(ref_hev->curs + 1) == '?')
 	{
+		ref_hev->is_exit_status = 1;
 		ref_hev->env_v = ft_itoa(g_exit_status);
 		if (!ref_hev->env_v)
 			return (perror("itoa fail"), 0);
@@ -69,7 +73,7 @@ static int	init_hev(t_handle_env *ref_hev, char **out_value, t_env *head_env)
 	ref_hev->ak = ft_strdup(ref_hev->curs);
 	if (!ref_hev->ak)
 		return (perror("strdup dupafterkey"), free(ref_hev->bk), 0);
-	if (!ref_hev->env_v)
+	if (ref_hev->is_exit_status == 0)
 		ref_hev->env_v = get_env_value(head_env, ref_hev->key);
 	free(ref_hev->key);
 	return (1);

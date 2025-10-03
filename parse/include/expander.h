@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:08:21 by agense            #+#    #+#             */
-/*   Updated: 2025/09/11 13:08:21 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/03 13:29:32 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct s_handle_env
 	char		*bk;
 	char		*ak;
 	char		*key;
-	const char	*env_v;
+	int			is_exit_status;
+	char		*env_v;
 	char		*tmp_v;
 }		t_handle_env;
 
