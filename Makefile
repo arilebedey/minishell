@@ -20,6 +20,7 @@ PARSE_SRC_FILES = parse.c \
 	build/build_error.c \
 	expander/expander.c \
 	expander/replace.c \
+	expander/join.c \
 
 EXEC_SRC_FILES = exec.c \
 	pipeline/pipeline.c \
