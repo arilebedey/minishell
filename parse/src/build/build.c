@@ -6,11 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:10:03 by agense            #+#    #+#             */
-/*   Updated: 2025/09/11 13:10:04 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/03 17:30:41 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/command.h"
+#include "../../../include/sig/sig.h"
 #include "../../../include/error.h"
 #include "../../../libft/libft.h"
 #include "../../include/token.h"
@@ -38,8 +39,8 @@ t_command	*build_command_list(t_token *head_tk)
 			return (free_cmd_list(&head_cmd), NULL);
 	}
 	if (!check_args(head_cmd))
-		return (print_error("error: no command"), free_cmd_list(&head_cmd),
-			NULL);
+		return (print_error("error: no command"), free_cmd_list(&head_cmd), \
+			g_exit_status = 1, NULL);
 	return (head_cmd);
 }
 
