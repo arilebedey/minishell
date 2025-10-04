@@ -6,13 +6,13 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:10:03 by agense            #+#    #+#             */
-/*   Updated: 2025/10/03 17:30:41 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/04 08:27:53 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/command.h"
-#include "../../../include/sig/sig.h"
 #include "../../../include/error.h"
+#include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
 #include "../../include/token.h"
 #include "../../include/build.h"
@@ -39,7 +39,7 @@ t_command	*build_command_list(t_token *head_tk)
 			return (free_cmd_list(&head_cmd), NULL);
 	}
 	if (!check_args(head_cmd))
-		return (print_error("error: no command"), free_cmd_list(&head_cmd), \
+		return (print_error("error: no command"), free_cmd_list(&head_cmd),
 			g_exit_status = 1, NULL);
 	return (head_cmd);
 }
@@ -84,15 +84,19 @@ static int	redir_handlers(t_token **ref_curr_tk, t_command **ref_curr_cmd)
 	return (1);
 }
 
-// Check if there is at least one argument for each command
 static int	check_args(t_command *head_cmd)
 {
 	t_command	*curr_cmd;
+	int			has_content;
 
 	curr_cmd = head_cmd;
 	while (curr_cmd)
 	{
-		if (!curr_cmd->head_arg)
+		has_content = 0;
+		if (curr_cmd->head_arg || curr_cmd->head_infile
+			|| curr_cmd->head_outfile)
+			has_content = 1;
+		if (!has_content)
 			return (0);
 		curr_cmd = curr_cmd->next;
 	}

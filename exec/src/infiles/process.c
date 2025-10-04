@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:07:26 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:07:26 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 07:37:38 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 #include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
 #include "../../include/heredoc.h"
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 static int	process_infile_node(t_infile *in, int *idx, t_command *cmd)
