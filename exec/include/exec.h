@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:42 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 12:55:42 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:21:34 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_child_ctx
 
 // Main exec function
 int		exec(t_command *head_cmd, t_env *head_env);
+int		has_empty_command(t_command *head_cmd);
 
 // exec_pipeline.c
 int		exec_pipeline(t_command *cmd, t_env *head_env);
