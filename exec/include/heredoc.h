@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:45 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/15 14:29:12 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 07:45:46 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 // process.c
 int		process_infiles(t_command *head_cmd);
 void	cleanup_infiles(t_command *head_cmd);
+
+// validate.c
+int		validate_infiles_access(t_command *head_cmd);
 
 // write_heredocs.c
 int		write_heredoc_to_fd(t_infile *infile, int fd, char *tmpname,

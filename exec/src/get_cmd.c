@@ -6,13 +6,13 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:06:32 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 09:04:20 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 07:48:51 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/env.h"
-#include "../../../libft/libft.h"
-#include "../../include/cmd.h"
+#include "../../include/env.h"
+#include "../../libft/libft.h"
+#include "../include/cmd.h"
 #include <stdlib.h>
 #include <unistd.h>
 
