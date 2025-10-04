@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:36 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 11:24:01 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 08:59:04 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		builtin_cd(t_command *cmd, t_env *head_env);
 // b_cd_utils.c
 int		update_env_var(t_env *head_env, const char *key, const char *value);
 int		update_pwd_and_oldpwd(t_env *head_env, const char *oldpwd);
+int		update_env_vars(t_env *head_env, char *oldpwd);
 
 // b_env.c
 int		builtin_env(t_command *cmd, t_env *head_env);

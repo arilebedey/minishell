@@ -6,11 +6,12 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:56:47 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 11:55:26 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 08:58:55 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/env.h"
+#include "../../../include/sig/sig.h"
 #include "../../../libft/libft.h"
 #include "../../include/builtins.h"
 #include <stdio.h>
@@ -49,6 +50,17 @@ int	update_env_var(t_env *head_env, const char *key, const char *value)
 	if (!var->value)
 	{
 		perror("cd: malloc");
+		return (1);
+	}
+	return (0);
+}
+
+int	update_env_vars(t_env *head_env, char *oldpwd)
+{
+	if (update_pwd_and_oldpwd(head_env, oldpwd))
+	{
+		free(oldpwd);
+		g_exit_status = 1;
 		return (1);
 	}
 	return (0);
