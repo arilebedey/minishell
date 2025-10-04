@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:11 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:12:16 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:53:11 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,18 @@ void	fork_and_exec_child(t_command *head_cmd, t_command *cmd,
 		exit(1);
 	if (ctx->in_fd != STDIN_FILENO)
 	{
-		dup2(ctx->in_fd, STDIN_FILENO);
+		if (dup2(ctx->in_fd, STDIN_FILENO) < 0)
+			exit(1);
 		close(ctx->in_fd);
 	}
 	if (ctx->need_pipe)
 	{
 		close(ctx->pipefd[0]);
-		dup2(ctx->pipefd[1], STDOUT_FILENO);
+		if (dup2(ctx->pipefd[1], STDOUT_FILENO) < 0)
+			exit(1);
 		close(ctx->pipefd[1]);
 	}
+	setup_redirections(cmd);
 	exec_command(head_cmd, cmd, head_env);
 }
 
