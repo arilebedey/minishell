@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:35 by alebedev          #+#    #+#             */
-/*   Updated: 2025/09/11 13:12:39 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:16:27 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	setup_infiles(t_command *cmd)
 		if (dup2(fd, STDIN_FILENO) < 0)
 		{
 			perror("dup2 infile");
+			close(fd);
 			exit(1);
 		}
 		close(fd);
@@ -61,6 +62,7 @@ static void	setup_outfiles(t_command *cmd)
 		if (dup2(fd, STDOUT_FILENO) < 0)
 		{
 			perror("dup2 outfile");
+			close(fd);
 			exit(1);
 		}
 		close(fd);

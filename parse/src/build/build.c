@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:10:03 by agense            #+#    #+#             */
-/*   Updated: 2025/10/04 08:27:53 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:32:16 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,15 @@ static int	redir_handlers(t_token **ref_curr_tk, t_command **ref_curr_cmd)
 	return (1);
 }
 
+// Check if there is at least one argument for each command
 static int	check_args(t_command *head_cmd)
 {
 	t_command	*curr_cmd;
-	int			has_content;
 
 	curr_cmd = head_cmd;
 	while (curr_cmd)
 	{
-		has_content = 0;
-		if (curr_cmd->head_arg || curr_cmd->head_infile
-			|| curr_cmd->head_outfile)
-			has_content = 1;
-		if (!has_content)
+		if (!curr_cmd->head_arg)
 			return (0);
 		curr_cmd = curr_cmd->next;
 	}

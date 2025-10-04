@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:12:31 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 09:19:03 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:21:21 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+int	has_empty_command(t_command *head_cmd)
+{
+	t_command	*cmd;
+
+	cmd = head_cmd;
+	while (cmd)
+	{
+		if (!cmd->head_arg)
+			return (1);
+		cmd = cmd->next;
+	}
+	return (0);
+}
 
 static void	handle_builtin_or_exit(t_command *head_cmd, t_command *cmd,
 		t_env *head_env)

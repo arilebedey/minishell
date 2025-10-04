@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:26 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/04 08:37:00 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 10:27:03 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static int	has_empty_command(t_command *head_cmd)
-{
-	t_command	*cmd;
-
-	cmd = head_cmd;
-	while (cmd)
-	{
-		if (!cmd->head_arg)
-			return (1);
-		cmd = cmd->next;
-	}
-	return (0);
-}
-
+// set res == -1 if heredoc was SIGINT-ed
 int	handle_infiles_and_validation(t_command *head_cmd)
 {
 	int	res;
@@ -50,13 +37,31 @@ int	handle_infiles_and_validation(t_command *head_cmd)
 		g_exit_status = 1;
 		return (1);
 	}
-	if (has_empty_command(head_cmd))
-	{
-		cleanup_infiles(head_cmd);
-		g_exit_status = 0;
-		return (1);
-	}
 	return (-1);
+}
+
+static void	create_only_redirs(t_command *cmd)
+{
+	t_command	*curr;
+	t_outfile	*out;
+	int			fd;
+
+	curr = cmd;
+	while (curr)
+	{
+		out = curr->head_outfile;
+		while (out)
+		{
+			if (out->append_mode)
+				fd = open(out->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			else
+				fd = open(out->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			if (fd >= 0)
+				close(fd);
+			out = out->next;
+		}
+		curr = curr->next;
+	}
 }
 
 int	exec_single_command(t_command *head_cmd, t_env *head_env)
@@ -95,5 +100,12 @@ int	exec(t_command *head_cmd, t_env *head_env)
 	res = handle_infiles_and_validation(head_cmd);
 	if (res != -1)
 		return (res);
+	if (has_empty_command(head_cmd))
+	{
+		create_only_redirs(head_cmd);
+		cleanup_infiles(head_cmd);
+		g_exit_status = 0;
+		return (1);
+	}
 	return (exec_pipeline_or_single(head_cmd, head_env));
 }
