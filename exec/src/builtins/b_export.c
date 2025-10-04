@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:04:42 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/02 08:01:33 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/04 07:18:09 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+static int	join_split_args(t_args *arg)
+{
+	t_args	*next;
+	char	*joined;
+	size_t	len;
+
+	while (arg && arg->next)
+	{
+		len = ft_strlen(arg->value);
+		if (len && arg->value[len - 1] == '=')
+		{
+			next = arg->next;
+			joined = ft_strjoin(arg->value, next->value);
+			if (!joined)
+				return (perror("export join malloc"), 0);
+			free(arg->value);
+			arg->value = joined;
+			arg->next = next->next;
+			free(next->value);
+			free(next);
+			continue ;
+		}
+		arg = arg->next;
+	}
+	return (1);
+}
+
 static int	handle_export_no_args(t_env *head_env)
 {
 	print_env_export(head_env);
@@ -25,7 +52,6 @@ static int	handle_export_no_args(t_env *head_env)
 	return (0);
 }
 
-// Only uses functions from _setvar and _utils
 static int	process_export_arg(t_env *head_env, char *param)
 {
 	if (!is_valid_identifier(param))
@@ -43,6 +69,8 @@ static int	handle_export_args(t_args *arg, t_env *head_env)
 	int	err;
 
 	err = 0;
+	if (!join_split_args(arg))
+		return (1);
 	while (arg)
 	{
 		err |= process_export_arg(head_env, arg->value);
