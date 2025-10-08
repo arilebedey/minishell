@@ -6,7 +6,7 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:10:03 by agense            #+#    #+#             */
-/*   Updated: 2025/10/08 12:22:04 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/08 12:47:55 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 static int	build_from_token(t_token **ref_curr_tk, t_command **ref_curr_cmd);
 static int	redir_handlers(t_token **ref_curr_tk, t_command **ref_curr_cmd);
-static int	check_args(t_command *head_cmd);
+static int	check_cmd_list(t_command *head_cmd);
 
 t_command	*build_command_list(t_token *head_tk)
 {
@@ -38,9 +38,9 @@ t_command	*build_command_list(t_token *head_tk)
 		if (!build_from_token(&curr_tk, &curr_cmd))
 			return (free_cmd_list(&head_cmd), NULL);
 	}
-	if (!check_args(head_cmd))
+	if (!check_cmd_list(head_cmd))
 		return (print_error("error: no command"), free_cmd_list(&head_cmd), \
-			g_exit_status = 1, NULL);
+			g_exit_status = 2, NULL);
 	return (head_cmd);
 }
 
@@ -84,15 +84,17 @@ static int	redir_handlers(t_token **ref_curr_tk, t_command **ref_curr_cmd)
 	return (1);
 }
 
-// Check if there is at least one argument for each command
-static int	check_args(t_command *head_cmd)
+// Returns 1 if there is at least one in/outfile or one arg in all commands.
+// Returns 0 otherwise.
+static int	check_cmd_list(t_command *head_cmd)
 {
 	t_command	*curr_cmd;
 
 	curr_cmd = head_cmd;
 	while (curr_cmd)
 	{
-		if (!curr_cmd->head_arg)
+		if (!curr_cmd->head_arg && !curr_cmd->head_infile \
+			&& !curr_cmd->head_outfile)
 			return (0);
 		curr_cmd = curr_cmd->next;
 	}

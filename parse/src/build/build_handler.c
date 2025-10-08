@@ -6,11 +6,12 @@
 /*   By: agense <agense@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:09:58 by agense            #+#    #+#             */
-/*   Updated: 2025/09/30 16:59:14 by agense           ###   ########.fr       */
+/*   Updated: 2025/10/08 12:49:39 by agense           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/command.h"
+#include "../../../include/sig/sig.h"
 #include "../../../include/error.h"
 #include "../../../libft/libft.h"
 #include "../../include/token.h"
@@ -20,7 +21,8 @@
 int	handle_pipe(t_token *curr_tk, t_command **ref_curr_cmd)
 {
 	if (!curr_tk->next || curr_tk->next->type == T_PIPE)
-		return (print_error("error: no command after pipe"), 0);
+		return (print_error("error: no command after pipe"), \
+			g_exit_status = 2, 0);
 	(*ref_curr_cmd)->next = init_cmd();
 	if (!(*ref_curr_cmd)->next)
 		return (0);
