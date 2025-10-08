@@ -6,7 +6,7 @@
 /*   By: alebedev <alebedev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 12:55:26 by alebedev          #+#    #+#             */
-/*   Updated: 2025/10/04 10:27:03 by alebedev         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:18:39 by alebedev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int	exec(t_command *head_cmd, t_env *head_env)
 
 	if (!head_cmd)
 		return (1);
+	create_only_redirs(head_cmd);
 	res = handle_infiles_and_validation(head_cmd);
 	if (res != -1)
 		return (res);
 	if (has_empty_command(head_cmd))
 	{
-		create_only_redirs(head_cmd);
 		cleanup_infiles(head_cmd);
 		g_exit_status = 0;
 		return (1);
